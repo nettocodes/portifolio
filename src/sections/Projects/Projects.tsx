@@ -1,30 +1,32 @@
 import React from 'react';
 import styles from './Projects.module.scss';
 import ProjectCard from '../../components/ProjectCard';
-import { motion } from 'framer-motion';
+import { motion, easeOut } from 'framer-motion';
 import SectionWrapper from '../../components/SectionWrapper';
+import ordeskImg from '../../assets/ordesk.png';
+import dataImg from '../../assets/data.png';
 
 const projects = [
   {
     id: '1',
-    title: 'Portfólio Moderno',
-    description: 'Site pessoal com animações fluídas, dark mode inteligente, responsividade total e integração completa com GitHub API.',
-    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80',
-    link: 'https://ivonetto.dev',
-    tags: ['React', 'Next.js', 'Framer Motion', 'SCSS', 'TypeScript']
+    title: 'Ordesk',
+    description: 'Ferramenta empressarial para controle de ordens de serviço.',
+    image: ordeskImg,
+    link: 'https://github.com/IvoBraatz/Ordesk',
+    tags: ['Vue.js', 'Javascript', 'Node.js', 'Express', 'Cors', 'API Rest', 'Chart.js']
   },
   {
     id: '2',
-    title: 'API Node.js Escalável',
-    description: 'Backend robusto com autenticação JWT, middleware personalizado, testes automatizados e documentação Swagger interativa.',
-    image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80',
-    link: 'https://github.com/ivonetto/api-node',
-    tags: ['Node.js', 'Express', 'JWT', 'Swagger', 'MongoDB']
+    title: 'DataRunner',
+    description: 'Sistema de login seguro para gerenciamento de dados.',
+    image: dataImg,
+    link: 'https://github.com/IvoBraatz/DataRunner',
+    tags: ['Next.js', 'Nest.js', 'JWT', 'Swagger', 'MySQL', 'Prisma','Redis', 'Linux']
   },
   {
     id: '3',
-    title: 'Dashboard Analytics',
-    description: 'Painel administrativo responsivo com gráficos interativos, filtros dinâmicos em tempo real e exportação de dados avançada.',
+    title: 'Em Breve...',
+    description: 'Novos projetos em desenvolvimento. Se tiver uma ideia entre em contato!',
     image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
     link: 'https://github.com/ivonetto/dashboard-react',
     tags: ['React', 'Recharts', 'Styled Components', 'Vite', 'Redux']
@@ -54,7 +56,7 @@ const cardVariants = {
     scale: 1,
     transition: { 
       duration: 0.6,
-      ease: [0.25, 0.46, 0.45, 0.94]
+      ease: easeOut
     }
   },
 };
@@ -69,7 +71,7 @@ const headerVariants = {
     y: 0,
     transition: { 
       duration: 0.8,
-      ease: [0.25, 0.46, 0.45, 0.94]
+      ease: easeOut
     }
   },
 };

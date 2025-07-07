@@ -26,6 +26,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, image, li
         {link && (
           <a className={styles.link} href={link} target="_blank" rel="noopener noreferrer">
             Ver Projeto
+            <svg 
+              width="16" 
+              height="16" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+              style={{ marginLeft: '8px', transition: 'transform 0.3s ease' }}
+            >
+              <path d="M7 7h10v10"/>
+              <path d="M7 17 17 7"/>
+            </svg>
           </a>
         )}
       </div>

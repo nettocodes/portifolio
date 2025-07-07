@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './Hero.module.scss';
 import AnimatedButton from '../../components/AnimatedButton';
-import { motion } from 'framer-motion';
+import gsap from 'gsap';
 
 const typingText = 'Olá, eu sou Ivo.';
 
 const Hero: React.FC = () => {
   const [displayedText, setDisplayedText] = useState('');
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const buttonRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let i = 0;
@@ -18,35 +22,70 @@ const Hero: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    // Animações de entrada GSAP
+    if (titleRef.current && subtitleRef.current && buttonRef.current) {
+      gsap.set([titleRef.current, subtitleRef.current, buttonRef.current], { opacity: 0, y: 40 });
+      gsap.to(titleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        delay: 0.2
+      });
+      gsap.to(subtitleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        delay: 0.7
+      });
+      gsap.to(buttonRef.current, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.8,
+        ease: 'expo.out',
+        delay: 1.2
+      });
+    }
+    // Parallax leve no background
+    if (bgRef.current) {
+      const onScroll = () => {
+        const scrollY = window.scrollY;
+        gsap.to(bgRef.current, {
+          y: scrollY * 0.15,
+          ease: 'power1.out',
+          overwrite: 'auto',
+          duration: 0.6
+        });
+      };
+      window.addEventListener('scroll', onScroll);
+      return () => window.removeEventListener('scroll', onScroll);
+    }
+  }, []);
+
   return (
     <section className={styles.hero} aria-label="Seção de introdução" role="region">
       <div className={styles.content}>
-        <motion.h1
+        <h1
           className={styles.title}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
+          ref={titleRef}
         >
           {displayedText}
           <span className={styles.cursor} aria-hidden="true">|</span>
-        </motion.h1>
-        <motion.p
+        </h1>
+        <p
           className={styles.subtitle}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.7 }}
+          ref={subtitleRef}
         >
           Desenvolvedor Full Stack apaixonado por tecnologia e design elegante.
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1.3, duration: 0.5 }}
-        >
+        </p>
+        <div ref={buttonRef} style={{ opacity: 0, transform: 'scale(0.8)' }}>
           <AnimatedButton aria-label="Ver projetos">Ver Projetos</AnimatedButton>
-        </motion.div>
+        </div>
       </div>
-      <div className={styles.background} aria-hidden="true">{/* Efeito parallax ou glitch aqui futuramente */}</div>
+      <div className={styles.background} ref={bgRef} aria-hidden="true"></div>
     </section>
   );
 };

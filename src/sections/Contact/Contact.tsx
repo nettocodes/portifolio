@@ -32,7 +32,7 @@ const Contact: React.FC = () => {
             <div className={styles.contactInfoLine}>
               <span><FaMapMarkerAlt /> Timbó, SC</span>
               <span><FaPhoneAlt /> (47) 99140-3388</span>
-              <span><FaEnvelope /> seu@email.com</span>
+              <span><FaEnvelope /> braatzivo@hotmail.com</span>
             </div>
             <div className={styles.socialsList}>
               {socials.map((social) => (

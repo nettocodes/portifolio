@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import styles from './Skills.module.scss';
 import { FaReact, FaNodeJs, FaDatabase, FaSass, FaGitAlt, FaFigma, FaHtml5, FaCss3Alt, FaJs, FaAws, FaLinux } from 'react-icons/fa';
-import { SiTypescript, SiNextdotjs, SiRedux, SiVite, SiJest, SiStorybook, SiExpress, SiMongodb, SiPostgresql, SiDocker, SiPrisma, SiGraphql, SiNestjs, SiCypress, SiWebpack, SiAngular, SiVuedotjs, SiLaravel, SiPhp, SiFirebase, SiSupabase, SiRedis, SiKubernetes, SiJenkins, SiVercel, SiNetlify, SiHeroku, SiSlack, SiTrello, SiNotion, SiCanva, SiSketch } from 'react-icons/si';
+import { SiTypescript, SiNextdotjs, SiVite,  SiExpress, SiMongodb,  SiDocker, SiPrisma,  SiNestjs, SiVuedotjs, SiRedis, SiVercel, SiTrello, SiNotion, SiCanva, } from 'react-icons/si';
 import SectionWrapper from '../../components/SectionWrapper';
 
 // Definir um estilo padrão para todos os ícones
@@ -15,13 +15,7 @@ const frontend = [
   { name: 'HTML5', icon: <FaHtml5 style={iconStyle} /> },
   { name: 'CSS3', icon: <FaCss3Alt style={iconStyle} /> },
   { name: 'Sass', icon: <FaSass style={iconStyle} /> },
-  { name: 'Redux', icon: <SiRedux style={iconStyle} /> },
   { name: 'Vite', icon: <SiVite style={iconStyle} /> },
-  { name: 'Webpack', icon: <SiWebpack style={iconStyle} /> },
-  { name: 'Jest', icon: <SiJest style={iconStyle} /> },
-  { name: 'Storybook', icon: <SiStorybook style={iconStyle} /> },
-  { name: 'Cypress', icon: <SiCypress style={iconStyle} /> },
-  { name: 'Angular', icon: <SiAngular style={iconStyle} /> },
   { name: 'Vue.js', icon: <SiVuedotjs style={iconStyle} /> },
 ];
 
@@ -29,16 +23,10 @@ const backend = [
   { name: 'Node.js', icon: <FaNodeJs style={iconStyle} /> },
   { name: 'Express', icon: <SiExpress style={iconStyle} /> },
   { name: 'NestJS', icon: <SiNestjs style={iconStyle} /> },
-  { name: 'SQL/NoSQL', icon: <FaDatabase style={iconStyle} /> },
+  { name: 'SQL', icon: <FaDatabase style={iconStyle} /> },
   { name: 'MongoDB', icon: <SiMongodb style={iconStyle} /> },
-  { name: 'PostgreSQL', icon: <SiPostgresql style={iconStyle} /> },
   { name: 'Prisma', icon: <SiPrisma style={iconStyle} /> },
-  { name: 'GraphQL', icon: <SiGraphql style={iconStyle} /> },
   { name: 'Docker', icon: <SiDocker style={iconStyle} /> },
-  { name: 'PHP', icon: <SiPhp style={iconStyle} /> },
-  { name: 'Laravel', icon: <SiLaravel style={iconStyle} /> },
-  { name: 'Firebase', icon: <SiFirebase style={iconStyle} /> },
-  { name: 'Supabase', icon: <SiSupabase style={iconStyle} /> },
   { name: 'Redis', icon: <SiRedis style={iconStyle} /> },
   { name: 'AWS', icon: <FaAws style={iconStyle} /> },
   { name: 'Linux', icon: <FaLinux style={iconStyle} /> },
@@ -47,14 +35,8 @@ const backend = [
 const tools = [
   { name: 'Git', icon: <FaGitAlt style={iconStyle} /> },
   { name: 'Figma', icon: <FaFigma style={iconStyle} /> },
-  { name: 'Sketch', icon: <SiSketch style={iconStyle} /> },
   { name: 'Canva', icon: <SiCanva style={iconStyle} /> },
-  { name: 'Kubernetes', icon: <SiKubernetes style={iconStyle} /> },
-  { name: 'Jenkins', icon: <SiJenkins style={iconStyle} /> },
   { name: 'Vercel', icon: <SiVercel style={iconStyle} /> },
-  { name: 'Netlify', icon: <SiNetlify style={iconStyle} /> },
-  { name: 'Heroku', icon: <SiHeroku style={iconStyle} /> },
-  { name: 'Slack', icon: <SiSlack style={iconStyle} /> },
   { name: 'Trello', icon: <SiTrello style={iconStyle} /> },
   { name: 'Notion', icon: <SiNotion style={iconStyle} /> },
 ];
@@ -66,7 +48,7 @@ const InfiniteMarquee: React.FC<{
   speed?: number;
 }> = ({ items, reverse = false, speed = 50 }) => {
   const trackRef = useRef<HTMLDivElement>(null);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | null>(null);
 
   useEffect(() => {
     const track = trackRef.current;

@@ -1,53 +1,72 @@
 import React from 'react';
 import styles from './About.module.scss';
-import { motion } from 'framer-motion';
-import { 
-  FaGraduationCap, 
-  FaBriefcase, 
-  FaAward, 
-  FaMusic, 
-  FaCamera, 
-  FaPlane, 
-  FaCoffee, 
-  FaFutbol,
-  FaCode,
-  FaLightbulb,
-  FaUsers,
-  FaCalendarAlt,
-  FaFolderOpen,
-  FaMugHot,
-} from 'react-icons/fa';
+import { motion, easeOut, easeInOut } from 'framer-motion';
+import ivoImg from '../../assets/ivo.jpg';
+import {
+  GraduationCap,
+  Briefcase,
+  Trophy,
+  MusicNote,
+  Camera,
+  Airplane,
+  Coffee,
+  Car,
+  Code,
+  Lightbulb,
+  Users,
+  Calendar,
+  FolderOpen,
+  GameController,
+  Book,
+  FilmStrip,
+  Globe,
+  DeviceMobile,
+  Heart,
+  Chats,
+  PawPrint,
+  Tree,
+  Star,
+  Smiley,
+} from 'phosphor-react';
 
 const infoData = [
   {
-    icon: <FaGraduationCap />,
+    icon: <GraduationCap weight="duotone" />, 
     title: 'Formação',
     text: 'Gestão da Tecnologia da Informação pelo Centro Universitário Leonardo da Vinci'
   },
   {
-    icon: <FaBriefcase />,
+    icon: <Briefcase weight="duotone" />, 
     title: 'Experiência',
-    text: '5+ anos em projetos web modernos e times ágeis'
+    text: '3+ anos em projetos web modernos'
   },
   {
-    icon: <FaAward />,
+    icon: <Trophy weight="duotone" />, 
     title: 'Conquistas',
-    text: 'Finalista em hackathons e mais de 30 certificados de cursos'
+    text: 'Mais de 30 certificados de cursos'
   }
 ];
 
 const hobbies = [
-  { icon: <FaMusic />, label: 'Música' },
-  { icon: <FaCamera />, label: 'Fotografia' },
-  { icon: <FaPlane />, label: 'Viagens' },
-  { icon: <FaCoffee />, label: 'Café especial' },
-  { icon: <FaFutbol />, label: 'Esportes' },
-  { icon: <FaCode />, label: 'Coding' },
-  { icon: <FaLightbulb />, label: 'Criatividade' },
-  { icon: <FaUsers />, label: 'Networking' },
-  { icon: <FaAward />, label: 'Prêmios' },
-  { icon: <FaBriefcase />, label: 'Negócios' },
-  { icon: <FaGraduationCap />, label: 'Aprendizado' },
+  { icon: <MusicNote weight="fill" />, label: 'Música' },
+  { icon: <Camera weight="fill" />, label: 'Fotografia' },
+  { icon: <Airplane weight="fill" />, label: 'Viagens' },
+  { icon: <Coffee weight="fill" />, label: 'Café' },
+  { icon: <Car weight="fill" />, label: 'Carros' },
+  { icon: <GameController weight="fill" />, label: 'Games' },
+  { icon: <Book weight="fill" />, label: 'Leitura' },
+  { icon: <FilmStrip weight="fill" />, label: 'Filmes' },
+  { icon: <Globe weight="fill" />, label: 'Explorar' },
+  { icon: <DeviceMobile weight="fill" />, label: 'Tecnologia' },
+  { icon: <Code weight="fill" />, label: 'Coding' },
+  { icon: <Lightbulb weight="fill" />, label: 'Criatividade' },
+  { icon: <Users weight="fill" />, label: 'Networking' },
+  { icon: <Tree weight="fill" />, label: 'Natureza' },
+  { icon: <PawPrint weight="fill" />, label: 'Pets' },
+  { icon: <Star weight="fill" />, label: 'Colecionar' },
+  { icon: <Heart weight="fill" />, label: 'Família' },
+  { icon: <Chats weight="fill" />, label: 'Conversar' },
+  { icon: <Smiley weight="fill" />, label: 'Humor' },
 ];
 
 // Variantes de animação otimizadas
@@ -74,7 +93,7 @@ const itemVariants = {
     scale: 1,
     transition: {
       duration: 0.6,
-      ease: "easeOut"
+      ease: easeOut
     }
   }
 };
@@ -89,14 +108,14 @@ const cardVariants = {
     y: 0,
     transition: {
       duration: 0.5,
-      ease: "easeOut"
+      ease: easeOut
     }
   },
   hover: {
     y: -8,
     transition: {
       duration: 0.3,
-      ease: "easeInOut"
+      ease: easeInOut
     }
   }
 };
@@ -104,17 +123,17 @@ const cardVariants = {
 // Substituir quickStats por uma lista com ícones
 const stats = [
   {
-    icon: <FaCalendarAlt />,
+    icon: <Calendar weight="fill" />,
     number: '5+',
     label: 'Anos',
   },
   {
-    icon: <FaFolderOpen />,
+    icon: <FolderOpen weight="fill" />,
     number: '50+',
     label: 'Projetos',
   },
   {
-    icon: <FaMugHot />,
+    icon: <Coffee weight="fill" />,
     number: '∞',
     label: 'Café',
   },
@@ -155,8 +174,8 @@ const About: React.FC = () => {
                 }}
               >
                 <img 
-                  src="https://api.dicebear.com/7.x/identicon/svg?seed=Ivo" 
-                  alt="Avatar ilustrativo de Ivo Netto"
+                  src={ivoImg} 
+                  alt="Foto de Ivo Netto"
                   loading="lazy"
                 />
               </motion.div>
@@ -171,7 +190,7 @@ const About: React.FC = () => {
                 className={styles.quickStats}
                 variants={itemVariants}
               >
-                {stats.map((stat, idx) => (
+                {stats.map((stat) => (
                   <div className={styles.stat} key={stat.label}>
                     <span className={styles.statIcon}>{stat.icon}</span>
                     <span className={styles.number}>{stat.number}</span>
