@@ -1,0 +1,52 @@
+@use '../styles/variables.scss' as *;
+
+.card {
+  background: rgba(17, 17, 17, 0.7);
+  color: $color-text-light;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: $border-radius;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  cursor: pointer;
+  position: relative;
+  min-width: 220px;
+  min-height: 220px;
+  aspect-ratio: 1 / 1;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow: hidden;
+
+  &:hover {
+    transform: scale(1.04) rotate(-1deg);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.22);
+    opacity: 0.97;
+  }
+
+  .icon {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .description {
+    font-size: 1rem;
+    color: $color-gray-light;
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 1.2rem 1rem;
+    min-width: 140px;
+    min-height: 140px;
+  }
+} 

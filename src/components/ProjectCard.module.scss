@@ -1,0 +1,181 @@
+@use '../styles/variables.scss' as *;
+
+.card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 0;
+  min-width: 220px;
+  margin: 0 auto;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: auto;
+  min-height: 320px;
+  
+  // Hover state
+  &:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba($color-primary, 0.2);
+    
+    .image {
+      transform: scale(1.05);
+      filter: brightness(1.1) saturate(1.15);
+    }
+    
+    .content {
+      background: rgba(255, 255, 255, 0.98);
+    }
+    
+    .link {
+      background: linear-gradient(135deg, $color-primary 0%, darken($color-primary, 15%) 100%);
+      color: $color-text-light;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba($color-primary, 0.4);
+    }
+    
+    .tags li {
+      background: rgba($color-bg-dark, 0.9);
+      transform: translateY(-1px);
+    }
+  }
+  
+  // Focus state para acessibilidade
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+  
+  @media (max-width: 900px) {
+    min-height: 260px;
+  }
+  
+  @media (max-width: 600px) {
+    min-height: 200px;
+  }
+}
+
+.image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  @media (max-width: 900px) {
+    height: 160px;
+  }
+  
+  @media (max-width: 600px) {
+    height: 140px;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  padding: 1.1rem 1rem 1.2rem 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background 0.3s ease;
+  
+  @media (max-width: 900px) {
+    padding: 0.9rem 0.7rem 1rem 0.7rem;
+  }
+  
+  @media (max-width: 600px) {
+    padding: 0.7rem 0.5rem 0.8rem 0.5rem;
+  }
+}
+
+.title {
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  font-weight: 700;
+  color: $color-text-dark;
+  margin-bottom: 0.75rem;
+  font-family: $font-title;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.description {
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  color: rgba($color-text-dark, 0.8);
+  font-family: $font-body;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 4.5em;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  
+  li {
+    background: rgba($color-bg-dark, 0.8);
+    color: $color-text-light;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border-radius: calc($border-radius / 2);
+    padding: 0.25rem 0.75rem;
+    font-family: $font-mono;
+    letter-spacing: 0.02em;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: $color-bg-dark;
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.link {
+  display: inline-block;
+  background: rgba($color-bg-dark, 0.9);
+  color: $color-text-light;
+  border-radius: calc($border-radius / 1.5);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: $font-body;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba($color-bg-dark, 0.3);
+  letter-spacing: 0.02em;
+  margin-top: auto;
+  
+  &:hover {
+    background: linear-gradient(135deg, $color-primary 0%, darken($color-primary, 10%) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba($color-primary, 0.4);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+  
+  @media (max-width: 600px) {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,16 @@
+@use '../styles/variables.scss' as *;
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2.5rem;
+  width: 100%;
+}
+
+.item {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  padding: 0;
+  // O Card já cuida do visual
+} 
