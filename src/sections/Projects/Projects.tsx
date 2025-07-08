@@ -244,11 +244,11 @@ const Projects: React.FC = () => {
 
   useEffect(() => {
     if (!statsVisible) return;
-    const intervals: NodeJS.Timeout[] = [];
+    const intervals: number[] = [];
     stats.forEach((stat, idx) => {
       let current = 0;
       const increment = Math.max(1, Math.ceil(stat.number / 40));
-      intervals[idx] = setInterval(() => {
+      intervals[idx] = window.setInterval(() => {
         current += increment;
         setCountedStats(prev => {
           const arr = [...prev];
