@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './ProjectGrid.module.scss';
 import ProjectCard from './ProjectCard';
-import { motion } from 'framer-motion';
+import { motion, easeOut } from 'framer-motion';
 
 // Importar o tipo Project igual ao de Projects.tsx
 export interface Project {
@@ -25,7 +25,7 @@ interface ProjectGridProps {
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40, scale: 0.95 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: 'easeOut' } }
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: easeOut } }
 };
 
 const ProjectGrid: React.FC<ProjectGridProps> = ({ projects }) => (

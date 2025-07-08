@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './ProjectCard.module.scss';
-import { motion } from 'framer-motion';
+import { motion, easeOut } from 'framer-motion';
 
 interface ProjectCardProps {
   title: string;
@@ -17,7 +17,7 @@ interface ProjectCardProps {
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40, scale: 0.96 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: 'easeOut' } }
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: easeOut } }
 };
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ 
