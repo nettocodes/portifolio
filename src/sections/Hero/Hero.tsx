@@ -81,7 +81,7 @@ const Hero: React.FC = () => {
         >
           Desenvolvedor Full Stack apaixonado por tecnologia e design elegante.
         </p>
-        <div ref={buttonRef} style={{ opacity: 0, transform: 'scale(0.8)' }}>
+        <div ref={buttonRef} className={styles.buttonWrapper}>
           <AnimatedButton aria-label="Ver projetos">Ver Projetos</AnimatedButton>
         </div>
       </div>

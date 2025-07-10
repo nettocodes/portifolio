@@ -1,32 +1,10 @@
 import React from 'react';
 import styles from './About.module.scss';
 import { motion, easeOut, easeInOut } from 'framer-motion';
-import ivoImg from '../../assets/ivo.jpg';
 import {
   GraduationCap,
   Briefcase,
   Trophy,
-  MusicNote,
-  Camera,
-  Airplane,
-  Coffee,
-  Car,
-  Code,
-  Lightbulb,
-  Users,
-  Calendar,
-  FolderOpen,
-  GameController,
-  Book,
-  FilmStrip,
-  Globe,
-  DeviceMobile,
-  Heart,
-  Chats,
-  PawPrint,
-  Tree,
-  Star,
-  Smiley,
 } from 'phosphor-react';
 
 const infoData = [
@@ -47,29 +25,6 @@ const infoData = [
   }
 ];
 
-const hobbies = [
-  { icon: <MusicNote weight="fill" />, label: 'Música' },
-  { icon: <Camera weight="fill" />, label: 'Fotografia' },
-  { icon: <Airplane weight="fill" />, label: 'Viagens' },
-  { icon: <Coffee weight="fill" />, label: 'Café' },
-  { icon: <Car weight="fill" />, label: 'Carros' },
-  { icon: <GameController weight="fill" />, label: 'Games' },
-  { icon: <Book weight="fill" />, label: 'Leitura' },
-  { icon: <FilmStrip weight="fill" />, label: 'Filmes' },
-  { icon: <Globe weight="fill" />, label: 'Explorar' },
-  { icon: <DeviceMobile weight="fill" />, label: 'Tecnologia' },
-  { icon: <Code weight="fill" />, label: 'Coding' },
-  { icon: <Lightbulb weight="fill" />, label: 'Criatividade' },
-  { icon: <Users weight="fill" />, label: 'Networking' },
-  { icon: <Tree weight="fill" />, label: 'Natureza' },
-  { icon: <PawPrint weight="fill" />, label: 'Pets' },
-  { icon: <Star weight="fill" />, label: 'Colecionar' },
-  { icon: <Heart weight="fill" />, label: 'Família' },
-  { icon: <Chats weight="fill" />, label: 'Conversar' },
-  { icon: <Smiley weight="fill" />, label: 'Humor' },
-];
-
-// Variantes de animação otimizadas
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -120,25 +75,6 @@ const cardVariants = {
   }
 };
 
-// Substituir quickStats por uma lista com ícones
-const stats = [
-  {
-    icon: <Calendar weight="fill" />,
-    number: '5+',
-    label: 'Anos',
-  },
-  {
-    icon: <FolderOpen weight="fill" />,
-    number: '50+',
-    label: 'Projetos',
-  },
-  {
-    icon: <Coffee weight="fill" />,
-    number: '∞',
-    label: 'Café',
-  },
-];
-
 const About: React.FC = () => {
   return (
     <section 
@@ -155,73 +91,6 @@ const About: React.FC = () => {
         viewport={{ once: true, amount: 0.2 }}
       >
         <div className={styles.aboutRow}>
-          {/* Profile Section */}
-          <motion.div 
-            className={styles.profileSection} 
-            variants={itemVariants}
-          >
-            <div className={styles.profileRow}>
-              <motion.div 
-                className={styles.avatar}
-                whileHover={{ 
-                  scale: 1.1,
-                  rotate: 5
-                }}
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 300, 
-                  damping: 20 
-                }}
-              >
-                <img 
-                  src={ivoImg} 
-                  alt="Foto de Ivo Netto"
-                  loading="lazy"
-                />
-              </motion.div>
-              <motion.div 
-                className={styles.nameBlock}
-                variants={itemVariants}
-              >
-                <h1>Ivo Netto</h1>
-                <span className={styles.title}>Desenvolvedor Full Stack</span>
-              </motion.div>
-              <motion.div 
-                className={styles.quickStats}
-                variants={itemVariants}
-              >
-                {stats.map((stat) => (
-                  <div className={styles.stat} key={stat.label}>
-                    <span className={styles.statIcon}>{stat.icon}</span>
-                    <span className={styles.number}>{stat.number}</span>
-                    <span className={styles.label}>{stat.label}</span>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-            <motion.div 
-              className={styles.hobbiesSection} 
-              variants={itemVariants}
-            >
-              <div className={styles.hobbiesList}>
-                <div className={styles.hobbiesFadeLeft}></div>
-                <div className={styles.hobbiesMarquee}>
-                  {[...hobbies, ...hobbies].map((hobby, index) => (
-                    <div
-                      key={hobby.label + index}
-                      className={styles.hobbyItem}
-                    >
-                      <span className={styles.hobbyIcon}>{hobby.icon}</span>
-                      <span>{hobby.label}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className={styles.hobbiesFadeRight}></div>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Bio Section */}
           <motion.div 
             className={styles.bioSection} 
             variants={itemVariants}
@@ -243,7 +112,6 @@ const About: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Info Cards Grid */}
         <motion.div 
           className={styles.infoGrid}
           variants={containerVariants}

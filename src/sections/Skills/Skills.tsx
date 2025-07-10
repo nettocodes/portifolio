@@ -1,173 +1,180 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React from 'react';
 import styles from './Skills.module.scss';
-import { FaReact, FaNodeJs, FaDatabase, FaSass, FaGitAlt, FaFigma, FaHtml5, FaCss3Alt, FaJs, FaAws, FaLinux } from 'react-icons/fa';
-import { SiTypescript, SiNextdotjs, SiVite,  SiExpress, SiMongodb,  SiDocker, SiPrisma,  SiNestjs, SiVuedotjs, SiRedis, SiVercel, SiTrello, SiNotion, SiCanva, } from 'react-icons/si';
+import { 
+  FaReact, 
+  FaNodeJs, 
+  FaDatabase, 
+  FaAws, 
+  FaSass,
+  FaDocker,
+  FaLinux,
+  FaGitAlt,
+  FaFigma
+} from 'react-icons/fa';
+import { 
+  SiTypescript, 
+  SiNextdotjs, 
+  SiMongodb,
+  SiJavascript,
+  SiExpress,
+  SiPostgresql,
+  SiVercel
+} from 'react-icons/si';
 import SectionWrapper from '../../components/SectionWrapper';
 
-// Definir um estilo padrão para todos os ícones
-const iconStyle = { width: 28, height: 28 };
-
-const frontend = [
-  { name: 'React', icon: <FaReact style={iconStyle} /> },
-  { name: 'Next.js', icon: <SiNextdotjs style={iconStyle} /> },
-  { name: 'TypeScript', icon: <SiTypescript style={iconStyle} /> },
-  { name: 'JavaScript', icon: <FaJs style={iconStyle} /> },
-  { name: 'HTML5', icon: <FaHtml5 style={iconStyle} /> },
-  { name: 'CSS3', icon: <FaCss3Alt style={iconStyle} /> },
-  { name: 'Sass', icon: <FaSass style={iconStyle} /> },
-  { name: 'Vite', icon: <SiVite style={iconStyle} /> },
-  { name: 'Vue.js', icon: <SiVuedotjs style={iconStyle} /> },
-];
-
-const backend = [
-  { name: 'Node.js', icon: <FaNodeJs style={iconStyle} /> },
-  { name: 'Express', icon: <SiExpress style={iconStyle} /> },
-  { name: 'NestJS', icon: <SiNestjs style={iconStyle} /> },
-  { name: 'SQL', icon: <FaDatabase style={iconStyle} /> },
-  { name: 'MongoDB', icon: <SiMongodb style={iconStyle} /> },
-  { name: 'Prisma', icon: <SiPrisma style={iconStyle} /> },
-  { name: 'Docker', icon: <SiDocker style={iconStyle} /> },
-  { name: 'Redis', icon: <SiRedis style={iconStyle} /> },
-  { name: 'AWS', icon: <FaAws style={iconStyle} /> },
-  { name: 'Linux', icon: <FaLinux style={iconStyle} /> },
-];
-
-const tools = [
-  { name: 'Git', icon: <FaGitAlt style={iconStyle} /> },
-  { name: 'Figma', icon: <FaFigma style={iconStyle} /> },
-  { name: 'Canva', icon: <SiCanva style={iconStyle} /> },
-  { name: 'Vercel', icon: <SiVercel style={iconStyle} /> },
-  { name: 'Trello', icon: <SiTrello style={iconStyle} /> },
-  { name: 'Notion', icon: <SiNotion style={iconStyle} /> },
-];
-
-// Hook para detectar o tamanho da tela
-const useScreenSize = () => {
-  const [screenSize, setScreenSize] = useState({
-    width: typeof window !== 'undefined' ? window.innerWidth : 1200,
-    height: typeof window !== 'undefined' ? window.innerHeight : 800
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setScreenSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
-    };
-
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }
-  }, []);
-
-  return screenSize;
+// Mapeamento de ícones para as tecnologias
+const techIcons: { [key: string]: React.ComponentType } = {
+  'React': FaReact,
+  'Next.js': SiNextdotjs,
+  'TypeScript': SiTypescript,
+  'Sass': FaSass,
+  'JavaScript': SiJavascript,
+  'Node.js': FaNodeJs,
+  'Express/NestJS': SiExpress,
+  'MongoDB': SiMongodb,
+  'PostgreSQL': SiPostgresql,
+  'Docker': FaDocker,
+  'Git/GitHub': FaGitAlt,
+  'AWS': FaAws,
+  'Vercel': SiVercel,
+  'Linux': FaLinux,
+  'Figma': FaFigma
 };
 
-// InfiniteMarquee com scroll infinito suave e responsivo
-const InfiniteMarquee: React.FC<{
-  items: { icon: React.ReactNode; name: string }[];
-  reverse?: boolean;
-  speed?: number;
-}> = ({ items, reverse = false, speed = 50 }) => {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const animationRef = useRef<number | null>(null);
-  const { width } = useScreenSize();
+// Ícones principais para o fundo decorativo (posições organizadas)
+const backgroundIcons = [
+  { icon: FaReact, color: '#61DAFB', size: 'large', position: 'pos-1' },
+  { icon: SiTypescript, color: '#3178C6', size: 'medium', position: 'pos-2' },
+  { icon: FaNodeJs, color: '#339933', size: 'large', position: 'pos-3' },
+  { icon: SiNextdotjs, color: '#ffffff', size: 'medium', position: 'pos-4' },
+  { icon: FaDatabase, color: '#336791', size: 'small', position: 'pos-5' },
+  { icon: SiMongodb, color: '#47A248', size: 'medium', position: 'pos-6' },
+];
 
-  // Ajustar velocidade baseada no tamanho da tela
-  const getAdjustedSpeed = () => {
-    if (width < 480) return speed * 0.6; // Mobile pequeno - mais lento
-    if (width < 768) return speed * 0.8; // Mobile grande - um pouco mais lento
-    if (width < 1024) return speed * 0.9; // Tablet - ligeiramente mais lento
-    return speed; // Desktop - velocidade normal
-  };
+// Categorias de skills reformuladas para serem mais descritivas
+const skillCategories = [
+  {
+    title: "Frontend Development",
+    description: "Especializado em React e Next.js para criar interfaces modernas e performáticas. Domínio completo de TypeScript, Sass e JavaScript ES6+ para desenvolvimento de SPAs escaláveis.",
+    icon: FaReact,
+    color: '#61DAFB',
+    mainTechs: ['React', 'Next.js', 'TypeScript', 'Sass', 'JavaScript'],
+  },
+  {
+    title: "Backend Development", 
+    description: "Desenvolvimento de APIs robustas com Node.js e frameworks modernos. Experiência sólida em bancos de dados NoSQL e SQL, além de containerização com Docker.",
+    icon: FaNodeJs,
+    color: '#339933',
+    mainTechs: ['Node.js', 'Express/NestJS', 'MongoDB', 'PostgreSQL', 'Docker'],
+  },
+  {
+    title: "DevOps & Tools",
+    description: "Proficiência em ferramentas essenciais para desenvolvimento moderno, desde controle de versão até deploy em cloud. Experiência com AWS e plataformas de CI/CD.",
+    icon: FaAws,
+    color: '#FF9900',
+    mainTechs: ['Git/GitHub', 'AWS', 'Vercel', 'Linux', 'Figma'],
+  }
+];
 
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    // Duplicar itens para criar o efeito infinito
-    const duplicatedItems = [...items, ...items, ...items]; // triplica para suavizar
-    let translateX = 0;
-    const itemWidth = width < 480 ? 120 : width < 768 ? 140 : 160; // Largura baseada na tela
-    const resetPoint = -((duplicatedItems.length / 3) * itemWidth);
-    const adjustedSpeed = getAdjustedSpeed();
-
-    const animate = () => {
-      if (reverse) {
-        translateX += adjustedSpeed / 60;
-        if (translateX >= 0) {
-          translateX = resetPoint;
-        }
-      } else {
-        translateX -= adjustedSpeed / 60;
-        if (translateX <= resetPoint) {
-          translateX = 0;
-        }
-      }
-      if (track) {
-        track.style.transform = `translateX(${translateX}px)`;
-      }
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
-    animationRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, [items, reverse, speed, width]);
-
-  // Triplica os itens para suavizar o looping
-  const duplicatedItems = [...items, ...items, ...items];
-
+// Componente para ícones de fundo decorativos
+const BackgroundIcons: React.FC = React.memo(() => {
   return (
-    <div className={styles.marqueeWrapper}>
-      <div className={styles.marqueeMaskLeft} />
-      <div className={styles.marqueeMaskRight} />
-      <div className={styles.marqueeTrack} ref={trackRef}>
-        {duplicatedItems.map((item, idx) => (
-          <div className={styles.marqueeItem} key={`${item.name}-${idx}`}>
-            <span className={styles.icon}>{item.icon}</span>
-            <span className={styles.label}>{item.name}</span>
+    <div className={styles.backgroundIcons}>
+      {backgroundIcons.map((item, index) => {
+        const IconComponent = item.icon;
+        return (
+          <div
+            key={index}
+            className={`${styles.backgroundIcon} ${styles[item.size]} ${styles[item.position]} ${styles[`delay-${index % 8}`]}`}
+          >
+            <IconComponent />
           </div>
-        ))}
+        );
+      })}
+    </div>
+  );
+});
+
+BackgroundIcons.displayName = 'BackgroundIcons';
+
+// Componente para categoria de skill mais descritiva
+const SkillCategory: React.FC<{
+  title: string;
+  description: string;
+  icon: React.ComponentType;
+  mainTechs: string[];
+  index: number;
+}> = React.memo(({ title, description, icon: IconComponent, mainTechs, index }) => {
+  // Alternar entre left e right baseado no index
+  const fromDirection = index % 2 === 0 ? 'fromLeft' : 'fromRight';
+  
+  return (
+    <div 
+      className={`${styles.skillCategory} ${styles[fromDirection]} ${styles[`categoryDelay-${index}`]}`}
+    >
+      <div className={styles.categoryHeader}>
+        <div className={styles.categoryIconContainer}>
+          <IconComponent />
+        </div>
+        <div className={styles.categoryInfo}>
+          <div className={styles.titleLevelWrapper}>
+            <h3 className={styles.categoryTitle}>{title}</h3>
+          </div>
+        </div>
+      </div>
+      
+      <p className={styles.categoryDescription}>{description}</p>
+      
+      <div className={styles.techList}>
+        {mainTechs.map((tech, techIndex) => {
+          const TechIcon = techIcons[tech];
+          return (
+            <div key={techIndex} className={styles.techTag}>
+              {TechIcon && (
+                <span className={styles.techIcon}>
+                  <TechIcon />
+                </span>
+              )}
+              <span className={styles.techName}>{tech}</span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
-};
+});
 
+SkillCategory.displayName = 'SkillCategory';
+
+// Componente principal Skills
 const Skills: React.FC = () => {
-  const { width } = useScreenSize();
-
-  // Ajustar velocidades baseadas no tamanho da tela
-  const getSpeed = (baseSpeed: number) => {
-    if (width < 480) return baseSpeed * 0.7;
-    if (width < 768) return baseSpeed * 0.85;
-    return baseSpeed;
-  };
-
   return (
     <SectionWrapper id="skills" className={styles.skills}>
       <div className={styles.visualBg} aria-hidden="true" />
+      <BackgroundIcons />
+      
       <div className="container">
         <div className={styles.header}>
-          <h2>Skills & Tecnologias</h2>
+          <h2>Skills & Expertise</h2>
           <p className={styles.subtitle}>
-            Conheça as principais tecnologias, frameworks e ferramentas que domino para criar soluções digitais modernas, performáticas e criativas.
+            Domínio técnico consolidado através de projetos reais e aprendizado contínuo.
+            Cada tecnologia representa soluções implementadas e desafios superados.
           </p>
         </div>
-        <div className={styles.marqueeSection}>
-          <div className={styles.marqueeLabel}>Frontend &rarr;</div>
-          <InfiniteMarquee items={frontend} speed={getSpeed(30)} />
-          <div className={styles.marqueeLabel}>Backend &larr;</div>
-          <InfiniteMarquee items={backend} reverse speed={getSpeed(40)} />
-          <div className={styles.marqueeLabel}>Ferramentas & Design &rarr;</div>
-          <InfiniteMarquee items={tools} speed={getSpeed(35)} />
+
+        <div className={styles.skillsGrid}>
+          {skillCategories.map((category, categoryIndex) => (
+            <SkillCategory
+              key={categoryIndex}
+              title={category.title}
+              description={category.description}
+              icon={category.icon}
+              mainTechs={category.mainTechs}
+              index={categoryIndex}
+            />
+          ))}
         </div>
+
       </div>
     </SectionWrapper>
   );

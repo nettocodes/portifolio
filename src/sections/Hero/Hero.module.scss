@@ -2,6 +2,7 @@
 
 .hero {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
@@ -9,17 +10,17 @@
   color: $color-text-dark;
   overflow: hidden;
   padding-top: 96px;
-  min-height: 70vh;
-  height: 80vh;
+  padding-bottom: 3rem; // Volta ao padding normal
+  min-height: 100vh; // Volta à altura normal
   @media (max-width: 900px) {
-    min-height: 60vh;
-    height: 70vh;
+    min-height: 90vh;
     padding-top: 72px;
+    padding-bottom: 2rem;
   }
   @media (max-width: 600px) {
-    min-height: 55vh;
-    height: 60vh;
+    min-height: 80vh;
     padding-top: 56px;
+    padding-bottom: 1.5rem;
   }
 }
 
@@ -51,6 +52,11 @@
   margin-bottom: 3.2rem;
   color: $color-gray-dark;
   font-weight: 400;
+}
+
+.buttonWrapper {
+  opacity: 0;
+  transform: scale(0.8);
 }
 
 .background {

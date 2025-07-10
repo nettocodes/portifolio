@@ -9,6 +9,9 @@ import Contact from './sections/Contact/Contact';
 import SectionWrapper from './components/SectionWrapper';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Profile from './components/Profile';
+import ContactFloating from './components/ContactFloating';
+import styles from './App.module.scss';
 
 const App: React.FC = () => (
   <>
@@ -16,9 +19,15 @@ const App: React.FC = () => (
     <SectionWrapper id="hero">
       <Hero />
     </SectionWrapper>
+    <div className={styles.profileContainer}>
+      <Profile />
+    </div>
     <SectionWrapper id="about">
       <About />
     </SectionWrapper>
+    <div className={styles.contactContainer}>
+      <ContactFloating />
+    </div>
     <SectionWrapper id="projects">
       <Projects />
     </SectionWrapper>

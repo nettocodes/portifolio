@@ -1,27 +1,49 @@
 @use '../../styles/variables.scss' as *;
 @use "sass:color";
 
+@keyframes backgroundPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
 .about {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, $color-bg-light 0%, $color-bg 50%, $color-gray-light 100%);
+  // Background escuro como na seção Projects
+  background: linear-gradient(135deg, #0a0d16 0%, #1a1d2e 25%, #2a2d3a 50%, #1e2139 75%, #0f1419 100%);
   position: relative;
   overflow: hidden;
-  padding: 2rem 0;
+  padding: 6rem 0 6rem 0; // Reduzido pois o espaço do profile é gerenciado pelo container
   
+  // Animated background particles
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 20% 80%, rgba(79, 140, 255, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(79, 140, 255, 0.03) 0%, transparent 50%);
+    inset: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(79, 140, 255, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(79, 140, 255, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(79, 140, 255, 0.02) 0%, transparent 50%);
     pointer-events: none;
+    z-index: 1;
+    animation: backgroundPulse 8s ease-in-out infinite;
+  }
+  
+  // Overlay for depth
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(circle at 70% 20%, rgba($color-primary, 0.12) 0%, transparent 60%),
+      radial-gradient(circle at 30% 80%, rgba($color-primary, 0.08) 0%, transparent 60%),
+      linear-gradient(45deg, transparent 0%, rgba($color-primary, 0.02) 50%, transparent 100%);
+    pointer-events: none;
+    z-index: 2;
+    mix-blend-mode: screen;
   }
 }
 
@@ -40,11 +62,13 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background: $color-bg-light;
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   padding: 2rem 1.5rem;
   border-radius: $border-radius;
-  box-shadow: 0 2px 12px rgba(79, 140, 255, 0.08);
-  border: 1px solid rgba(79, 140, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   position: relative;
   overflow: hidden;
   gap: 1rem;
@@ -104,19 +128,25 @@
     font-size: 2rem;
     font-family: $font-title;
     font-weight: 800;
-    color: $color-text-dark;
+    color: $color-text-light;
     margin-bottom: 0.5rem;
     letter-spacing: -0.5px;
-    background: linear-gradient(135deg, $color-text-dark 0%, $color-primary 100%);
+    background: linear-gradient(135deg, 
+      $color-text-light 0%, 
+      rgba(255, 255, 255, 0.9) 30%,
+      rgba($color-primary, 0.9) 70%,
+      $color-text-light 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    text-shadow: 0 0 30px rgba($color-primary, 0.3);
     line-height: 1.2;
   }
   
   .title {
     font-size: 1rem;
-    color: $color-primary;
+    color: rgba(255, 255, 255, 0.8);
     font-family: $font-mono;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -149,7 +179,7 @@
   .number {
     font-size: 1.5rem;
     font-weight: 700;
-    color: $color-primary;
+    color: $color-text-light;
     font-family: $font-mono;
     display: block;
     line-height: 1;
@@ -157,7 +187,7 @@
   
   .label {
     font-size: 0.8rem;
-    color: $color-gray-dark;
+    color: rgba(255, 255, 255, 0.7);
     font-family: $font-mono;
     margin-top: 0.25rem;
   }
@@ -175,8 +205,8 @@
   width: 100%;
   position: relative;
   min-height: 2.5rem;
-  mask: none;
   -webkit-mask: none;
+  mask: none;
   overflow: hidden;
   padding: 1rem;
 }
@@ -199,16 +229,16 @@
   gap: 0.8rem;
   font-size: 1.1rem;
   font-weight: 500;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: $border-radius;
   padding: 0.8rem 1.4rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  color: $color-bg-dark;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  color: $color-text-light;
   white-space: nowrap;
   min-width: 140px;
   justify-content: center;
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
   cursor: pointer;
@@ -226,7 +256,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $color-bg-dark !important;
+  color: $color-text-light !important;
   transition: all 0.3s ease;
 }
 .hobbyIcon svg {
@@ -241,18 +271,18 @@
 }
 .hobbyItem:hover {
   transform: translateY(-2px) scale(1.05);
-  background: linear-gradient(135deg, #e0e7ff 0%, #ffe7e0 100%);
-  box-shadow: 0 8px 32px rgba(100, 108, 255, 0.2);
-  border-color: rgba(100, 108, 255, 0.3);
-  color: #646cff;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px rgba(100, 108, 255, 0.4);
+  border-color: rgba(100, 108, 255, 0.5);
+  color: $color-text-light;
 }
 .hobbyItem:hover .hobbyIcon {
-  color: #646cff !important;
-  text-shadow: 0 2px 12px rgba(100, 108, 255, 0.4);
+  color: $color-primary !important;
+  text-shadow: 0 2px 12px rgba(100, 108, 255, 0.6);
   transform: scale(1.1);
 }
 .hobbyItem:hover .hobbyIcon svg {
-  fill: #646cff !important;
+  fill: $color-primary !important;
 }
 
 .hobbiesList::before, .hobbiesList::after {
@@ -272,10 +302,24 @@
   font-size: 3rem;
   font-family: $font-title;
   font-weight: 800;
-  color: $color-text-dark;
+  color: $color-text-light;
   margin-bottom: 2rem;
   position: relative;
   line-height: 1.1;
+  
+  // Enhanced gradient text effect
+  background: linear-gradient(135deg, 
+    $color-text-light 0%, 
+    rgba(255, 255, 255, 0.9) 30%,
+    rgba($color-primary, 0.9) 70%,
+    $color-text-light 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  
+  // Text shadow for depth
+  text-shadow: 0 0 30px rgba($color-primary, 0.3);
   
   &::after {
     content: '';
@@ -292,7 +336,7 @@
 .bioText {
   font-size: 1.25rem;
   line-height: 1.7;
-  color: $color-text-dark;
+  color: rgba(255, 255, 255, 0.8);
   margin-bottom: 0;
   margin-top: 0.2rem;
   
@@ -310,17 +354,19 @@
 }
 
 .infoCard {
-  background: $color-bg-light;
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   padding: 2rem;
   border-radius: $border-radius;
-  box-shadow: 0 2px 12px rgba(79, 140, 255, 0.08);
-  border: 1px solid rgba(79, 140, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
   
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-    border-color: rgba(79, 140, 255, 0.2);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.3);
   }
   
   .cardIcon {
@@ -332,14 +378,14 @@
   .cardTitle {
     font-size: 1.25rem;
     font-weight: 600;
-    color: $color-text-dark;
+    color: $color-text-light;
     margin-bottom: 0.75rem;
     font-family: $font-title;
   }
   
   .cardText {
     font-size: 1rem;
-    color: $color-gray-dark;
+    color: rgba(255, 255, 255, 0.8);
     line-height: 1.6;
   }
 }
@@ -379,6 +425,9 @@
 
 /* Desktop Pequeno / Tablet Grande (992px - 1199px) */
 @media (max-width: 1199px) {
+  .about{
+    padding: 10rem 0 6rem 0;
+  }
   .about .container {
     padding: 2rem 1.5rem;
   }
@@ -402,10 +451,7 @@
 
 /* Tablet Médio (768px - 991px) */
 @media (max-width: 991px) {
-  .about {
-    padding: 1.5rem 0;
-  }
-  
+ 
   .about .container {
     padding: 1.5rem 2rem;
   }
@@ -423,7 +469,7 @@
   
   .bioSection {
     order: 2;
-    text-align: center;
+    text-align: left;
     gap: 2rem;
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
@@ -433,10 +479,6 @@
     font-size: 2.2rem;
     margin-bottom: 1.2rem;
     
-    &::after {
-      left: 50%;
-      transform: translateX(-50%);
-    }
   }
   
   .infoGrid {
@@ -449,10 +491,10 @@
   }
 }
 
-/* Tablet Pequeno (576px - 767px) */
-@media (max-width: 767px) {
-  .about .container {
-    padding: 1.5rem 2rem;
+/* Tablet Pequeno (600px - 767px) */
+@media (max-width: 767px) and (min-width: 601px) {
+  .about {
+    padding: 10rem 0 !important;
   }
   
   .aboutRow {
@@ -503,7 +545,7 @@
 /* Mobile Grande (480px - 575px) */
 @media (max-width: 575px) {
   .about {
-    padding: 1rem 0;
+    padding: 8rem 0;
   }
   
   .about .container {
@@ -555,6 +597,8 @@
     .hobbyItem {
       padding: 0.4rem 0.8rem;
       font-size: 0.85rem;
+      background: rgba(255, 255, 255, 0.12);
+      color: $color-text-light;
     }
   }
 }
@@ -625,6 +669,15 @@
     .hobbyItem {
       padding: 0.35rem 0.6rem;
       font-size: 0.8rem;
+      background: rgba(255, 255, 255, 0.12);
+      color: $color-text-light;
+    }
+    
+    .hobbiesFadeLeft {
+      background: linear-gradient(to right, rgba(10, 13, 22, 1) 0%, transparent 100%);
+    }
+    .hobbiesFadeRight {
+      background: linear-gradient(to left, rgba(10, 13, 22, 1) 0%, transparent 100%);
     }
   }
 }
@@ -680,9 +733,12 @@
     .hobbyItem {
       padding: 0.3rem 0.5rem;
       font-size: 0.75rem;
+      background: rgba(255, 255, 255, 0.12);
+      color: $color-text-light;
       
       .hobbyIcon {
         font-size: 0.85rem;
+        color: $color-text-light !important;
       }
     }
   }
@@ -716,7 +772,12 @@
   }
 }
 
+/* Mobile tablets e dispositivos menores */
 @media (max-width: 600px) {
+  .about {
+    padding: 10rem 0 !important;
+  }
+  
   .profileRow {
     flex-direction: column;
     gap: 0.5rem;
@@ -734,8 +795,8 @@
     justify-content: center;
   }
   .hobbiesList {
-    mask: none;
     -webkit-mask: none;
+    mask: none;
     padding-left: 1rem;
     padding-right: 1rem;
   }
@@ -744,6 +805,8 @@
     padding: 0.5rem 0.8rem;
     min-width: 90px;
     margin-right: 0.4rem;
+    background: rgba(255, 255, 255, 0.12);
+    color: $color-text-light;
   }
   .hobbyIcon {
     font-size: 1rem;
@@ -751,9 +814,16 @@
     height: 1rem;
     min-width: 1rem;
     min-height: 1rem;
+    color: $color-text-light !important;
   }
   .hobbiesFadeLeft, .hobbiesFadeRight {
     width: 0.7rem;
+  }
+  .hobbiesFadeLeft {
+    background: linear-gradient(to right, rgba(10, 13, 22, 1) 0%, transparent 100%);
+  }
+  .hobbiesFadeRight {
+    background: linear-gradient(to left, rgba(10, 13, 22, 1) 0%, transparent 100%);
   }
   .bioSection {
     gap: 1.2rem;
@@ -766,6 +836,15 @@
   }
   .bioText {
     font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .statIcon {
+    font-size: 1.1rem;
+    color: $color-text-light;
+  }
+  .quickStats {
+    gap: 0.5rem;
   }
 }
 
@@ -774,6 +853,8 @@
     min-width: 120px;
     padding: 0.7rem 1.2rem;
     font-size: 1rem;
+    background: rgba(255, 255, 255, 0.15);
+    color: $color-text-light;
   }
   .hobbyIcon {
     font-size: 1.1rem;
@@ -781,6 +862,7 @@
     height: 1.1rem;
     min-width: 1.1rem;
     min-height: 1.1rem;
+    color: $color-text-light !important;
   }
 }
 
@@ -794,11 +876,11 @@
 }
 .hobbiesFadeLeft {
   left: 0;
-  background: linear-gradient(to right, $color-bg-light 0%, transparent 100%);
+  background: linear-gradient(to right, rgba(10, 13, 22, 1) 0%, transparent 100%);
 }
 .hobbiesFadeRight {
   right: 0;
-  background: linear-gradient(to left, $color-bg-light 0%, transparent 100%);
+  background: linear-gradient(to left, rgba(10, 13, 22, 1) 0%, transparent 100%);
 }
 
 .statIcon {
@@ -806,7 +888,7 @@
   align-items: center;
   justify-content: center;
   font-size: 1.3rem;
-  color: $color-primary;
+  color: $color-text-light;
   margin-bottom: 0.15rem;
   margin-right: 0.15rem;
 }
@@ -820,12 +902,4 @@
 }
 .quickStats {
   gap: 1.2rem;
-}
-@media (max-width: 600px) {
-  .statIcon {
-    font-size: 1.1rem;
-  }
-  .quickStats {
-    gap: 0.5rem;
-  }
 }

@@ -1,39 +1,22 @@
 @use '../../styles/variables.scss' as *;
 
 .projects {
-  background: 
-    linear-gradient(135deg, #0a0d16 0%, #1a1d2e 25%, #2a2d3a 50%, #1e2139 75%, #0f1419 100%);
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
   position: relative;
   width: 100vw;
   overflow: hidden;
   padding: 6rem 0;
   
-  // Animated background particles
+  // Background particles com tons mais suaves para fundo claro
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     background: 
-      radial-gradient(circle at 20% 80%, rgba(79, 140, 255, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(79, 140, 255, 0.03) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(79, 140, 255, 0.02) 0%, transparent 50%);
+      radial-gradient(circle at 20% 80%, rgba(79, 140, 255, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(79, 140, 255, 0.03) 0%, transparent 50%);
     pointer-events: none;
     z-index: 1;
-    animation: backgroundPulse 8s ease-in-out infinite;
-  }
-  
-  // Overlay for depth
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: 
-      radial-gradient(circle at 70% 20%, rgba($color-primary, 0.12) 0%, transparent 60%),
-      radial-gradient(circle at 30% 80%, rgba($color-primary, 0.08) 0%, transparent 60%),
-      linear-gradient(45deg, transparent 0%, rgba($color-primary, 0.02) 50%, transparent 100%);
-    pointer-events: none;
-    z-index: 2;
-    mix-blend-mode: screen;
   }
   
   @media (max-width: 900px) {
@@ -43,11 +26,6 @@
   @media (max-width: 600px) {
     padding: 3rem 0;
   }
-}
-
-@keyframes backgroundPulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
 }
 
 .container {
@@ -87,26 +65,18 @@
 .title {
   font-size: clamp(2.5rem, 6vw, 3.5rem);
   font-weight: 800;
-  color: $color-text-light;
+  color: $color-text-dark;
   font-family: $font-title;
   letter-spacing: -0.03em;
   margin-bottom: 1.5rem;
   line-height: 1.1;
   text-align: left;
   
-  // Enhanced gradient text effect
-  background: linear-gradient(135deg, 
-    $color-text-light 0%, 
-    rgba(255, 255, 255, 0.9) 30%,
-    rgba($color-primary, 0.9) 70%,
-    $color-text-light 100%
-  );
+  // Enhanced gradient text effect para fundo claro
+  background: linear-gradient(135deg, $color-text-dark 0%, $color-primary 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  
-  // Text shadow for depth
-  text-shadow: 0 0 30px rgba($color-primary, 0.3);
   
   @media (max-width: 600px) {
     line-height: 1.2;
@@ -114,7 +84,7 @@
 }
 
 .subtitle {
-  color: rgba(255, 255, 255, 0.8);
+  color: $color-gray-dark;
   font-size: clamp(1.1rem, 2.8vw, 1.3rem);
   font-family: $font-body;
   font-weight: 400;
@@ -136,9 +106,9 @@
   padding: 0;
   overflow: hidden;
   border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 12px rgba(79, 140, 255, 0.08);
   
-  // Gradient overlay for depth
+  // Gradient overlay for depth ajustado para fundo claro
   &::before {
     content: '';
     position: absolute;
@@ -148,16 +118,16 @@
     bottom: 0;
     background: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.1) 0%,
+      rgba(0, 0, 0, 0.05) 0%,
       transparent 30%,
       transparent 70%,
-      rgba(0, 0, 0, 0.3) 100%
+      rgba(0, 0, 0, 0.15) 100%
     );
     z-index: 10;
     pointer-events: none;
   }
   
-  // Vignette effect
+  // Vignette effect mais suave
   &::after {
     content: '';
     position: absolute;
@@ -168,7 +138,7 @@
     background: radial-gradient(
       ellipse at center,
       transparent 40%,
-      rgba(0, 0, 0, 0.4) 100%
+      rgba(0, 0, 0, 0.2) 100%
     );
     z-index: 11;
     pointer-events: none;
@@ -266,7 +236,7 @@
   z-index: -1;
   pointer-events: none;
   border-radius: 0 0 20px 20px;
-  background: linear-gradient(90deg, rgba(10,13,22,0.92) 0%, rgba(10,13,22,0.7) 60%, rgba(10,13,22,0.0) 100%);
+  background: linear-gradient(90deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 60%, rgba(255,255,255,0.0) 100%);
 }
 
 .slideTitle {
@@ -274,7 +244,7 @@
   font-weight: 800;
   margin-bottom: 0.5rem;
   color: $color-primary;
-  text-shadow: 0 2px 16px rgba(0,0,0,0.8);
+  text-shadow: 0 2px 16px rgba(0,0,0,0.2);
   letter-spacing: -0.5px;
   line-height: 1.1;
   text-align: left;
@@ -295,8 +265,8 @@
   opacity: 0.96;
   margin-bottom: 1.2rem;
   max-width: 600px;
-  color: $color-text-light;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+  color: $color-text-dark;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.1);
   font-weight: 400;
   word-break: break-word;
   @media (max-width: 900px) {
@@ -327,14 +297,14 @@
 }
 
 .slideTag {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
   font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: $color-text-dark;
+  border: 1px solid rgba(79, 140, 255, 0.1);
   font-weight: 500;
   @media (max-width: 900px) {
     font-size: 0.7rem;
@@ -363,7 +333,7 @@
 }
 
 .slideLink {
-  background: rgba($color-primary, 0.8);
+  background: rgba($color-primary, 0.9);
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 25px;
@@ -371,9 +341,9 @@
   font-weight: 500;
   font-size: 0.9rem;
   transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(79, 140, 255, 0.2);
   
   &:hover {
     background: rgba($color-primary, 1);
@@ -417,8 +387,8 @@
   transition: background 0.2s, color 0.2s, transform 0.2s;
   pointer-events: all;
   &:hover {
-    background: rgba($color-primary, 0.12);
-    color: lighten($color-primary, 10%);
+    background: rgba($color-primary, 0.1);
+    color: #3d6dd1; // Versão mais escura do color-primary
     transform: translateY(-2px) scale(1.08);
   }
   &:active {
@@ -446,13 +416,13 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(79, 140, 255, 0.3);
   cursor: pointer;
   transition: all 0.3s ease;
   border: 2px solid transparent;
   
   &:hover {
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(79, 140, 255, 0.5);
     transform: scale(1.2);
   }
   
@@ -460,7 +430,7 @@
     background: $color-primary;
     transform: scale(1.4);
     box-shadow: 0 0 20px rgba($color-primary, 0.6);
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: rgba(79, 140, 255, 0.3);
   }
   
   @media (max-width: 600px) {
@@ -513,21 +483,15 @@
     padding: 0 1.1rem;
   }
   @media (max-width: 700px) {
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
     height: auto;
-    padding: 1.2rem 0.3rem 1.1rem 0.3rem;
     border-radius: 12px;
-    background: none !important;
-    box-shadow: none;
-    gap: 0.3rem;
   }
 }
 
 .statBar.fromLeft {
   justify-content: flex-start;
-  background: linear-gradient(90deg, rgba($color-primary, 0.13) 0%, transparent 80%);
+  background: linear-gradient(90deg, rgba($color-primary, 0.08) 0%, transparent 80%);
   text-align: left;
   border-top-left-radius: 16px;
   border-bottom-left-radius: 16px;
@@ -537,7 +501,7 @@
 
 .statBar.fromRight {
   justify-content: flex-end;
-  background: linear-gradient(270deg, rgba($color-primary, 0.13) 0%, transparent 80%);
+  background: linear-gradient(270deg, rgba($color-primary, 0.08) 0%, transparent 80%);
   text-align: right;
   border-top-right-radius: 16px;
   border-bottom-right-radius: 16px;
@@ -564,10 +528,10 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: rgba($color-primary, 0.13);
+  background: rgba($color-primary, 0.08);
   color: $color-primary;
   font-size: 1.7rem;
-  box-shadow: 0 1px 6px rgba($color-primary, 0.08);
+  box-shadow: 0 1px 6px rgba($color-primary, 0.05);
   svg {
     width: 1.5rem;
     height: 1.5rem;
@@ -591,7 +555,7 @@
     height: 2.2rem;
     min-width: 2.2rem;
     min-height: 2.2rem;
-    background: linear-gradient(120deg, rgba($color-primary, 0.18) 60%, transparent 100%);
+    background: linear-gradient(120deg, rgba($color-primary, 0.12) 60%, transparent 100%);
     box-shadow: none;
   }
 }
@@ -630,8 +594,8 @@
 
 .statLabel {
   font-size: 1.08rem;
-  color: $color-text-light;
-  opacity: 0.85;
+  color: $color-text-dark;
+  opacity: 0.8;
   font-weight: 500;
   letter-spacing: 0.1px;
   text-align: left;
@@ -655,10 +619,7 @@
   .statBar {
     flex: 1 1 100%;
     border-radius: 12px !important;
-    background: linear-gradient(90deg, rgba($color-primary, 0.13) 0%, transparent 80%) !important;
-    justify-content: flex-start !important;
     text-align: left !important;
-    margin-bottom: 0.7rem;
   }
   .statBar .statIcon {
     margin-right: 0.8rem !important;
@@ -688,7 +649,7 @@
 .spinner {
   width: 50px;
   height: 50px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
+  border: 3px solid rgba(79, 140, 255, 0.1);
   border-top: 3px solid $color-primary;
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -726,7 +687,7 @@
 
 .emptyText {
   font-size: 1.5rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: $color-text-dark;
   font-family: $font-title;
   margin-bottom: 0.5rem;
   
@@ -736,7 +697,7 @@
 }
 
 .emptySubtext {
-  color: rgba(255, 255, 255, 0.6);
+  color: $color-gray-dark;
   font-size: 1rem;
   
   @media (max-width: 600px) {
@@ -768,14 +729,15 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
+  background: rgba(255, 255, 255, 0.9);
+  color: $color-text-dark;
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.8rem;
   z-index: 15;
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(79, 140, 255, 0.1);
   
   @media (max-width: 600px) {
     font-size: 0.7rem;

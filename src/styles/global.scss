@@ -100,3 +100,10 @@ section {
   padding: 2rem;
   box-sizing: border-box;
 }
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: .5rem;
+  }
+  
+}
