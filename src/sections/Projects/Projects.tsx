@@ -143,7 +143,7 @@ const Projects: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<number | null>(null);
 
   // Otimizar scroll animations
   const { scrollYProgress } = useScroll({
@@ -188,7 +188,7 @@ const Projects: React.FC = () => {
       return;
     }
 
-    intervalRef.current = setInterval(() => {
+    intervalRef.current = window.setInterval(() => {
       nextSlide();
     }, 5000);
 
@@ -293,7 +293,7 @@ const Projects: React.FC = () => {
   useEffect(() => {
     if (!statsVisible) return;
 
-    const timeouts: NodeJS.Timeout[] = [];
+    const timeouts: number[] = [];
     
     stats.forEach((stat, idx) => {
       let current = 0;
@@ -308,11 +308,11 @@ const Projects: React.FC = () => {
         });
         
         if (current < stat.number) {
-          timeouts[idx] = setTimeout(animate, 50);
+          timeouts[idx] = window.setTimeout(animate, 50);
         }
       };
       
-      timeouts[idx] = setTimeout(animate, idx * 100);
+      timeouts[idx] = window.setTimeout(animate, idx * 100);
     });
 
     return () => timeouts.forEach(timeout => clearTimeout(timeout));
