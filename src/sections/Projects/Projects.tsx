@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import styles from './Projects.module.scss';
 import { motion, AnimatePresence, useScroll, useTransform, easeOut } from 'framer-motion';
 import SectionWrapper from '../../components/SectionWrapper';
@@ -131,7 +131,7 @@ const headerVariants = {
     opacity: 1, 
     y: 0,
     transition: { 
-      duration: 1,
+      duration: 0.8,
       ease: easeOut
     }
   },
@@ -140,47 +140,82 @@ const headerVariants = {
 const Projects: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Otimizar scroll animations
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, -30]);
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
 
-  const filteredProjects = projects;
+  const filteredProjects = useMemo(() => projects, []);
 
-  // Auto-play functionality
-  useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(() => {
-      setCurrentSlide(prev => (prev + 1) % filteredProjects.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [isPaused, filteredProjects.length]);
-
-  const nextSlide = () => {
+  // Otimizar funções de navegação
+  const nextSlide = useCallback(() => {
     setCurrentSlide(prev => (prev + 1) % filteredProjects.length);
-  };
+  }, [filteredProjects.length]);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setCurrentSlide(prev => (prev - 1 + filteredProjects.length) % filteredProjects.length);
-  };
+  }, [filteredProjects.length]);
 
-  const goToSlide = (index: number) => {
+  const goToSlide = useCallback((index: number) => {
     setCurrentSlide(index);
-  };
+  }, []);
 
-  const handleMouseEnter = () => {
+  // Otimizar mouse handlers
+  const handleMouseEnter = useCallback(() => {
     setIsPaused(true);
-  };
+  }, []);
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     setIsPaused(false);
-  };
+  }, []);
 
+  // Auto-play otimizado
+  useEffect(() => {
+    if (isPaused || !isVisible) {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      return;
+    }
+
+    intervalRef.current = setInterval(() => {
+      nextSlide();
+    }, 5000);
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isPaused, isVisible, nextSlide]);
+
+  // Intersection Observer para otimizar performance
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Memoizar estatísticas
   const stats = useMemo(() => {
     const completed = projects.filter(p => p.status === 'completed').length;
     const inProgress = projects.filter(p => p.status === 'in-progress').length;
@@ -194,173 +229,131 @@ const Projects: React.FC = () => {
     ];
   }, []);
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'completed': return '#10b981';
-      case 'in-progress': return '#f59e0b';
-      case 'coming-soon': return '#8b5cf6';
-      default: return '#6b7280';
-    }
-  };
-
-  const getStatusText = (status: string) => {
+  // Memoizar funções de status
+  const getStatusText = useCallback((status: string) => {
     switch (status) {
       case 'completed': return 'Concluído';
       case 'in-progress': return 'Em Andamento';
       case 'coming-soon': return 'Em Breve';
       default: return status;
     }
-  };
+  }, []);
 
-  // SVGs minimalistas para cada stat
-  const statIcons = [
+  // Memoizar ícones das estatísticas
+  const statIcons = useMemo(() => [
     // Projetos
     (
-      <svg className={styles.statIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+      <svg className={styles.statIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
     ),
     // Concluídos
     (
-      <svg className={styles.statIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10" strokeWidth="1.5"/><path d="M9 12l2 2l4-4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+      <svg className={styles.statIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10" strokeWidth="1.5"/>
+        <path d="M9 12l2 2l4-4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
     ),
     // Em Andamento
     (
-      <svg className={styles.statIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10" strokeWidth="1.5"/><path d="M12 6v6l4 2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+      <svg className={styles.statIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10" strokeWidth="1.5"/>
+        <path d="M12 6v6l4 2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
     ),
     // Tecnologias
     (
-      <svg className={styles.statIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14.7 6.3a5 5 0 0 0-6.6 6.6l-5.1 5.1a2 2 0 1 0 2.8 2.8l5.1-5.1a5 5 0 0 0 6.6-6.6z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+      <svg className={styles.statIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M14.7 6.3a5 5 0 0 0-6.6 6.6l-5.1 5.1a2 2 0 1 0 2.8 2.8l5.1-5.1a5 5 0 0 0 6.6-6.6z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
     ),
-  ];
+  ], []);
 
-  // Animação de count-up para cada stat
+  // Animação count-up otimizada
   const [countedStats, setCountedStats] = useState([0, 0, 0, 0]);
-  const statsRef = useRef<HTMLDivElement>(null);
   const [statsVisible, setStatsVisible] = useState(false);
 
   useEffect(() => {
-    // Detecta se stats estão visíveis na tela
-    function onScroll() {
-      if (!statsRef.current) return;
-      const rect = statsRef.current.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        setStatsVisible(true);
-      }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStatsVisible(true);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
     }
-    window.addEventListener('scroll', onScroll);
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
+
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
     if (!statsVisible) return;
-    const intervals: number[] = [];
+
+    const timeouts: NodeJS.Timeout[] = [];
+    
     stats.forEach((stat, idx) => {
       let current = 0;
-      const increment = Math.max(1, Math.ceil(stat.number / 40));
-      intervals[idx] = window.setInterval(() => {
+      const increment = Math.max(1, Math.ceil(stat.number / 30));
+      
+      const animate = () => {
         current += increment;
         setCountedStats(prev => {
           const arr = [...prev];
           arr[idx] = current > stat.number ? stat.number : current;
           return arr;
         });
-        if (current >= stat.number) clearInterval(intervals[idx]);
-      }, 18 + idx * 10);
+        
+        if (current < stat.number) {
+          timeouts[idx] = setTimeout(animate, 50);
+        }
+      };
+      
+      timeouts[idx] = setTimeout(animate, idx * 100);
     });
-    return () => intervals.forEach(i => clearInterval(i));
+
+    return () => timeouts.forEach(timeout => clearTimeout(timeout));
   }, [statsVisible, stats]);
 
   return (
     <SectionWrapper id="projects" className={styles.projects}>
       <div ref={sectionRef} className={styles.backgroundAnimations}>
-        {/* Animated Background Elements */}
-        <motion.div 
-          className={styles.floatingElements}
-          style={{ y, opacity }}
-        >
-          {[...Array(6)].map((_, i) => (
-            <motion.div
-              key={i}
-              className={styles.floatingElement}
-              initial={{ opacity: 0, scale: 0, rotate: 0 }}
-              animate={{ 
-                opacity: [0.1, 0.3, 0.1], 
-                scale: [0.8, 1.2, 0.8],
-                rotate: [0, 360],
-                y: [-20, 20, -20]
-              }}
-              transition={{
-                duration: 4 + i * 0.5,
-                repeat: Infinity,
-                delay: i * 0.3
-              }}
-              style={{
-                top: `${15 + i * 12}%`,
-                left: `${8 + (i % 3) * 25}%`
-              }}
-            >
-              {i % 5 === 0 && '</>'}
-              {i % 5 === 1 && '{}'}
-              {i % 5 === 2 && '()'}
-              {i % 5 === 3 && '[]'}
-              {i % 5 === 4 && '⚛️'}
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Code Rain Animation */}
-        <div className={styles.codeRain}>
-          {[...Array(5)].map((_, i) => (
-            <motion.div
-              key={i}
-              className={styles.codeColumn}
-              initial={{ opacity: 0, y: -100 }}
-              animate={{ 
-                opacity: [0, 0.4, 0],
-                y: ['-100%', '100%']
-              }}
-              transition={{
-                duration: 6 + i * 0.4,
-                repeat: Infinity,
-                delay: i * 0.8,
-                ease: "linear"
-              }}
-              style={{ left: `${15 + i * 20}%` }}
-            >
-              {['const', 'let', 'function', 'return', 'async', 'await'].map((_, idx) => (
-                <span key={idx} className={styles.codeText}>
-                  {['const', 'let', 'function', 'return', 'async', 'await'][Math.floor(Math.random() * 6)]}
-                </span>
-              ))}
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Particle System */}
-        <div className={styles.particleSystem}>
-          {[...Array(10)].map((_, i) => (
-            <motion.div
-              key={i}
-              className={styles.particle}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ 
-                opacity: [0, 0.6, 0],
-                scale: [0, 1, 0],
-                x: [0, Math.random() * 100 - 50],
-                y: [0, Math.random() * 100 - 50]
-              }}
-              transition={{
-                duration: 3 + Math.random() * 2,
-                repeat: Infinity,
-                delay: Math.random() * 3
-              }}
-              style={{
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`
-              }}
-            />
-          ))}
-        </div>
+        {/* Animações de background simplificadas */}
+        {isVisible && (
+          <motion.div 
+            className={styles.floatingElements}
+            style={{ y, opacity }}
+          >
+            {[...Array(3)].map((_, i) => (
+              <motion.div
+                key={i}
+                className={styles.floatingElement}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ 
+                  opacity: [0.1, 0.2, 0.1], 
+                  scale: [0.8, 1, 0.8],
+                  y: [-10, 10, -10]
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  delay: i * 0.8
+                }}
+                style={{
+                  top: `${20 + i * 20}%`,
+                  left: `${10 + i * 30}%`
+                }}
+              >
+                {i % 3 === 0 && '</>'}
+                {i % 3 === 1 && '{}'}
+                {i % 3 === 2 && '⚛️'}
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
       </div>
 
       <div className="container">
@@ -383,118 +376,101 @@ const Projects: React.FC = () => {
             className={styles.panoramaContainer}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: true, amount: 0.3 }}
           >
-            {/* Enhanced Auto-play indicator */}
+            {/* Indicador de auto-play simplificado */}
             <motion.div 
               className={styles.autoPlayIndicator}
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
             >
-              <motion.div
-                animate={{ rotate: isPaused ? 0 : 360 }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                style={{ display: 'inline-block', marginRight: '8px' }}
-              >
+              <span className={styles.autoPlayIcon}>
                 {!isPaused ? '●' : '⏸'}
-              </motion.div>
+              </span>
               {!isPaused ? 'Auto-play' : 'Pausado'}
             </motion.div>
 
-            {/* Enhanced Panoramic track */}
+            {/* Slide principal */}
             <div className={styles.panoramaTrack}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={filteredProjects[currentSlide].id}
                   className={styles.panoramaSlide}
-                  initial={{ opacity: 0, x: 50, scale: 0.98 }}
-                  animate={{ opacity: 1, x: 0, scale: 1 }}
-                  exit={{ opacity: 0, x: -50, scale: 0.98 }}
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
-                  whileHover={{ scale: 1.02 }}
+                  initial={{ opacity: 0, x: 30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -30 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  whileHover={{ scale: 1.01 }}
                   aria-hidden="false"
                 >
                   <motion.img
                     src={filteredProjects[currentSlide].image}
                     alt={filteredProjects[currentSlide].title}
                     className={styles.slideImage}
-                    initial={{ scale: 1.1 }}
+                    initial={{ scale: 1.05 }}
                     animate={{ scale: 1 }}
-                    transition={{ duration: 0.8 }}
+                    transition={{ duration: 0.6 }}
                   />
                   <motion.div 
                     className={styles.slideContent}
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2, duration: 0.6 }}
+                    transition={{ delay: 0.1, duration: 0.4 }}
                   >
                     <div className={styles.slideContentBg} />
                     <motion.div 
                       className={styles.slideTags}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      transition={{ delay: 0.4 }}
+                      transition={{ delay: 0.2 }}
                     >
                       {filteredProjects[currentSlide].tags.map((tag, i) => (
-                        <motion.span 
+                        <span 
                           className={styles.slideTag} 
                           key={i}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.4 + i * 0.1 }}
-                          whileHover={{ scale: 1.05 }}
                         >
                           {tag}
-                        </motion.span>
+                        </span>
                       ))}
                     </motion.div>
                     <motion.h3 
                       className={styles.slideTitle}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.2 }}
                     >
                       {filteredProjects[currentSlide].title}
                     </motion.h3>
                     <motion.p 
                       className={styles.slideDescription}
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.3 }}
                     >
                       {filteredProjects[currentSlide].description}
                     </motion.p>
                     <motion.div 
-                      style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.5 }}
+                      className={styles.statusContainer}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.4 }}
                     >
-                      <motion.span 
-                        style={{
-                          display: 'inline-block',
-                          width: 12,
-                          height: 12,
-                          borderRadius: '50%',
-                          background: getStatusColor(filteredProjects[currentSlide].status),
-                          marginRight: 6
-                        }}
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
+                      <span 
+                        className={`${styles.statusDot} ${styles[`status-${filteredProjects[currentSlide].status}`]}`}
                       />
-                      <span style={{ fontSize: 14, color: getStatusColor(filteredProjects[currentSlide].status), fontWeight: 600 }}>
+                      <span className={`${styles.statusText} ${styles[`status-${filteredProjects[currentSlide].status}`]}`}>
                         {getStatusText(filteredProjects[currentSlide].status)}
                       </span>
                     </motion.div>
                     <motion.div 
                       className={styles.slideLinks}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.6 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.5 }}
                     >
                       {filteredProjects[currentSlide].github && (
                         <motion.a
@@ -503,8 +479,8 @@ const Projects: React.FC = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`GitHub de ${filteredProjects[currentSlide].title}`}
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
                         >
                           GitHub
                         </motion.a>
@@ -516,8 +492,8 @@ const Projects: React.FC = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`Ver projeto ${filteredProjects[currentSlide].title}`}
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
                         >
                           Ver Projeto
                         </motion.a>
@@ -528,31 +504,33 @@ const Projects: React.FC = () => {
               </AnimatePresence>
             </div>
 
-            {/* Enhanced Navegação */}
+            {/* Navegação */}
             <div className={styles.panoramaNavigation}>
               <motion.button
                 className={styles.navButton}
                 onClick={prevSlide}
                 aria-label="Anterior"
-                tabIndex={0}
-                whileHover={{ scale: 1.1, backgroundColor: "rgba(79, 140, 255, 0.1)" }}
-                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </motion.button>
               <motion.button
                 className={styles.navButton}
                 onClick={nextSlide}
                 aria-label="Próximo"
-                tabIndex={0}
-                whileHover={{ scale: 1.1, backgroundColor: "rgba(79, 140, 255, 0.1)" }}
-                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </motion.button>
             </div>
 
-            {/* Enhanced Dots de paginação */}
+            {/* Paginação */}
             <div className={styles.panoramaPagination}>
               {filteredProjects.map((_, idx) => (
                 <motion.div
@@ -564,78 +542,66 @@ const Projects: React.FC = () => {
                   }
                   onClick={() => goToSlide(idx)}
                   aria-label={`Ir para slide ${idx + 1}`}
-                  tabIndex={0}
                   role="button"
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.8 }}
-                  animate={idx === currentSlide ? { scale: [1, 1.2, 1] } : {}}
-                  transition={{ duration: 0.3 }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                 />
               ))}
             </div>
           </motion.div>
         ) : (
           <div className={styles.emptyState}>
-            <span className={styles.emptyIcon}>��</span>
+            <span className={styles.emptyIcon}>📁</span>
             <div className={styles.emptyText}>Nenhum projeto encontrado</div>
             <div className={styles.emptySubtext}>Em breve novos projetos serão adicionados.</div>
           </div>
         )}
 
-        {/* Enhanced Estatísticas */}
+        {/* Estatísticas otimizadas */}
         <motion.div 
           ref={statsRef} 
           className={styles.statsRow}
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true, amount: 0.3 }}
         >
           {stats.map((stat, idx) => (
             <motion.div
-              className={
-                styles.statBar + ' ' + (idx % 2 === 0 ? styles.fromLeft : styles.fromRight)
-              }
+              className={styles.statBar}
               key={idx}
               initial={{ 
                 opacity: 0, 
-                x: idx % 2 === 0 ? -50 : 50,
-                scale: 0.8
+                y: 20,
+                scale: 0.9
               }}
               whileInView={{ 
                 opacity: 1, 
-                x: 0,
+                y: 0,
                 scale: 1
               }}
               transition={{ 
-                duration: 0.6, 
+                duration: 0.4, 
                 delay: idx * 0.1,
-                type: "spring",
-                stiffness: 100
+                ease: "easeOut"
               }}
               whileHover={{ 
-                scale: 1.05, 
-                y: -5,
+                scale: 1.02, 
+                y: -2,
                 transition: { duration: 0.2 }
               }}
               viewport={{ once: true, amount: 0.5 }}
             >
-              <motion.div
-                initial={{ rotate: 0 }}
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.6 }}
-              >
+              <div>
                 {statIcons[idx]}
-              </motion.div>
+              </div>
               <motion.span 
                 className={styles.statNumber}
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 transition={{ 
-                  duration: 0.5, 
-                  delay: idx * 0.1 + 0.3,
-                  type: "spring",
-                  stiffness: 200
+                  duration: 0.3, 
+                  delay: idx * 0.1 + 0.2
                 }}
               >
                 {countedStats[idx]}
@@ -644,7 +610,7 @@ const Projects: React.FC = () => {
                 className={styles.statLabel}
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                transition={{ delay: idx * 0.1 + 0.5 }}
+                transition={{ delay: idx * 0.1 + 0.3 }}
               >
                 {stat.label}
               </motion.span>

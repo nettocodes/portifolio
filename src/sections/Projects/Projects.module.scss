@@ -87,6 +87,8 @@
   font-size: 1.5rem;
   font-weight: 600;
   color: rgba(79, 140, 255, 0.2);
+  will-change: transform;
+  backface-visibility: hidden;
   
   @media (max-width: 768px) {
     font-size: 1.2rem;
@@ -242,6 +244,7 @@
     0 4px 20px rgba(79, 140, 255, 0.15),
     0 8px 40px rgba(79, 140, 255, 0.08);
   transition: all 0.3s ease;
+  perspective: 1000px;
   
   &:hover {
     box-shadow: 
@@ -312,6 +315,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  will-change: transform;
+  backface-visibility: hidden;
+  
   @media (max-width: 900px) {
     min-height: 340px;
   }
@@ -680,6 +686,8 @@
   transition: all 0.4s cubic-bezier(0.4,0.2,0.2,1);
   justify-content: flex-start;
   cursor: pointer;
+  will-change: transform;
+  backface-visibility: hidden;
   
   &::before {
     content: '';
@@ -988,4 +996,75 @@
     font-size: 0.75rem;
     padding: 0.5rem 1rem;
   }
+}
+
+// Auto-play indicator classes
+.autoPlayIcon {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+// Status container and elements
+.statusContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.statusDot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.statusText {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+// Status specific colors
+.status-completed {
+  &.statusDot {
+    background-color: #10b981;
+  }
+  &.statusText {
+    color: #10b981;
+  }
+}
+
+.status-in-progress {
+  &.statusDot {
+    background-color: #f59e0b;
+  }
+  &.statusText {
+    color: #f59e0b;
+  }
+}
+
+.status-coming-soon {
+  &.statusDot {
+    background-color: #8b5cf6;
+  }
+  &.statusText {
+    color: #8b5cf6;
+  }
+}
+
+// Performance optimizations
+.floatingElement {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.panoramaSlide {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.statBar {
+  will-change: transform;
+  backface-visibility: hidden;
 }
