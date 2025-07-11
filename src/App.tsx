@@ -1,4 +1,5 @@
 import React from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import './reset.css';
 import './styles/global.scss';
 import Hero from './sections/Hero/Hero';
@@ -38,6 +39,7 @@ const App: React.FC = () => (
       <Contact />
     </SectionWrapper>
     <Footer />
+    <Analytics />
   </>
 );
 

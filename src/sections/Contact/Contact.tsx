@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Contact.module.scss';
 import { FaGithub, FaLinkedin, FaEnvelope, FaWhatsapp, FaMapMarkerAlt, FaPhoneAlt, FaPaperPlane } from 'react-icons/fa';
+import ivoImg from '../../assets/ivo.jpg';
 
 const socials = [
   { href: 'https://github.com/SEUUSER', label: 'GitHub', icon: <FaGithub /> },
@@ -62,7 +63,7 @@ const Contact: React.FC = () => {
             <div className={styles.imageSection}>
               <div className={styles.imageWrapper}>
                 <img 
-                  src="/assets/ivo.jpg" 
+                  src={ivoImg} 
                   alt="Ivo Braatz" 
                   className={styles.profileImage}
                 />
