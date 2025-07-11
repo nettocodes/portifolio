@@ -541,7 +541,7 @@
   
   &:hover {
     background: rgba(255, 255, 255, 1);
-    color: darken($color-primary, 10%);
+    color: rgba(79, 140, 255, 0.8);
     transform: scale(1.1);
     box-shadow: 0 4px 20px rgba(79, 140, 255, 0.2);
   }
@@ -588,7 +588,7 @@
   pointer-events: all;
   &:hover {
     background: rgba($color-primary, 0.1);
-    color: darken($color-primary, 10%);
+    color: rgba(79, 140, 255, 0.8);
     transform: translateY(-2px) scale(1.08);
   }
   &:active {

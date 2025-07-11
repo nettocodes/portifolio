@@ -110,7 +110,7 @@
       left: 50%;
       width: 0;
       height: 2px;
-      background: linear-gradient(90deg, $color-primary, lighten($color-primary, 15%));
+      background: linear-gradient(90deg, $color-primary, rgba(79, 140, 255, 0.8));
       transition: all 0.3s ease;
       transform: translateX(-50%);
       border-radius: 1px;
@@ -219,7 +219,7 @@
       top: 50%;
       width: 0;
       height: 2px;
-      background: linear-gradient(90deg, lighten($color-primary, 15%), $color-primary);
+      background: linear-gradient(90deg, rgba(79, 140, 255, 0.8), $color-primary);
       transition: all 0.3s ease;
       transform: translateY(-50%);
       border-radius: 1px;

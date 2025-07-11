@@ -69,7 +69,7 @@
     left: 0;
     width: 80px;
     height: 4px;
-    background: linear-gradient(90deg, $color-primary, lighten($color-primary, 15%));
+    background: linear-gradient(90deg, $color-primary, rgba(79, 140, 255, 0.8));
     border-radius: 2px;
     
     @media (max-width: 600px) {
@@ -295,7 +295,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, $color-primary 0%, lighten($color-primary, 10%) 100%);
+  background: linear-gradient(135deg, $color-primary 0%, rgba(79, 140, 255, 0.9) 100%);
   color: white;
   border: none;
   border-radius: 0.8rem;
@@ -308,7 +308,7 @@
   margin-top: 1rem;
   
   &:hover:not(:disabled) {
-    background: linear-gradient(135deg, darken($color-primary, 5%) 0%, $color-primary 100%);
+    background: linear-gradient(135deg, rgba(79, 140, 255, 0.9) 0%, $color-primary 100%);
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(79, 140, 255, 0.3);
   }
