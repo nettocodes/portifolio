@@ -16,7 +16,7 @@
   background: linear-gradient(135deg, #0a0d16 0%, #1a1d2e 25%, #2a2d3a 50%, #1e2139 75%, #0f1419 100%);
   position: relative;
   overflow: hidden;
-  padding: 6rem 0 6rem 0; // Reduzido pois o espaço do profile é gerenciado pelo container
+  padding: 10rem 0 6rem 0; // Reduzido pois o espaço do profile é gerenciado pelo container
   
   // Animated background particles
   &::before {

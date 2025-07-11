@@ -1,4 +1,5 @@
 @use '../styles/variables.scss' as *;
+
 .profile {
   // Posicionamento de pseudo-section flutuante
   position: absolute;
@@ -10,79 +11,109 @@
   align-items: center;
   justify-content: center;
   transform: translate(0px, -100px);
-  
+
   // Garantir que não interfira no fluxo das outras sections
   pointer-events: none;
-  
+
   // Sempre visível
   opacity: 1;
-  
+
   .profileContent {
     // Reativar pointer-events apenas no conteúdo
     pointer-events: all;
     width: 100%;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 2rem 0 0 0;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
     position: relative;
-    overflow: hidden;
-    
-    // Visual glassmorphism
-    background: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.95) 0%,
-      rgba(255, 255, 255, 0.9) 50%,
-      rgba(245, 248, 255, 0.95) 100%
-    );
-    -webkit-backdrop-filter: blur(25px);
-    backdrop-filter: blur(25px);
-    box-shadow: 
-      0 15px 30px rgba(0, 0, 0, 0.08),
-      0 6px 15px rgba(79, 140, 255, 0.06),
-      0 3px 10px rgba(0, 0, 0, 0.04),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    
-    // Gradiente sutil na borda (estático)
+    border-radius: 8px 8px 0 0;
+
+    // Background de imagem 
     &::before {
       content: '';
       position: absolute;
       inset: 0;
-      padding: 1px;
-      background: linear-gradient(
-        135deg, 
-        rgba(79, 140, 255, 0.15) 0%,
-        rgba(255, 255, 255, 0.1) 50%,
-        rgba(79, 140, 255, 0.15) 100%
-      );
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: subtract;
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      mask-composite: subtract;
-      pointer-events: none;
+      background: 
+        // Overlay escuro para melhor contraste
+        linear-gradient(135deg, 
+          rgba(0, 0, 0, 0.3) 0%, 
+          rgba(0, 0, 0, 0.2) 25%,
+          rgba(0, 0, 0, 0.1) 50%,
+          rgba(0, 0, 0, 0.2) 75%,
+          rgba(0, 0, 0, 0.3) 100%),
+        // Imagem de fundo
+        url('../assets/ordesk.png');
+      background-size: cover, cover;
+      background-position: center, center;
+      background-repeat: no-repeat, no-repeat;
+      z-index: -1;
     }
-  }
-}
 
+    // Glassmorphism estilo Windows 7
+    background: linear-gradient(180deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 255, 255, 0.85) 25%,
+        rgba(245, 248, 255, 0.8) 50%,
+        rgba(240, 245, 255, 0.85) 75%,
+        rgba(255, 255, 255, 0.9) 100%);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    
+    // Sombra e bordas estilo Windows 7
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.6) inset,
+      0 0 0 2px rgba(0, 0, 0, 0.1),
+      0 4px 12px rgba(0, 0, 0, 0.15),
+      0 8px 24px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-right: 1px solid rgba(0, 0, 0, 0.15);
+  }
+ 
+}
 .profileInner {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
   width: 100%;
   max-width: 1200px;
-  padding: 0 1rem;
+  margin-top: 1rembuild;
+  padding: 40px 1rem; // Padding top para acomodar a barra de título
   box-sizing: border-box;
   
+  // Background transparente
+  background: transparent;
+  
+  // Borda estilo Windows 7 com transparência
+  border: 1px solid transparent;
+  border-radius: 0;
+  
+  // Gradiente de borda Windows 7 transparente
+  background: 
+    linear-gradient(transparent, transparent) padding-box,
+    linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.1) 25%,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(0, 0, 0, 0.2) 75%,
+      rgba(0, 0, 0, 0.3) 100%) border-box;
+  
+  // Sombra interna sutil estilo Windows 7
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+    inset 1px 0 0 rgba(255, 255, 255, 0.1),
+    inset -1px 0 0 rgba(0, 0, 0, 0.1);
+
   @media (min-width: 769px) {
-    padding: 0 2rem;
+    padding: 40px 2rem;
   }
 }
 
 .profileHeader {
   display: flex;
-  align-items: center;
   gap: 1.2rem; // Reduzido
   justify-content: flex-start;
 }
@@ -101,40 +132,64 @@
 
 .avatar {
   position: relative;
-  width: 70px; // Reduzido
-  height: 70px; // Reduzido
-  border-radius: 50%;
+  width: 67.65px; // Dimensões exatas da especificação
+  height: 69.69px;
+  border-radius: 8px; // Corner mixed - usando radius moderado
   overflow: hidden;
-  background: linear-gradient(135deg, $color-primary 0%, rgba(79, 140, 255, 0.8) 100%);
-  padding: 3px; // Reduzido
   transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
-  
-  // Anel animado ao redor
+
+  // Borda estilo Windows com gradiente linear
+  border: 0.5px solid transparent;
+  background: linear-gradient(135deg,
+      rgba(0, 0, 0, 0.46) 0%,
+      rgba(0, 0, 0, 0.3) 50%,
+      rgba(0, 0, 0, 0.46) 100%) border-box;
+
+  // Drop shadow e background blur
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+
+  // Borda interna para o efeito Windows
   &::before {
     content: '';
     position: absolute;
-    inset: -6px;
-    border-radius: 50%;
-    background: conic-gradient(
-      from 0deg,
-      $color-primary 0deg,
-      rgba(79, 140, 255, 0.7) 90deg,
-      $color-primary 180deg,
-      rgba(79, 140, 255, 0.7) 270deg,
-      $color-primary 360deg
-    );
-    animation: rotate 4s linear infinite;
-    opacity: 0.6;
-    z-index: -1;
+    inset: 0.5px;
+    border-radius: 7px;
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.8) 0%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0.8) 100%);
+    padding: 4px;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: subtract;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: subtract;
+    z-index: 1;
   }
 
   img {
-    width: 100%;
-    height: 100%;
+    position: relative;
+    width: 58.39px; // Dimensões exatas da foto
+    height: 58.75px;
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: 4px; // Corner radius da foto
     transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
     filter: contrast(1.05) saturate(1.1);
+    z-index: 2;
+
+    // Posicionamento centralizado
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    // Borda interna da foto
+    border: 0.7px solid rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 0 0.7px rgba(255, 255, 255, 0.3);
   }
 
   .avatarOverlay {
@@ -143,29 +198,26 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(79, 140, 255, 0.15),
-      rgba(79, 140, 255, 0.25)
-    );
-    border-radius: 50%;
+    background: linear-gradient(135deg,
+        rgba(79, 140, 255, 0.1),
+        rgba(79, 140, 255, 0.2));
+    border-radius: 8px;
     opacity: 0;
     transition: all 0.3s ease;
+    z-index: 3;
   }
 
   &:hover {
-    transform: scale(1.08) translateY(-2px);
-    
-    &::before {
-      opacity: 0.8;
-      animation-duration: 2s;
-    }
-    
+    transform: scale(1.05) translateY(-2px);
+    box-shadow:
+      0 6px 16px rgba(0, 0, 0, 0.2),
+      0 3px 8px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
     img {
-      transform: scale(1.1);
       filter: contrast(1.1) saturate(1.2) brightness(1.05);
     }
-    
+
     .avatarOverlay {
       opacity: 1;
     }
@@ -173,8 +225,13 @@
 }
 
 @keyframes rotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .nameBlock {
@@ -182,11 +239,11 @@
   flex: 1;
 
   h2 {
-    font-size: 1.5rem; // Reduzido
-    font-weight: 800;
+    font-size: 15px; // Especificação: 15px
+    font-weight: 400; // Regular
     color: $color-text-dark;
     margin: 0 0 0.2rem 0; // Reduzido
-    font-family: $font-title;
+    font-family: 'Segoe UI', sans-serif; // Especificação: Segoe UI
     background: linear-gradient(135deg, $color-text-dark 0%, $color-primary 50%, rgba(79, 140, 255, 0.8) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -199,8 +256,8 @@
 .profileTitle {
   font-size: 0.9rem; // Reduzido
   color: $color-primary;
-  font-weight: 600;
-  font-family: $font-mono;
+  font-weight: 600; // Semibold
+  font-family: 'Segoe UI', sans-serif; // Especificação: Segoe UI
   opacity: 0.9;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -225,7 +282,7 @@
   min-width: 60px; // Reduzido
   position: relative;
   overflow: hidden;
-  
+
   // Brilho sutil no hover
   &::before {
     content: '';
@@ -243,7 +300,7 @@
     transform: translateY(-3px) scale(1.02);
     border-color: rgba(79, 140, 255, 0.2);
     box-shadow: 0 8px 25px rgba(79, 140, 255, 0.15);
-    
+
     &::before {
       left: 100%;
     }
@@ -255,7 +312,7 @@
   font-size: 1.1rem; // Reduzido
   opacity: 0.9;
   transition: all 0.3s ease;
-  
+
   .statItem:hover & {
     color: rgba(79, 140, 255, 0.8);
     transform: scale(1.1);
@@ -268,7 +325,7 @@
   color: $color-text-dark;
   line-height: 1;
   font-family: $font-mono;
-  
+
   .statItem:hover & {
     color: $color-primary;
   }
@@ -284,122 +341,648 @@
   letter-spacing: 0.5px;
 }
 
-.hobbiesContainer {
+// Carrossel Container - Estilo Windows 7
+.categoriesContainer {
   width: 100%;
-  overflow: hidden;
+  padding: .5rem 1rem;
   position: relative;
-  padding: 0.5rem 0;
-  
-  // Máscaras para fade nas laterais
-  -webkit-mask: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(0, 0, 0, 1) 8%,
-    rgba(0, 0, 0, 1) 92%,
-    transparent 100%
-  );
-  mask: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(0, 0, 0, 1) 8%,
-    rgba(0, 0, 0, 1) 92%,
-    transparent 100%
-  );
-}
-
-.hobbiesMarquee {
-  display: flex;
-  gap: 1.2rem;
-  animation: infiniteScroll 50s linear infinite;
-  white-space: nowrap;
-  will-change: transform;
-  width: max-content;
-}
-
-.hobbyItem {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.6rem 1rem;
-  background: linear-gradient(135deg, rgba(79, 140, 255, 0.08) 0%, rgba(255, 255, 255, 0.9) 100%);
-  border-radius: 20px;
-  font-size: 0.85rem;
-  color: $color-text-dark;
-  font-weight: 600;
-  transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
-  flex-shrink: 0;
-  border: 1px solid rgba(79, 140, 255, 0.1);
-  position: relative;
-  overflow: hidden;
-  min-width: 80px;
-  white-space: nowrap;
+  gap: 0.5rem;
   
-  // Brilho animado no fundo
+  // Background estilo Windows 7 toolbar
+  background: linear-gradient(to bottom,
+    #ffffff 0%,
+    #f8f9fa 25%,
+    #f1f3f4 75%,
+    #e8eaed 100%);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 1px 2px rgba(0, 0, 0, 0.05);
+  
+  // Overlay escuro quando um dropdown está aberto
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.15s ease;
+    z-index: 999;
+    pointer-events: none;
+  }
+
+  &.hasOpenDropdown::before {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+// Utilitários para o carrossel funcionar corretamente
+.categoriesContainer {
+  // Força o hardware acceleration para melhor performance
+  transform: translateZ(0);
+  will-change: transform;
+  
+  // Suporte para scroll horizontal em touch devices
+  &.scrollable {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    
+    .categoriesCarousel {
+      overflow: visible;
+    }
+    
+    .categoriesTrack {
+      scroll-snap-align: start;
+    }
+    
+    .categoryItem {
+      scroll-snap-align: center;
+    }
+  }
+  
+  // Estado de loading
+  &.loading {
+    .carouselButton {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    
+    .categoriesCarousel::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+// Botões de navegação do carrossel - Template fornecido
+.carouselButton {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 0;
+  background: linear-gradient(#2e3c87, #24b8e8);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.1s ease;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.6);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #0078d4;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(0, 120, 212, 0.3);
+  }
+}
+
+.carouselButtonInner {
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 100%,
+    #30f8f8 10%,
+    #28cff1 30%,
+    #2d6284 60%,
+    #2c517b
+  );
+}
+
+.carouselButtonTopWhite {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(#fffe, #fff0 60%),
+    radial-gradient(circle at 50% 2%, #fff5, #fff5 7%, #fff0 50%);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 45%, 80% 60%, 50% 45%, 20% 60%, 0% 45%);
+}
+
+.carouselButtonLeft {
+  .arrow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 14px;
+    background-image: url('../assets/left.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65));
+    transition: all 0.1s ease;
+    z-index: 2;
+  }
+
+  &:hover .arrow {
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65)) brightness(1.1);
+  }
+
+  &:active .arrow {
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65)) brightness(0.9);
+  }
+
+  &:disabled .arrow {
+    opacity: 0.6;
+    filter: none;
+  }
+}
+
+.carouselButtonRight {
+  .arrow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 14px;
+    background-image: url('../assets/right.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65));
+    transition: all 0.1s ease;
+    z-index: 2;
+  }
+
+  &:hover .arrow {
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65)) brightness(1.1);
+  }
+
+  &:active .arrow {
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65)) brightness(0.9);
+  }
+
+  &:disabled .arrow {
+    opacity: 0.6;
+    filter: none;
+  }
+}
+
+// Container do carrossel - Estilo Windows 7
+.categoriesCarousel {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(to bottom,
+    #ffffff 0%,
+    #f8f9fa 15%,
+    #f1f3f4 85%,
+    #e8eaed 100%);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+  box-shadow: 
+    inset 0 1px 2px rgba(0, 0, 0, 0.1),
+    inset 0 0 1px rgba(0, 0, 0, 0.05);
+  
+  // Bordas internas estilo Windows 7
   &::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(79, 140, 255, 0.1), transparent);
-    transition: left 0.6s ease;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.8) 10%,
+      rgba(255, 255, 255, 0.8) 90%,
+      transparent 100%);
+    z-index: 1;
   }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.05) 10%,
+      rgba(0, 0, 0, 0.05) 90%,
+      transparent 100%);
+    z-index: 1;
+  }
+}
 
-  &:hover {
-    background: linear-gradient(135deg, rgba(79, 140, 255, 0.15) 0%, rgba(255, 255, 255, 0.95) 100%);
-    transform: translateY(-2px) scale(1.05);
-    border-color: rgba(79, 140, 255, 0.2);
-    box-shadow: 0 8px 20px rgba(79, 140, 255, 0.15);
-    color: $color-primary;
-    
-    &::before {
-      left: 100%;
-    }
-    
-    .hobbyIcon {
-      color: $color-primary;
-      transform: scale(1.15) rotate(5deg);
+// Track do carrossel - Melhorado
+.categoriesTrack {
+  display: flex;
+  gap: 0.5rem;
+  transition: transform 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  padding: 0.5rem;
+  position: relative;
+  z-index: 2;
+  
+  // Smooth scroll para touch devices
+  scroll-behavior: smooth;
+}
+
+// Items do carrossel
+.categoryItem {
+  flex: 0 0 180px;
+  min-width: 180px;
+  
+  @media (max-width: 768px) {
+    flex: 0 0 150px;
+    min-width: 150px;
+  }
+  
+  @media (max-width: 480px) {
+    flex: 0 0 120px;
+    min-width: 120px;
+  }
+  
+  @media (max-width: 360px) {
+    flex: 0 0 100px;
+    min-width: 100px;
+  }
+  
+  @media (max-width: 320px) {
+    flex: 0 0 80px;
+    min-width: 80px;
+  }
+}
+
+.categoryDropdown {
+  position: relative;
+  width: 100%;
+  z-index: 20;
+
+  &.open {
+    z-index: 1000;
+
+    .categoryButton {
+      // Estilo Windows 7 menu pressed - azul mais escuro
+      background: linear-gradient(to bottom,
+          rgba(132, 192, 222, 0.9) 0%,
+          rgba(146, 202, 230, 0.9) 50%,
+          rgba(186, 228, 249, 0.9) 100%);
+      border: 1px solid rgba(60, 127, 177, 1);
+      color: #000;
     }
   }
 }
 
-.hobbyIcon {
-  width: 1rem;
-  height: 1rem;
-  min-width: 1rem;
-  min-height: 1rem;
+.categoryButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid transparent;
+  border-radius: 0; // Windows 7 não tem border-radius
+  cursor: pointer;
+  transition: all 0.1s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+
+  // Estilo Windows 7 menubar - sem fundo por padrão
+  background: transparent;
+  color: #000;
+
+  &:hover {
+    // Estilo Windows 7 menu hover - azul claro
+    background: linear-gradient(to bottom,
+        rgba(186, 228, 249, 0.9) 0%,
+        rgba(146, 202, 230, 0.9) 50%,
+        rgba(132, 192, 222, 0.9) 100%);
+    border-color: rgba(60, 127, 177, 0.8);
+    color: #000;
+  }
+
+  &:active,
+  &.active {
+    // Estilo Windows 7 menu pressed - azul mais escuro
+    background: linear-gradient(to bottom,
+        rgba(132, 192, 222, 0.9) 0%,
+        rgba(146, 202, 230, 0.9) 50%,
+        rgba(186, 228, 249, 0.9) 100%);
+    border-color: rgba(60, 127, 177, 1);
+    color: #000;
+  }
+}
+
+.categoryIcon {
+  color: #000;
+  font-size: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $color-primary;
-  transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
-  
-  svg {
-    width: 100%;
-    height: 100%;
+  transition: all 0.1s ease;
+}
+
+.categoryTitle {
+  flex: 1;
+  text-align: left;
+  color: #2c3e50;
+  font-weight: 400;
+  letter-spacing: 0.1px;
+}
+
+.categoryArrow {
+  color: #000;
+  font-size: 0.8rem;
+  transition: transform 0.1s ease;
+  display: flex;
+  align-items: center;
+
+  &.rotated {
+    transform: rotate(180deg);
+  }
+}
+
+.dropdownContent {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #f0f0f0;
+  border: 1px solid #a0a0a0;
+  border-top: none;
+  border-radius: 0; // Windows 7 não tem border-radius
+  box-shadow:
+    2px 2px 5px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+  overflow: hidden;
+  transform: translateY(-5px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.1s ease;
+  z-index: 1000; // Z-index alto para ficar acima de tudo
+
+  &.show {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &.animating {
+    transition-duration: 0.05s;
+  }
+}
+
+.dropdownInner {
+  background: #f0f0f0;
+  border: 1px solid rgba(0, 0, 0, .4);
+  box-shadow: 4px 4px 3px -2px rgba(0, 0, 0, .5019607843137255);
+  color: initial;
+  min-width: 150px;
+  padding: 2px;
+  position: relative;
+&::before {
+      box-shadow: inset 1px 0 rgba(0, 0, 0, .14901960784313725), inset -1px 0 #fff;
+      content: "";
+      height: calc(100% - 4px);
+      left: 30px;
+      pointer-events: none;
+      position: absolute;
+      width: 2px;
+    }
+  // Scrollbar estilo Windows 7 clássico
+  &::-webkit-scrollbar {
+    width: 17px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom,
+        #f5f5f5 0%,
+        #e0e0e0 50%,
+        #d0d0d0 100%);
+    border: 1px solid #a0a0a0;
+    border-radius: 0;
+
+    &:hover {
+      background: linear-gradient(to bottom,
+          #e5e5e5 0%,
+          #d0d0d0 50%,
+          #c0c0c0 100%);
+    }
+
+    
+
+    &:active {
+      background: linear-gradient(to bottom,
+          #d0d0d0 0%,
+          #c0c0c0 50%,
+          #b0b0b0 100%);
+    }
+  }
+
+  &::-webkit-scrollbar-button {
+    height: 17px;
+    background: linear-gradient(to bottom,
+        #f5f5f5 0%,
+        #e0e0e0 50%,
+        #d0d0d0 100%);
+    border: 1px solid #a0a0a0;
+
+    &:hover {
+      background: linear-gradient(to bottom,
+          #e5e5e5 0%,
+          #d0d0d0 50%,
+          #c0c0c0 100%);
+    }
+  }
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 4px 24px 4px 36px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  border: none;
+  background: transparent;
+  color: #000;
+
+  &:hover {
+    // Estilo Windows 7 menu item hover - azul claro
+    background: linear-gradient(to bottom,
+        rgba(186, 228, 249, 0.9) 0%,
+        rgba(146, 202, 230, 0.9) 50%,
+        rgba(132, 192, 222, 0.9) 100%);
+    border: 1px solid rgba(60, 127, 177, 0.8);
+    color: #000;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.dropdownItemLink {
+  &:hover {
+    background: linear-gradient(to bottom,
+        rgba(186, 228, 249, 0.9) 0%,
+        rgba(146, 202, 230, 0.9) 50%,
+        rgba(132, 192, 222, 0.9) 100%);
+    border: 1px solid rgba(60, 127, 177, 0.8);
+
+    .dropdownItemIcon {
+      color: #000;
+      transform: scale(1.05);
+    }
+
+    .dropdownItemLabel {
+      color: #000;
+      font-weight: 400;
+    }
+
+    .dropdownItemLinkIcon {
+      color: #666;
+      transform: scale(1.1);
+    }
+  }
+}
+
+.dropdownItemIcon {
+  color: #000;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s ease;
+  min-width: 16px;
+}
+
+.dropdownItemLabel {
+  flex: 1;
+  color: #000;
+  font-size: 0.8rem;
+  font-weight: 400;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.1s ease;
+}
+
+// Separador estilo Windows 7
+.dropdownSeparator {
+  height: 1px;
+  margin: 3px 0;
+  background: linear-gradient(to right,
+      transparent 0%,
+      #a0a0a0 10%,
+      #a0a0a0 90%,
+      transparent 100%);
+  border: none;
+
+  &::after {
+    content: '';
     display: block;
-    color: inherit;
-    fill: currentColor;
+    height: 1px;
+    background: linear-gradient(to right,
+        transparent 0%,
+        rgba(255, 255, 255, 0.8) 10%,
+        rgba(255, 255, 255, 0.8) 90%,
+        transparent 100%);
+    margin-top: 1px;
   }
 }
 
-@keyframes infiniteScroll {
-  0% {
-    transform: translateX(0);
+// Tablets em modo retrato - Responsividade intermediária
+@media (max-width: 1024px) and (min-width: 769px) {
+  .categoriesContainer {
+    gap: 0.4rem;
+    
+    // Background otimizado para tablets
+    background: linear-gradient(to bottom,
+      #ffffff 0%,
+      #f8f9fa 15%,
+      #f1f3f4 85%,
+      #e8eaed 100%);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
   }
-  100% {
-    transform: translateX(-25%); // Funciona para 4 repetições
+  
+  .carouselButton {
+    width: 26px;
+    height: 26px;
+    
+    .carouselButtonInner {
+      inset: 2px;
+    }
+    
+    .arrow {
+      width: 10px;
+      height: 10px;
+      filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65));
+    }
   }
-}
+  
+  .categoriesCarousel {
+    border-radius: 2px;
+    
+    // Mantém bordas internas em tablets
+    &::before,
+    &::after {
+      display: block;
+    }
+  }
+  
+  .categoriesTrack {
+    padding: 0.4rem;
+    gap: 0.4rem;
+  }
+  
+  .categoryItem {
+    flex: 0 0 160px;
+    min-width: 160px;
+  }
 
-// Animação específica para mobile (3 repetições)
-@keyframes infiniteScrollMobile {
-  0% {
-    transform: translateX(0);
+  .categoryButton {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.75rem;
   }
-  100% {
-    transform: translateX(-33.333%); // 100% / 3 repetições
+
+  .dropdownContent {
+    max-height: 180px;
+    z-index: 1001;
+  }
+
+  .dropdownItem {
+    padding: 0.4rem 0.7rem;
+  }
+
+  .dropdownItemLabel {
+    font-size: 0.75rem;
   }
 }
 
@@ -411,7 +994,6 @@
   }
 
   .profileInner {
-    padding: 0 0.8rem;
     gap: 0.8rem;
     max-width: 100%;
   }
@@ -433,12 +1015,14 @@
 @media (max-width: 768px) {
   .profile {
     transform: translate(0px, -40px);
-    
-  }
 
+  }
+  .profileContent{
+    padding: 1rem !important;
+  }
   .profileInner {
     gap: 0.6rem;
-    padding: 0 0.3rem;
+    padding: 35px 0.3rem; // Ajustado para a barra de título
     max-width: 100%;
     min-width: 0;
   }
@@ -448,7 +1032,7 @@
     text-align: center;
     width: 100%;
   }
-  
+
   .profileInfo {
     text-align: center;
     gap: 0.8rem;
@@ -461,24 +1045,32 @@
   }
 
   .avatar {
-    width: 80px;
-    height: 80px;
-    
-    &::before {
-      inset: -4px;
+    width: 60px; // Mantendo proporção 67.65 -> 60
+    height: 61.8px; // Mantendo proporção 69.69 -> 61.8
+    border-radius: 7px;
+
+    img {
+      width: 51.5px; // Mantendo proporção 58.39 -> 51.5
+      height: 52px; // Mantendo proporção 58.75 -> 52
+      border-radius: 3.5px;
+      border: 0.6px solid rgba(0, 0, 0, 0.2);
     }
   }
 
   .nameBlock {
     width: 100%;
-    
+
     h2 {
-      font-size: 1.6rem;
+      font-size: 16px; // Mantendo Segoe UI em tamanho ligeiramente maior para mobile
+      font-weight: 400; // Regular
+      font-family: 'Segoe UI', sans-serif;
       margin-bottom: 0.3rem;
     }
-    
+
     .profileTitle {
       font-size: 0.9rem;
+      font-family: 'Segoe UI', sans-serif;
+      font-weight: 600; // Semibold
     }
   }
 
@@ -493,41 +1085,81 @@
   .statItem {
     padding: 0.6rem 0.5rem;
     min-width: 60px;
-    
+
     .statNumber {
       font-size: 1.1rem;
     }
-    
+
     .statIcon {
       font-size: 1.2rem;
     }
-    
+
     .statLabel {
       font-size: 0.7rem;
     }
   }
 
-  .hobbyItem {
-    font-size: 0.8rem;
-    padding: 0.5rem 0.8rem;
-    gap: 0.5rem;
+  .categoriesContainer {
+    width: 100%;
+    min-width: 0;
+    gap: 0.4rem;
     
-    .hobbyIcon {
-      width: 0.9rem;
-      height: 0.9rem;
-      min-width: 0.9rem;
-      min-height: 0.9rem;
+    // Ajuste do background para telas médias
+    background: linear-gradient(to bottom,
+      #ffffff 0%,
+      #f8f9fa 20%,
+      #f1f3f4 80%,
+      #e8eaed 100%);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+  }
+
+  .carouselButton {
+    width: 28px;
+    height: 28px;
+    
+    .carouselButtonInner {
+      inset: 2px;
+    }
+    
+    .arrow {
+      width: 12px;
+      height: 12px;
+      filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65));
     }
   }
 
-  .hobbiesMarquee {
-    animation-duration: 45s;
-    animation-name: infiniteScrollMobile;
+  .categoriesCarousel {
+    border-radius: 2px;
+    
+    // Ajuste das bordas internas
+    &::before,
+    &::after {
+      display: none; // Remove detalhes finos em telas médias
+    }
   }
 
-  .hobbiesContainer {
-    width: 100%;
-    min-width: 0;
+  .categoryItem {
+    flex: 0 0 150px;
+    min-width: 150px;
+  }
+
+  .categoryButton {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .dropdownContent {
+    max-height: 150px;
+    z-index: 1001;
+  }
+
+  .dropdownItem {
+    padding: 0.5rem 0.8rem;
+  }
+
+  .dropdownItemLabel {
+    font-size: 0.75rem;
   }
 }
 
@@ -535,12 +1167,12 @@
 @media (max-width: 768px) and (orientation: landscape) {
   .profile {
     transform: translate(0px, -20px);
-    
+
   }
 
   .profileInner {
     gap: 0.4rem;
-    padding: 0 0.2rem;
+    padding: 35px 0.2rem; // Ajustado para a barra de título
     flex-direction: row;
     align-items: center;
     flex-wrap: wrap;
@@ -553,7 +1185,7 @@
     flex: 1;
     min-width: 0;
   }
-  
+
   .profileInfo {
     text-align: left;
     flex-direction: row;
@@ -562,18 +1194,32 @@
   }
 
   .avatar {
-    width: 60px;
-    height: 60px;
-    flex-shrink: 0;
+    width: 54px; // Mantendo proporção
+    height: 55.6px;
+    border-radius: 6px;
+
+    img {
+      width: 46.5px; // Mantendo proporção
+      height: 47px;
+      border-radius: 3px;
+      border: 0.5px solid rgba(0, 0, 0, 0.2);
+    }
   }
 
   .nameBlock {
     text-align: left;
     flex: 1;
     min-width: 0;
-    
+
     h2 {
-      font-size: 1.3rem;
+      font-size: 13px; // Ajustado para landscape
+      font-weight: 400; // Regular
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .profileTitle {
+      font-family: 'Segoe UI', sans-serif;
+      font-weight: 600; // Semibold
     }
   }
 
@@ -587,254 +1233,737 @@
     min-width: 45px;
   }
 
-  .hobbiesContainer {
-    padding: 0.2rem 0;
-    width: 100%;
-    flex-basis: 100%;
+  .categoriesContainer {
+    padding: 0.3rem 0;
+    gap: 0.4rem;
+    
+    // Background simplificado para mobile
+    background: linear-gradient(to bottom,
+      #ffffff 0%,
+      #f5f5f5 50%,
+      #eeeeee 100%);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
   }
 
-  .hobbyItem {
+  .carouselButton {
+    width: 24px;
+    height: 24px;
+    
+    .carouselButtonInner {
+      inset: 2px;
+    }
+    
+    .arrow {
+      width: 8px;
+      height: 8px;
+      filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65));
+    }
+  }
+
+  .categoriesCarousel {
+    border-radius: 2px;
+    
+    // Remove detalhes decorativos em mobile
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  .categoriesTrack {
+    padding: 0.4rem;
+    gap: 0.4rem;
+  }
+
+  .categoryItem {
+    flex: 0 0 130px;
+    min-width: 130px;
+  }
+
+  .categoryButton {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+  }
+
+  .dropdownContent {
+    max-height: 150px;
+    z-index: 1001;
+  }
+
+  .dropdownItem {
+    padding: 0.5rem 0.6rem;
+  }
+
+  .dropdownItemLabel {
+    font-size: 0.75rem;
+  }
+}
+
+// Responsive Design - Breakpoints para mobile pequeno
+@media (max-width: 480px) {
+  .categoriesContainer {
+    gap: 0.3rem;
+    padding: 0.3rem 0;
+    
+    // Background simplificado para mobile pequeno
+    background: linear-gradient(to bottom,
+      #ffffff 0%,
+      #f5f5f5 50%,
+      #eeeeee 100%);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+  }
+  
+  .carouselButton {
+    width: 22px;
+    height: 22px;
+    
+    .carouselButtonInner {
+      inset: 2px;
+    }
+    
+    .arrow {
+      width: 8px;
+      height: 8px;
+      filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65));
+    }
+  }
+  
+  .categoriesCarousel {
+    border-radius: 2px;
+    
+    // Remove detalhes decorativos em mobile pequeno
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+  
+  .categoriesTrack {
+    padding: 0.3rem;
+    gap: 0.3rem;
+  }
+  
+  .categoryItem {
+    flex: 0 0 120px;
+    min-width: 120px;
+  }
+
+  .categoryButton {
     padding: 0.3rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .dropdownContent {
+    max-height: 120px;
+    z-index: 1001;
+  }
+
+  .dropdownItem {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .dropdownItemLabel {
     font-size: 0.7rem;
   }
 }
 
-// Melhorias para telas ultra pequenas (smartwatches, etc)
-@media (max-width: 320px) {
-  .profile {
-    transform: translate(0px, -15px);
+@media (max-width: 360px) {
+  .categoriesContainer {
+    gap: 0.25rem;
+    padding: 0.25rem 0;
     
+    // Background ainda mais simplificado
+    background: linear-gradient(to bottom,
+      #ffffff 0%,
+      #f0f0f0 100%);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+  }
+  
+  .carouselButton {
+    width: 20px;
+    height: 20px;
+    
+    .carouselButtonInner {
+      inset: 2px;
+    }
+    
+    .arrow {
+      width: 7px;
+      height: 7px;
+      filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65));
+    }
+  }
+  
+  .categoriesCarousel {
+    border-radius: 2px;
+    
+    // Remove detalhes decorativos
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+  
+  .categoriesTrack {
+    padding: 0.25rem;
+    gap: 0.25rem;
+  }
+  
+  .categoryItem {
+    flex: 0 0 100px;
+    min-width: 100px;
+  }
+
+  .categoryButton {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.65rem;
+  }
+
+  .dropdownContent {
+    max-height: 100px;
+    z-index: 1001;
+  }
+
+  .dropdownItem {
+    padding: 0.3rem 0.5rem;
+  }
+
+  .dropdownItemLabel {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .categoriesContainer {
+    gap: 0.2rem;
+    padding: 0.2rem 0;
+    
+    // Background mínimo para telas muito pequenas
+    background: linear-gradient(to bottom,
+      #ffffff 0%,
+      #f0f0f0 100%);
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 1px;
+  }
+  
+  .carouselButton {
+    width: 18px;
+    height: 18px;
+    
+    .carouselButtonInner {
+      inset: 1px;
+    }
+    
+    .arrow {
+      width: 6px;
+      height: 6px;
+      filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65));
+    }
+  }
+  
+  .categoriesCarousel {
+    border-radius: 1px;
+    
+    // Remove detalhes decorativos
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+  
+  .categoriesTrack {
+    padding: 0.2rem;
+    gap: 0.2rem;
+  }
+  
+  .categoryItem {
+    flex: 0 0 80px;
+    min-width: 80px;
+  }
+
+  .categoryButton {
+    padding: 0.2rem 0.3rem;
+    font-size: 0.6rem;
+  }
+
+  .dropdownContent {
+    max-height: 80px;
+    z-index: 1001;
+  }
+
+  .dropdownItem {
+    padding: 0.25rem 0.4rem;
+  }
+
+  .dropdownItemLabel {
+    font-size: 0.6rem;
+  }
+}
+
+// Landscape orientations - Responsividade para orientação paisagem
+@media (max-height: 500px) and (orientation: landscape) {
+  .categoriesContainer {
+    gap: 0.3rem;
+    padding: 0.3rem 0;
+    
+    // Background otimizado para landscape
+    background: linear-gradient(to bottom,
+      #ffffff 0%,
+      #f5f5f5 50%,
+      #eeeeee 100%);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+  }
+  
+  .carouselButton {
+    width: 22px;
+    height: 22px;
+    
+    .carouselButtonInner {
+      inset: 2px;
+    }
+    
+    .arrow {
+      width: 8px;
+      height: 8px;
+      filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65));
+    }
+  }
+  
+  .categoriesCarousel {
+    border-radius: 2px;
+    
+    // Remove detalhes decorativos em landscape
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+  
+  .categoriesTrack {
+    padding: 0.3rem;
+    gap: 0.3rem;
+  }
+  
+  .categoryItem {
+    flex: 0 0 110px;
+    min-width: 110px;
+  }
+
+  .categoryButton {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .dropdownContent {
+    max-height: 100px;
+    z-index: 1001;
+  }
+
+  .dropdownItem {
+    padding: 0.3rem 0.5rem;
+  }
+
+  .dropdownItemLabel {
+    font-size: 0.7rem;
+  }
+}
+
+// Botões de controle de janela Windows 7
+.windowControls {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 2px;
+  z-index: 10;
+}
+
+.windowButton {
+  width: 21px;
+  height: 21px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+  transition: all 0.1s ease;
+  
+  // Gradiente base Windows 7
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(245, 245, 245, 0.9) 50%,
+    rgba(225, 225, 225, 0.9) 100%);
+  
+  // Sombra interna
+  box-shadow: 
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.1) inset,
+    0 1px 2px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(250, 250, 250, 0.95) 50%,
+      rgba(235, 235, 235, 0.95) 100%);
+    border-color: rgba(0, 0, 0, 0.4);
+  }
+
+  &:active {
+    background: linear-gradient(180deg,
+      rgba(215, 215, 215, 0.95) 0%,
+      rgba(230, 230, 230, 0.95) 50%,
+      rgba(245, 245, 245, 0.95) 100%);
+    box-shadow: 
+      0 1px 0 rgba(255, 255, 255, 0.6) inset,
+      0 -1px 0 rgba(0, 0, 0, 0.2) inset,
+      0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.minimizeButton {
+  width: 24.85px;
+  height: 18px;
+  background: 
+    linear-gradient(180deg,
+      #FFFFFF 0%,
+      rgba(159, 160, 165, 0.4) 100%),
+    linear-gradient(180deg,
+      #F7F7F7 0%,
+      #E7E7E7 100%),
+    linear-gradient(180deg,
+      rgba(214, 214, 214, 0.4) 0%,
+      rgba(0, 0, 0, 0.4) 65%,
+      rgba(84, 84, 84, 0.4) 79%,
+      #6F7077 93%);
+  
+  &::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background-image: url('../assets/minimise.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.3));
+  }
+  
+  &:hover {
+    background: 
+      linear-gradient(180deg,
+        #FFFFFF 0%,
+        rgba(169, 170, 175, 0.5) 100%),
+      linear-gradient(180deg,
+        #FAFAFA 0%,
+        #EAEAEA 100%),
+      linear-gradient(180deg,
+        rgba(224, 224, 224, 0.5) 0%,
+        rgba(10, 10, 10, 0.5) 65%,
+        rgba(94, 94, 94, 0.5) 79%,
+        #7F8087 93%);
+    
+    &::after {
+      filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.4)) brightness(1.1);
+    }
+  }
+  
+  &:active {
+    background: 
+      linear-gradient(180deg,
+        #F5F5F5 0%,
+        rgba(149, 150, 155, 0.6) 100%),
+      linear-gradient(180deg,
+        #F0F0F0 0%,
+        #E0E0E0 100%),
+      linear-gradient(180deg,
+        rgba(204, 204, 204, 0.6) 0%,
+        rgba(0, 0, 0, 0.6) 65%,
+        rgba(74, 74, 74, 0.6) 79%,
+        #5F6067 93%);
+    
+    &::after {
+      filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5)) brightness(0.9);
+    }
+  }
+}
+
+.maximizeButton {
+  width: 24.85px;
+  height: 18px;
+  background: 
+    linear-gradient(180deg,
+      #FFFFFF 0%,
+      rgba(159, 160, 165, 0.4) 100%),
+    linear-gradient(180deg,
+      #F7F7F7 0%,
+      #E7E7E7 100%),
+    linear-gradient(180deg,
+      rgba(214, 214, 214, 0.4) 0%,
+      rgba(0, 0, 0, 0.4) 65%,
+      rgba(84, 84, 84, 0.4) 79%,
+      #6F7077 93%);
+  
+  &::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background-image: url('../assets/maximize.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.3));
+  }
+  
+  &:hover {
+    background: 
+      linear-gradient(180deg,
+        #FFFFFF 0%,
+        rgba(169, 170, 175, 0.5) 100%),
+      linear-gradient(180deg,
+        #FAFAFA 0%,
+        #EAEAEA 100%),
+      linear-gradient(180deg,
+        rgba(224, 224, 224, 0.5) 0%,
+        rgba(10, 10, 10, 0.5) 65%,
+        rgba(94, 94, 94, 0.5) 79%,
+        #7F8087 93%);
+    
+    &::after {
+      filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.4)) brightness(1.1);
+    }
+  }
+  
+  &:active {
+    background: 
+      linear-gradient(180deg,
+        #F5F5F5 0%,
+        rgba(149, 150, 155, 0.6) 100%),
+      linear-gradient(180deg,
+        #F0F0F0 0%,
+        #E0E0E0 100%),
+      linear-gradient(180deg,
+        rgba(204, 204, 204, 0.6) 0%,
+        rgba(0, 0, 0, 0.6) 65%,
+        rgba(74, 74, 74, 0.6) 79%,
+        #5F6067 93%);
+    
+    &::after {
+      filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5)) brightness(0.9);
+    }
+  }
+}
+
+.closeButton {
+  width: 42px;
+  height: 18px;
+  background: linear-gradient(180deg,
+    #EBA79B 0%,
+    #9B2813 61%,
+    #B32E16 71%,
+    #B8644E 93%);
+  
+  &::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background-image: url('../assets/close.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5));
+  }
+  
+  &:hover {
+    background: linear-gradient(180deg,
+      #F0B5AB 0%,
+      #A53A26 61%,
+      #C24128 71%,
+      #C8745E 93%);
+    
+    &::after {
+      filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.7)) brightness(1.1);
+    }
+  }
+  
+  &:active {
+    background: linear-gradient(180deg,
+      #E0A59B 0%,
+      #952A16 61%,
+      #B22E16 71%,
+      #B8644E 93%);
+    
+    &::after {
+      filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.8)) brightness(0.9);
+    }
+  }
+}
+
+// Barra de título Windows 7
+.titleBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(240, 245, 255, 0.9) 50%,
+    rgba(220, 230, 255, 0.95) 100%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  z-index: 5;
+  
+  // Gradiente de foco
+  box-shadow: 
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.1) inset;
+}
+
+.titleBarIcon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  background: linear-gradient(45deg, #4f8cff, #2563eb);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  
+  &::after {
+    content: 'P';
+  }
+}
+
+.titleBarText {
+  flex: 1;
+  font-size: 11px;
+  font-weight: 400;
+  color: #2c3e50;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+// Responsive para os controles de janela
+@media (max-width: 768px) {
+  .windowControls {
+    top: 6px;
+    right: 6px;
+    gap: 1px;
+  }
+
+  .windowButton {
+    width: 18px;
+    height: 18px;
+    font-size: 9px;
+    
+    &.minimizeButton,
+    &.maximizeButton {
+      width: 20px;
+      height: 15px;
+      
+      &::after {
+        width: 10px;
+        height: 10px;
+      }
+    }
+    
+    &.closeButton {
+      width: 36px;
+      height: 16px;
+      
+      &::after {
+        width: 10px;
+        height: 10px;
+      }
+    }
+  }
+
+  .titleBar {
+    height: 26px;
+    padding: 0 6px;
+  }
+
+  .titleBarIcon {
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+    font-size: 8px;
+  }
+
+  .titleBarText {
+    font-size: 10px;
   }
 
   .profileInner {
-    gap: 0.3rem;
-    padding: 0 0.1rem;
-    max-width: 100%;
-    min-width: 0;
-  }
-
-  .avatar {
-    width: 50px;
-    height: 50px;
-  }
-
-  .nameBlock {
-    width: 100%;
-    
-    h2 {
-      font-size: 1.1rem;
-    }
-
-    .profileTitle {
-      font-size: 0.7rem;
-    }
-  }
-
-  .stats {
-    gap: 0.4rem;
-    width: 100%;
-  }
-
-  .statItem {
-    padding: 0.3rem 0.2rem;
-    min-width: 40px;
-    border-radius: 8px;
-    
-    .statNumber {
-      font-size: 0.8rem;
-    }
-    
-    .statIcon {
-      font-size: 0.8rem;
-    }
-    
-    .statLabel {
-      font-size: 0.55rem;
-    }
-  }
-
-  .hobbyItem {
-    padding: 0.25rem 0.4rem;
-    font-size: 0.65rem;
-    border-radius: 12px;
-    
-    .hobbyIcon {
-      width: 0.7rem;
-      height: 0.7rem;
-      min-width: 0.7rem;
-      min-height: 0.7rem;
-    }
-  }
-}
-
-// Ajustes para telas muito altas (modo retrato em tablets)
-@media (min-height: 1024px) and (max-width: 768px) {
-  .profile {
-    transform: translate(0px, -80px);
-  }
-}
-
-// Melhorias de performance para dispositivos com pouco poder de processamento
-@media (prefers-reduced-motion: reduce) {
-  .hobbiesMarquee {
-    animation-duration: 60s;
-  }
-  
-  .avatar {
-    &::before {
-      animation: none;
-    }
-    
-    &:hover::before {
-      animation: none;
-    }
-  }
-  
-  .statItem, .hobbyItem {
-    transition: none;
-    
-    &:hover {
-      transition: none;
-    }
+    padding: 32px 0.3rem;
   }
 }
 
 @media (max-width: 480px) {
-  .profile {
-    transform: translate(0px, -30px);
+  .windowControls {
+    top: 4px;
+    right: 4px;
+    gap: 1px;
+  }
+
+  .windowButton {
+    width: 16px;
+    height: 16px;
+    font-size: 8px;
     
+    &.minimizeButton,
+    &.maximizeButton {
+      width: 18px;
+      height: 13px;
+      
+      &::after {
+        width: 8px;
+        height: 8px;
+      }
+    }
+    
+    &.closeButton {
+      width: 32px;
+      height: 14px;
+      
+      &::after {
+        width: 8px;
+        height: 8px;
+      }
+    }
+  }
+
+  .titleBar {
+    height: 22px;
+    padding: 0 4px;
+  }
+
+  .titleBarIcon {
+    width: 12px;
+    height: 12px;
+    margin-right: 4px;
+    font-size: 7px;
+  }
+
+  .titleBarText {
+    font-size: 9px;
   }
 
   .profileInner {
-    gap: 0.5rem;
-    padding: 0 0.2rem;
-    max-width: 100%;
-    min-width: 0;
-  }
-
-  .profileHeader {
-    gap: 0.6rem;
-    width: 100%;
-  }
-
-  .profileInfo {
-    flex-direction: column;
-    gap: 0.6rem;
-    width: 100%;
-  }
-
-  .profileRow {
-    margin: 0;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .avatar {
-    width: 70px;
-    height: 70px;
-    
-    &::before {
-      inset: -3px;
-    }
-  }
-
-  .nameBlock {
-    width: 100%;
-    
-    h2 {
-      font-size: 1.4rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .profileTitle {
-      font-size: 0.8rem;
-    }
-  }
-
-  .stats {
-    gap: 0.6rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .statItem {
-    padding: 0.5rem 0.4rem;
-    min-width: 50px;
-    border-radius: 10px;
-    
-    .statNumber {
-      font-size: 0.95rem;
-    }
-    
-    .statIcon {
-      font-size: 1rem;
-    }
-    
-    .statLabel {
-      font-size: 0.65rem;
-    }
-  }
-
-  .hobbyItem {
-    padding: 0.4rem 0.6rem;
-    font-size: 0.75rem;
-    border-radius: 16px;
-    
-    .hobbyIcon {
-      width: 0.8rem;
-      height: 0.8rem;
-      min-width: 0.8rem;
-      min-height: 0.8rem;
-    }
-  }
-
-  .hobbiesMarquee {
-    animation-duration: 40s;
-    animation-name: infiniteScrollMobile;
-    gap: 1rem;
-  }
-
-  .hobbiesContainer {
-    padding: 0.3rem 0;
-    width: 100%;
-    min-width: 0;
-  }
-}
-
-// Media query adicional para garantir fluidez em telas pequenas
-@media (max-width: 360px) {
-  .profileInner {
-    padding: 0 0.1rem;
-    gap: 0.4rem;
-  }
-
-  .profileHeader {
-    gap: 0.5rem;
-  }
-
-  .profileInfo {
-    gap: 0.5rem;
-  }
-
-  .nameBlock {
-    h2 {
-      font-size: 1.2rem;
-      line-height: 1.1;
-    }
-
-    .profileTitle {
-      font-size: 0.75rem;
-    }
-  }
-
-  .stats {
-    gap: 0.5rem;
-    justify-content: space-around;
-  }
-
-  .statItem {
-    min-width: 45px;
-    padding: 0.4rem 0.3rem;
+    padding: 28px 0.3rem;
   }
 }
