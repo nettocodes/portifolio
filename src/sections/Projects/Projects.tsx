@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import styles from './Projects.module.scss';
-import { motion, easeOut } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, easeOut } from 'framer-motion';
 import SectionWrapper from '../../components/SectionWrapper';
 import ordeskImg from '../../assets/ordesk.png';
 import dataImg from '../../assets/data.png';
@@ -140,6 +140,15 @@ const headerVariants = {
 const Projects: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   const filteredProjects = projects;
 
@@ -263,6 +272,97 @@ const Projects: React.FC = () => {
 
   return (
     <SectionWrapper id="projects" className={styles.projects}>
+      <div ref={sectionRef} className={styles.backgroundAnimations}>
+        {/* Animated Background Elements */}
+        <motion.div 
+          className={styles.floatingElements}
+          style={{ y, opacity }}
+        >
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              className={styles.floatingElement}
+              initial={{ opacity: 0, scale: 0, rotate: 0 }}
+              animate={{ 
+                opacity: [0.1, 0.3, 0.1], 
+                scale: [0.8, 1.2, 0.8],
+                rotate: [0, 360],
+                y: [-20, 20, -20]
+              }}
+              transition={{
+                duration: 4 + i * 0.5,
+                repeat: Infinity,
+                delay: i * 0.3
+              }}
+              style={{
+                top: `${15 + i * 12}%`,
+                left: `${8 + (i % 3) * 25}%`
+              }}
+            >
+              {i % 5 === 0 && '</>'}
+              {i % 5 === 1 && '{}'}
+              {i % 5 === 2 && '()'}
+              {i % 5 === 3 && '[]'}
+              {i % 5 === 4 && '⚛️'}
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Code Rain Animation */}
+        <div className={styles.codeRain}>
+          {[...Array(5)].map((_, i) => (
+            <motion.div
+              key={i}
+              className={styles.codeColumn}
+              initial={{ opacity: 0, y: -100 }}
+              animate={{ 
+                opacity: [0, 0.4, 0],
+                y: ['-100%', '100%']
+              }}
+              transition={{
+                duration: 6 + i * 0.4,
+                repeat: Infinity,
+                delay: i * 0.8,
+                ease: "linear"
+              }}
+              style={{ left: `${15 + i * 20}%` }}
+            >
+              {['const', 'let', 'function', 'return', 'async', 'await'].map((_, idx) => (
+                <span key={idx} className={styles.codeText}>
+                  {['const', 'let', 'function', 'return', 'async', 'await'][Math.floor(Math.random() * 6)]}
+                </span>
+              ))}
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Particle System */}
+        <div className={styles.particleSystem}>
+          {[...Array(10)].map((_, i) => (
+            <motion.div
+              key={i}
+              className={styles.particle}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ 
+                opacity: [0, 0.6, 0],
+                scale: [0, 1, 0],
+                x: [0, Math.random() * 100 - 50],
+                y: [0, Math.random() * 100 - 50]
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 3
+              }}
+              style={{
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
       <div className="container">
         <motion.div
           className={styles.header}
@@ -279,106 +379,183 @@ const Projects: React.FC = () => {
         </motion.div>
 
         {filteredProjects.length > 0 ? (
-          <div 
+          <motion.div 
             className={styles.panoramaContainer}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.3 }}
           >
-            {/* Auto-play indicator */}
-            <div className={styles.autoPlayIndicator}>
-              {!isPaused ? '● Auto-play' : '⏸ Pausado'}
-            </div>
-
-            {/* Panoramic track */}
-            <div className={styles.panoramaTrack}>
+            {/* Enhanced Auto-play indicator */}
+            <motion.div 
+              className={styles.autoPlayIndicator}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+            >
               <motion.div
-                key={filteredProjects[currentSlide].id}
-                className={styles.panoramaSlide}
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -40 }}
-                transition={{ duration: 0.5, ease: 'easeOut' }}
-                aria-hidden="false"
+                animate={{ rotate: isPaused ? 0 : 360 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                style={{ display: 'inline-block', marginRight: '8px' }}
               >
-                <img
-                  src={filteredProjects[currentSlide].image}
-                  alt={filteredProjects[currentSlide].title}
-                  className={styles.slideImage}
-                />
-                <div className={styles.slideContent}>
-                  <div className={styles.slideContentBg} />
-                  <div className={styles.slideTags}>
-                    {filteredProjects[currentSlide].tags.map((tag, i) => (
-                      <span className={styles.slideTag} key={i}>{tag}</span>
-                    ))}
-                  </div>
-                  <h3 className={styles.slideTitle}>{filteredProjects[currentSlide].title}</h3>
-                  <p className={styles.slideDescription}>{filteredProjects[currentSlide].description}</p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-                    <span style={{
-                      display: 'inline-block',
-                      width: 12,
-                      height: 12,
-                      borderRadius: '50%',
-                      background: getStatusColor(filteredProjects[currentSlide].status),
-                      marginRight: 6
-                    }} />
-                    <span style={{ fontSize: 14, color: getStatusColor(filteredProjects[currentSlide].status), fontWeight: 600 }}>
-                      {getStatusText(filteredProjects[currentSlide].status)}
-                    </span>
-                  </div>
-                  <div className={styles.slideLinks}>
-                    {filteredProjects[currentSlide].github && (
-                      <a
-                        href={filteredProjects[currentSlide].github}
-                        className={styles.slideLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`GitHub de ${filteredProjects[currentSlide].title}`}
-                      >
-                        GitHub
-                      </a>
-                    )}
-                    {filteredProjects[currentSlide].link && filteredProjects[currentSlide].link !== '#' && (
-                      <a
-                        href={filteredProjects[currentSlide].link}
-                        className={styles.slideLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Ver projeto ${filteredProjects[currentSlide].title}`}
-                      >
-                        Ver Projeto
-                      </a>
-                    )}
-                  </div>
-                </div>
+                {!isPaused ? '●' : '⏸'}
               </motion.div>
+              {!isPaused ? 'Auto-play' : 'Pausado'}
+            </motion.div>
+
+            {/* Enhanced Panoramic track */}
+            <div className={styles.panoramaTrack}>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={filteredProjects[currentSlide].id}
+                  className={styles.panoramaSlide}
+                  initial={{ opacity: 0, x: 50, scale: 0.98 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  exit={{ opacity: 0, x: -50, scale: 0.98 }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  whileHover={{ scale: 1.02 }}
+                  aria-hidden="false"
+                >
+                  <motion.img
+                    src={filteredProjects[currentSlide].image}
+                    alt={filteredProjects[currentSlide].title}
+                    className={styles.slideImage}
+                    initial={{ scale: 1.1 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.8 }}
+                  />
+                  <motion.div 
+                    className={styles.slideContent}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.6 }}
+                  >
+                    <div className={styles.slideContentBg} />
+                    <motion.div 
+                      className={styles.slideTags}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.4 }}
+                    >
+                      {filteredProjects[currentSlide].tags.map((tag, i) => (
+                        <motion.span 
+                          className={styles.slideTag} 
+                          key={i}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: 0.4 + i * 0.1 }}
+                          whileHover={{ scale: 1.05 }}
+                        >
+                          {tag}
+                        </motion.span>
+                      ))}
+                    </motion.div>
+                    <motion.h3 
+                      className={styles.slideTitle}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      {filteredProjects[currentSlide].title}
+                    </motion.h3>
+                    <motion.p 
+                      className={styles.slideDescription}
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                    >
+                      {filteredProjects[currentSlide].description}
+                    </motion.p>
+                    <motion.div 
+                      style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.5 }}
+                    >
+                      <motion.span 
+                        style={{
+                          display: 'inline-block',
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          background: getStatusColor(filteredProjects[currentSlide].status),
+                          marginRight: 6
+                        }}
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
+                      <span style={{ fontSize: 14, color: getStatusColor(filteredProjects[currentSlide].status), fontWeight: 600 }}>
+                        {getStatusText(filteredProjects[currentSlide].status)}
+                      </span>
+                    </motion.div>
+                    <motion.div 
+                      className={styles.slideLinks}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 }}
+                    >
+                      {filteredProjects[currentSlide].github && (
+                        <motion.a
+                          href={filteredProjects[currentSlide].github}
+                          className={styles.slideLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`GitHub de ${filteredProjects[currentSlide].title}`}
+                          whileHover={{ scale: 1.05, y: -2 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          GitHub
+                        </motion.a>
+                      )}
+                      {filteredProjects[currentSlide].link && filteredProjects[currentSlide].link !== '#' && (
+                        <motion.a
+                          href={filteredProjects[currentSlide].link}
+                          className={styles.slideLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Ver projeto ${filteredProjects[currentSlide].title}`}
+                          whileHover={{ scale: 1.05, y: -2 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          Ver Projeto
+                        </motion.a>
+                      )}
+                    </motion.div>
+                  </motion.div>
+                </motion.div>
+              </AnimatePresence>
             </div>
 
-            {/* Navegação */}
+            {/* Enhanced Navegação */}
             <div className={styles.panoramaNavigation}>
-              <button
+              <motion.button
                 className={styles.navButton}
                 onClick={prevSlide}
                 aria-label="Anterior"
                 tabIndex={0}
+                whileHover={{ scale: 1.1, backgroundColor: "rgba(79, 140, 255, 0.1)" }}
+                whileTap={{ scale: 0.9 }}
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </button>
-              <button
+              </motion.button>
+              <motion.button
                 className={styles.navButton}
                 onClick={nextSlide}
                 aria-label="Próximo"
                 tabIndex={0}
+                whileHover={{ scale: 1.1, backgroundColor: "rgba(79, 140, 255, 0.1)" }}
+                whileTap={{ scale: 0.9 }}
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </button>
+              </motion.button>
             </div>
 
-            {/* Dots de paginação */}
+            {/* Enhanced Dots de paginação */}
             <div className={styles.panoramaPagination}>
               {filteredProjects.map((_, idx) => (
-                <div
+                <motion.div
                   key={idx}
                   className={
                     idx === currentSlide
@@ -389,10 +566,14 @@ const Projects: React.FC = () => {
                   aria-label={`Ir para slide ${idx + 1}`}
                   tabIndex={0}
                   role="button"
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.8 }}
+                  animate={idx === currentSlide ? { scale: [1, 1.2, 1] } : {}}
+                  transition={{ duration: 0.3 }}
                 />
               ))}
             </div>
-          </div>
+          </motion.div>
         ) : (
           <div className={styles.emptyState}>
             <span className={styles.emptyIcon}>��</span>
@@ -401,21 +582,75 @@ const Projects: React.FC = () => {
           </div>
         )}
 
-        {/* Estatísticas */}
-        <div ref={statsRef} className={styles.statsRow}>
+        {/* Enhanced Estatísticas */}
+        <motion.div 
+          ref={statsRef} 
+          className={styles.statsRow}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true, amount: 0.3 }}
+        >
           {stats.map((stat, idx) => (
-            <div
+            <motion.div
               className={
                 styles.statBar + ' ' + (idx % 2 === 0 ? styles.fromLeft : styles.fromRight)
               }
               key={idx}
+              initial={{ 
+                opacity: 0, 
+                x: idx % 2 === 0 ? -50 : 50,
+                scale: 0.8
+              }}
+              whileInView={{ 
+                opacity: 1, 
+                x: 0,
+                scale: 1
+              }}
+              transition={{ 
+                duration: 0.6, 
+                delay: idx * 0.1,
+                type: "spring",
+                stiffness: 100
+              }}
+              whileHover={{ 
+                scale: 1.05, 
+                y: -5,
+                transition: { duration: 0.2 }
+              }}
+              viewport={{ once: true, amount: 0.5 }}
             >
-              {statIcons[idx]}
-              <span className={styles.statNumber}>{countedStats[idx]}</span>
-              <span className={styles.statLabel}>{stat.label}</span>
-            </div>
+              <motion.div
+                initial={{ rotate: 0 }}
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.6 }}
+              >
+                {statIcons[idx]}
+              </motion.div>
+              <motion.span 
+                className={styles.statNumber}
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                transition={{ 
+                  duration: 0.5, 
+                  delay: idx * 0.1 + 0.3,
+                  type: "spring",
+                  stiffness: 200
+                }}
+              >
+                {countedStats[idx]}
+              </motion.span>
+              <motion.span 
+                className={styles.statLabel}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: idx * 0.1 + 0.5 }}
+              >
+                {stat.label}
+              </motion.span>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </SectionWrapper>
   );

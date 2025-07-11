@@ -2,11 +2,10 @@
 
 .footer {
   width: 100%;
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  background: linear-gradient(135deg, #0a0d16 0%, #1a1d2e 25%, #2a2d3a 50%, #1e2139 75%, #0f1419 100%);
   color: $color-text-light;
   position: relative;
   overflow: hidden;
-  margin-top: 4rem;
   
   &::before {
     content: '';
@@ -16,9 +15,9 @@
     right: 0;
     bottom: 0;
     background: 
-      radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
-      radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+      radial-gradient(circle at 20% 80%, rgba(79, 140, 255, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(79, 140, 255, 0.06) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(79, 140, 255, 0.04) 0%, transparent 50%);
     z-index: 1;
     animation: backgroundFloat 20s ease-in-out infinite;
   }
@@ -31,16 +30,13 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: 
-      radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.3), transparent),
-      radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.2), transparent),
-      radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.4), transparent),
-      radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.3), transparent),
-      radial-gradient(2px 2px at 160px 30px, rgba(255, 255, 255, 0.2), transparent);
-    background-repeat: repeat;
-    background-size: 200px 100px;
+    background: 
+      radial-gradient(circle at 70% 20%, rgba(79, 140, 255, 0.12) 0%, transparent 60%),
+      radial-gradient(circle at 30% 80%, rgba(79, 140, 255, 0.10) 0%, transparent 60%),
+      linear-gradient(45deg, transparent 0%, rgba(79, 140, 255, 0.05) 50%, transparent 100%);
+    z-index: 2;
+    mix-blend-mode: screen;
     animation: sparkle 8s linear infinite;
-    z-index: 1;
   }
 }
 
@@ -108,10 +104,10 @@
 
 @keyframes glow {
   0%, 100% {
-    box-shadow: 0 0 5px rgba(79, 195, 247, 0.5);
+    box-shadow: 0 0 5px rgba(79, 140, 255, 0.5);
   }
   50% {
-    box-shadow: 0 0 20px rgba(79, 195, 247, 0.8), 0 0 30px rgba(79, 195, 247, 0.6);
+    box-shadow: 0 0 20px rgba(79, 140, 255, 0.8), 0 0 30px rgba(79, 140, 255, 0.6);
   }
 }
 
@@ -137,7 +133,7 @@
 
 .container {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   max-width: 1200px;
   margin: 0 auto;
   padding: 3rem 2rem 1rem;
@@ -177,7 +173,7 @@
       left: 0;
       width: 0;
       height: 3px;
-      background: linear-gradient(90deg, #4FC3F7, #29B6F6);
+      background: linear-gradient(90deg, rgba(79, 140, 255, 0.8), rgba(79, 140, 255, 0.6));
       animation: typewriter 1.5s ease-out 0.5s both;
     }
     
@@ -227,13 +223,7 @@
     font-family: $font-title;
     position: relative;
     
-    &::before {
-      content: '▶';
-      position: absolute;
-      left: -20px;
-      color: #4FC3F7;
-      animation: float 2s ease-in-out infinite;
-    }
+
   }
   
   .links {
@@ -249,15 +239,7 @@
       padding: 0.25rem 0;
       position: relative;
       overflow: hidden;
-      
-      &::before {
-        content: '→';
-        position: absolute;
-        left: -20px;
-        opacity: 0;
-        transition: all 0.3s ease;
-        color: #4FC3F7;
-      }
+
       
       &::after {
         content: '';
@@ -266,7 +248,7 @@
         left: 0;
         width: 0;
         height: 2px;
-        background: linear-gradient(90deg, #4FC3F7, #29B6F6);
+        background: linear-gradient(90deg, rgba(79, 140, 255, 0.8), rgba(79, 140, 255, 0.6));
         transition: width 0.3s ease;
       }
       
@@ -297,13 +279,7 @@
     font-family: $font-title;
     position: relative;
     
-    &::before {
-      content: '✉';
-      position: absolute;
-      left: -25px;
-      color: #4FC3F7;
-      animation: float 2s ease-in-out infinite 0.5s;
-    }
+    
   }
 }
 
@@ -332,7 +308,7 @@
   }
   
   .icon {
-    color: #4FC3F7;
+    color: rgba(79, 140, 255, 0.8);
     font-size: 1rem;
     flex-shrink: 0;
     transition: all 0.3s ease;
@@ -407,14 +383,6 @@
     margin-bottom: 1rem;
     font-family: $font-title;
     position: relative;
-    
-    &::before {
-      content: '⚡';
-      position: absolute;
-      left: -25px;
-      color: #4FC3F7;
-      animation: float 2s ease-in-out infinite 1s;
-    }
   }
 }
 
@@ -434,18 +402,16 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
   position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 0.6s ease;
-  }
+  overflow: hidden;    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(79, 140, 255, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
   
   &:hover {
     transform: translateY(-2px);
@@ -467,7 +433,7 @@
     
     &::before {
       content: '◆';
-      color: #4FC3F7;
+      color: rgba(79, 140, 255, 0.8);
       font-size: 0.7rem;
     }
   }
@@ -503,7 +469,7 @@
   transition: all 0.3s ease;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  z-index: 3;
+  z-index: 4;
   animation: bounceIn 0.8s ease-out 1.6s both;
   
   &:hover {
@@ -521,7 +487,7 @@
 
 .bottomSection {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1.5rem 0;
   margin-top: 2rem;
@@ -574,7 +540,7 @@
   }
   
   .codeIcon {
-    color: #4FC3F7;
+    color: rgba(79, 140, 255, 0.8);
     font-size: 0.9rem;
     animation: float 3s ease-in-out infinite;
   }
@@ -608,22 +574,22 @@
 
 // Animações específicas para cada categoria de tecnologia
 .techFrontend:hover {
-  border-left: 4px solid #61dafb;
+  border-left: 4px solid rgba(79, 140, 255, 0.8);
   transform: translateX(10px) translateY(-2px);
 }
 
 .techBackend:hover {
-  border-left: 4px solid #68a063;
+  border-left: 4px solid rgba(79, 140, 255, 0.7);
   transform: translateX(10px) translateY(-2px);
 }
 
 .techDatabase:hover {
-  border-left: 4px solid #336791;
+  border-left: 4px solid rgba(79, 140, 255, 0.6);
   transform: translateX(10px) translateY(-2px);
 }
 
 .techTools:hover {
-  border-left: 4px solid #f05032;
+  border-left: 4px solid rgba(79, 140, 255, 0.9);
   transform: translateX(10px) translateY(-2px);
 }
 
@@ -668,9 +634,9 @@
 // Efeito de ondas no background
 .footer::before {
   background-image: 
-    radial-gradient(circle at 25% 25%, rgba(79, 195, 247, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, rgba(79, 195, 247, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 25% 25%, rgba(79, 140, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(79, 140, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(79, 140, 255, 0.05) 0%, transparent 50%);
   animation: waveMove 15s ease-in-out infinite;
 }
 
@@ -696,12 +662,12 @@
 // Efeito de partículas melhorado
 .footer::after {
   background-image: 
-    radial-gradient(2px 2px at 25px 35px, rgba(79, 195, 247, 0.4), transparent),
-    radial-gradient(2px 2px at 45px 75px, rgba(79, 195, 247, 0.3), transparent),
-    radial-gradient(1px 1px at 95px 45px, rgba(255, 255, 255, 0.5), transparent),
-    radial-gradient(1px 1px at 135px 85px, rgba(79, 195, 247, 0.4), transparent),
-    radial-gradient(2px 2px at 165px 35px, rgba(255, 255, 255, 0.3), transparent),
-    radial-gradient(1px 1px at 185px 65px, rgba(79, 195, 247, 0.3), transparent);
+    radial-gradient(2px 2px at 25px 35px, rgba(79, 140, 255, 0.4), transparent),
+    radial-gradient(2px 2px at 45px 75px, rgba(79, 140, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 95px 45px, rgba(79, 140, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 135px 85px, rgba(79, 140, 255, 0.4), transparent),
+    radial-gradient(2px 2px at 165px 35px, rgba(79, 140, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 185px 65px, rgba(79, 140, 255, 0.3), transparent);
   background-size: 250px 120px;
   animation: particleFloat 12s linear infinite;
 }
