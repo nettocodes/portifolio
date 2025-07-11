@@ -62,7 +62,7 @@ const Contact: React.FC = () => {
             <div className={styles.imageSection}>
               <div className={styles.imageWrapper}>
                 <img 
-                  src="/src/assets/ivo.jpg" 
+                  src="/assets/ivo.jpg" 
                   alt="Ivo Braatz" 
                   className={styles.profileImage}
                 />
