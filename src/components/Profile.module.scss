@@ -1040,7 +1040,6 @@
     z-index: 2;
     display: flex;
     flex-direction: column;
-    min-height: 50px; // Altura mínima
 
     // Mobile muito pequeno (320px e abaixo)
     @media (max-width: 320px) {
@@ -2282,12 +2281,14 @@
 .clippyTooltip {
   position: absolute;
   top: 30px;
-  right: 0;
   z-index: 1000;
   display: flex;
   align-items: flex-start;
   gap: 12px;
 
+  // Garantir que não saia da tela
+  max-width: calc(100vw - 40px);
+  
   // Animação suave de entrada
   animation: clippyFadeIn 0.4s ease-out;
 }
@@ -2331,7 +2332,8 @@
 .clippyBubble {
   position: relative;
   min-width: 220px;
-  max-width: 300px;
+  max-width: min(300px, calc(100vw - 120px));
+  width: max-content;
 
   // Estilos do Windows 7 balloon
   background: linear-gradient(180deg, #fff, #ebebeb);
@@ -2517,8 +2519,9 @@
 // Responsividade para o tooltip
 @media (max-width: 768px) {
   .clippyTooltip {
-    right: -50px;
     gap: 8px;
+    max-width: calc(100vw - 40px);
+    transform: translateX(calc(-100% + 100px));
   }
 
   .clippyAvatar {
@@ -2532,7 +2535,7 @@
 
   .clippyBubble {
     min-width: 180px;
-    max-width: 250px;
+    max-width: min(250px, calc(100vw - 80px));
     font-size: 8pt;
     padding: 10px 20px 10px 12px;
   }
@@ -2540,8 +2543,9 @@
 
 @media (max-width: 480px) {
   .clippyTooltip {
-    right: -80px;
     gap: 6px;
+    max-width: calc(100vw - 20px);
+    transform: translateX(calc(-100% + 80px));
   }
 
   .clippyAvatar {
@@ -2554,10 +2558,34 @@
   }
 
   .clippyBubble {
-    min-width: 160px;
-    max-width: 220px;
+    min-width: 150px;
+    max-width: min(200px, calc(100vw - 60px));
     font-size: 7pt;
     padding: 8px 16px 8px 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .clippyTooltip {
+    gap: 4px;
+    max-width: calc(100vw - 10px);
+    transform: translateX(calc(-100% + 60px));
+  }
+
+  .clippyAvatar {
+    width: 24px;
+    height: 24px;
+  }
+
+  .clippyBody {
+    font-size: 16px;
+  }
+
+  .clippyBubble {
+    min-width: 120px;
+    max-width: min(180px, calc(100vw - 40px));
+    font-size: 6pt;
+    padding: 6px 12px 6px 8px;
   }
 }
 

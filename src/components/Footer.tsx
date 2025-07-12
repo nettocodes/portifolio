@@ -7,8 +7,7 @@ import {
   FaWhatsapp, 
   FaMapMarkerAlt, 
   FaCode, 
-  FaArrowUp,
-  FaHeart
+  FaArrowUp
 } from 'react-icons/fa';
 
 const Footer: React.FC = () => {
@@ -185,7 +184,7 @@ const Footer: React.FC = () => {
           <div className={styles.copy}>
             <span>&copy; {new Date().getFullYear()} Ivo Netto. Todos os direitos reservados.</span>
             <span className={styles.credits}>
-              Desenvolvido com <FaHeart className={styles.heartIcon} /> usando React, Vite e muito café ☕
+              Desenvolvido com React, Vite e muito café ☕
             </span>
           </div>
           <div className={styles.madeWith}>
