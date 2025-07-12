@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './Contact.module.scss';
 import HeaderSection from '../../components/HeaderSection';
 import AnimatedGridOptimized from '../../components/AnimatedGridOptimized';
-import { FaGithub, FaLinkedin, FaEnvelope, FaWhatsapp, FaMapMarkerAlt, FaPhoneAlt, FaPaperPlane } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaWhatsapp, FaMapMarkerAlt, FaPhoneAlt, FaPaperPlane, FaCheck, FaTimes } from 'react-icons/fa';
 import ivoImg from '../../assets/ivo.jpg';
 import emailjs from '@emailjs/browser';
 import { emailConfig, isEmailJSConfigured } from '../../config/emailjs';
@@ -242,21 +242,38 @@ const Contact: React.FC = () => {
                   />
                 </div>
                 
-                <button type="submit" disabled={status === 'sending'} className={styles.submitButton}>
-                  <FaPaperPlane className={styles.buttonIcon} />
-                  {status === 'sending' ? 'Enviando...' : 'Enviar mensagem'}
+                <button 
+                  type="submit" 
+                  disabled={status === 'sending'} 
+                  className={`${styles.submitButton} ${styles[status]}`}
+                >
+                  <div className={styles.buttonContent}>
+                    {status === 'idle' && (
+                      <>
+                        <FaPaperPlane className={styles.buttonIcon} />
+                        <span>Enviar mensagem</span>
+                      </>
+                    )}
+                    {status === 'sending' && (
+                      <>
+                        <FaPaperPlane className={`${styles.buttonIcon} ${styles.sending}`} />
+                        <span>Enviando...</span>
+                      </>
+                    )}
+                    {status === 'success' && (
+                      <>
+                        <FaCheck className={`${styles.buttonIcon} ${styles.success}`} />
+                        <span>Enviado!</span>
+                      </>
+                    )}
+                    {status === 'error' && (
+                      <>
+                        <FaTimes className={`${styles.buttonIcon} ${styles.error}`} />
+                        <span>Erro! Tente novamente</span>
+                      </>
+                    )}
+                  </div>
                 </button>
-                
-                {status === 'success' && (
-                  <div className={styles.feedback + ' ' + styles.success}>
-                    ✅ Mensagem enviada com sucesso! Obrigado pelo contato, responderei em breve.
-                  </div>
-                )}
-                {status === 'error' && (
-                  <div className={styles.feedback + ' ' + styles.error}>
-                    ❌ Erro ao enviar mensagem. Verifique os dados e tente novamente ou entre em contato diretamente.
-                  </div>
-                )}
               </form>
             </div>
           </div>

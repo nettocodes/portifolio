@@ -98,30 +98,6 @@ const projects: Project[] = [
     featured: false,
     status: 'in-progress'
   },
-  {
-    id: '7',
-    title: 'Real-time Chat',
-    description: 'Sistema de chat em tempo real com rooms, mensagens privadas e compartilhamento de arquivos.',
-    image: 'https://images.unsplash.com/photo-1577563908411-5077b6dc7624?auto=format&fit=crop&w=1200&q=80',
-    link: '#',
-    tags: ['Socket.io', 'React', 'Node.js', 'MongoDB'],
-    technologies: ['Socket.io', 'React', 'Node.js', 'MongoDB', 'JWT', 'Multer'],
-    category: 'fullstack',
-    featured: false,
-    status: 'completed'
-  },
-  {
-    id: '8',
-    title: 'Task Manager Pro',
-    description: 'Gerenciador de tarefas avançado com colaboração em equipe, cronogramas e relatórios de produtividade.',
-    image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?auto=format&fit=crop&w=1200&q=80',
-    link: '#',
-    tags: ['Vue.js', 'Express', 'PostgreSQL', 'Redis'],
-    technologies: ['Vue.js', 'Express', 'PostgreSQL', 'Redis', 'JWT', 'Websockets'],
-    category: 'fullstack',
-    featured: true,
-    status: 'completed'
-  }
 ];
 
 const Projects: React.FC = () => {

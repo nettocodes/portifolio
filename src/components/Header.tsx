@@ -47,7 +47,7 @@ const Header: React.FC = () => {
           transition={{ type: 'spring', stiffness: 400, damping: 25 }}
         >
           Ivo<span>.</span>
-          <span className={styles.slogan}>Portfólio &bull; Full Stack & Design</span>
+          <span className={styles.slogan}>Portfólio &bull; Full Stack</span>
         </motion.div>
         
         <nav className={styles.nav}>
