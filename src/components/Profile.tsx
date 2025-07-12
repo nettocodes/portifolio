@@ -1,6 +1,7 @@
 import React, { memo, useRef, useState, useEffect } from 'react';
 import styles from './Profile.module.scss';
 import ivoImg from '../assets/ivo.jpg';
+import windows7Background from '../assets/Windows_7.jpg';
 import {
   Calendar,
   FolderOpen,
@@ -448,7 +449,16 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <div className={styles.profile} ref={profileRef}>
+    <div 
+      className={styles.profile} 
+      ref={profileRef}
+      style={{
+        backgroundImage: `linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.2) 25%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.2) 75%, rgba(0, 0, 0, 0.3) 100%), url(${windows7Background})`,
+        backgroundSize: 'cover, cover',
+        backgroundPosition: 'center, center',
+        backgroundRepeat: 'no-repeat, no-repeat'
+      }}
+    >
       <div className={styles.profileContent}>
         {/* Barra de título Windows 7 */}
         <div className={styles.titleBar}>

@@ -19,26 +19,6 @@
 
   // Permite overflow em toda a hierarquia
   overflow: visible;
-  &::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-      
-        // Overlay escuro para melhor contraste
-        linear-gradient(135deg,
-          rgba(0, 0, 0, 0.3) 0%,
-          rgba(0, 0, 0, 0.2) 25%,
-          rgba(0, 0, 0, 0.1) 50%,
-          rgba(0, 0, 0, 0.2) 75%,
-          rgba(0, 0, 0, 0.3) 100%),
-        // Imagem de fundo
-        url('../assets/windows_7.jpg');
-      background-size: cover, cover;
-      background-position: center, center;
-      background-repeat: no-repeat, no-repeat;
-      z-index: -1;
-    }
 
   .profileContent {
     // Reativar pointer-events apenas no conteúdo

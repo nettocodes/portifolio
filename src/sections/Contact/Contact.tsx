@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Contact.module.scss';
 import HeaderSection from '../../components/HeaderSection';
 import AnimatedGridOptimized from '../../components/AnimatedGridOptimized';
 import { FaGithub, FaLinkedin, FaEnvelope, FaWhatsapp, FaMapMarkerAlt, FaPhoneAlt, FaPaperPlane } from 'react-icons/fa';
 import ivoImg from '../../assets/ivo.jpg';
 import emailjs from '@emailjs/browser';
-import { emailConfig, emailTemplateParams, isEmailJSConfigured } from '../../config/emailjs';
+import { emailConfig, isEmailJSConfigured } from '../../config/emailjs';
 
 const socials = [
   { href: 'https://github.com/IvoBraatz', label: 'GitHub', icon: <FaGithub /> },
@@ -24,12 +24,36 @@ const Contact: React.FC = () => {
     message: '',
   });
 
+  // Inicializar EmailJS quando o componente montar
+  useEffect(() => {
+    const initEmailJS = async () => {
+      try {
+        if (isEmailJSConfigured()) {
+          await emailjs.init(emailConfig.publicKey);
+        }
+      } catch (error) {
+        console.error('Erro ao inicializar EmailJS:', error);
+      }
+    };
+
+    initEmailJS();
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const validateEmail = (email: string) => /.+@.+\..+/.test(email);
-  const validatePhone = (phone: string) => phone === '' || /^(\(\d{2}\)\s?)?\d{4,5}-\d{4}$/.test(phone);
+  const validatePhone = (phone: string) => {
+    // Se o campo estiver vazio, é válido (campo opcional)
+    if (!phone || phone.trim() === '') return true;
+    
+    // Remover espaços e caracteres especiais para validação
+    const cleanPhone = phone.replace(/\D/g, '');
+    
+    // Aceitar números com 10 ou 11 dígitos (com ou sem DDD)
+    return cleanPhone.length >= 10 && cleanPhone.length <= 11;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,7 +72,6 @@ const Contact: React.FC = () => {
     try {
       // Verificar se o EmailJS está configurado
       if (!isEmailJSConfigured()) {
-        console.warn('EmailJS não está configurado. Configure as variáveis de ambiente.');
         // Fallback para simulação se não estiver configurado
         setTimeout(() => {
           setStatus(Math.random() > 0.15 ? 'success' : 'error');
@@ -62,30 +85,46 @@ const Contact: React.FC = () => {
         from_name: form.name,
         from_email: form.email,
         subject: form.subject,
-        company: form.company,
-        phone: form.phone,
+        company: form.company || 'Não informado',
+        phone: form.phone || 'Não informado',
         message: form.message,
-        ...emailTemplateParams
+        to_name: 'Ivo Braatz',
+        to_email: 'braatzivo@hotmail.com',
+        reply_to: form.email
       };
 
-      await emailjs.send(
-        emailConfig.serviceId,
-        emailConfig.templateId,
+      // Tentar envio com timeout para evitar travamentos
+      const sendPromise = emailjs.send(
+        'service_zgajelg',
+        'template_4nbqqwn',
         templateParams,
-        emailConfig.publicKey
+        'xffB9Bnv66-8D7RyW'
       );
 
-      setStatus('success');
-      // Limpar o formulário após envio bem-sucedido
-      setForm({
-        name: '',
-        email: '',
-        subject: '',
-        company: '',
-        phone: '',
-        message: '',
+      // Timeout de 30 segundos
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Timeout: O envio demorou mais de 30 segundos')), 30000);
       });
-    } catch (error) {
+
+      const result = await Promise.race([sendPromise, timeoutPromise]) as any;
+      
+      // Verificar se o resultado é válido
+      if (result && (result.status === 200 || result.text === 'OK' || result.status === undefined)) {
+        setStatus('success');
+        
+        // Limpar o formulário após envio bem-sucedido
+        setForm({
+          name: '',
+          email: '',
+          subject: '',
+          company: '',
+          phone: '',
+          message: '',
+        });
+      } else {
+        throw new Error(`Resposta inesperada: ${JSON.stringify(result)}`);
+      }
+    } catch (error: any) {
       console.error('Erro ao enviar email:', error);
       setStatus('error');
     }
@@ -184,7 +223,7 @@ const Contact: React.FC = () => {
                       id="phone" 
                       name="phone" 
                       type="text" 
-                      placeholder="(xx) xxxxx-xxxx" 
+                      placeholder="(11) 99999-9999" 
                       value={form.phone} 
                       onChange={handleChange} 
                     />

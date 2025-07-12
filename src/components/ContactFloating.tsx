@@ -2,6 +2,7 @@ import React, { memo, useRef, useEffect, useState } from 'react';
 import styles from './ContactFloating.module.scss';
 import { FaGithub, FaLinkedin, FaEnvelope, FaWhatsapp } from 'react-icons/fa';
 import networkIcon from '../assets/network.png';
+import windows7Background from '../assets/Windows_7.jpg';
 
 const contactMethods = [
   {
@@ -143,7 +144,16 @@ const ContactFloating: React.FC = () => {
   }, [isMobile]);
 
   return (
-    <div className={styles.contactFloating} ref={contactRef}>
+    <div 
+      className={styles.contactFloating} 
+      ref={contactRef}
+      style={{
+        backgroundImage: `linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.2) 25%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.2) 75%, rgba(0, 0, 0, 0.3) 100%), url(${windows7Background})`,
+        backgroundSize: 'cover, cover',
+        backgroundPosition: 'center, center',
+        backgroundRepeat: 'no-repeat, no-repeat'
+      }}
+    >
       <div className={styles.taskbar}>
         {/* Botão Start */}
         <div 
