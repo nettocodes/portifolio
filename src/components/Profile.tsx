@@ -115,6 +115,63 @@ const dropdownCategories: DropdownCategory[] = [
       { icon: <Globe weight="fill" />, label: 'Website', type: 'link', url: '#' },
     ]
   },
+  {
+    id: 'tools',
+    title: 'Ferramentas',
+    icon: <PaintBrush weight="fill" />,
+    items: [
+      { icon: <Code weight="fill" />, label: 'VS Code', type: 'info' },
+      { icon: <Database weight="fill" />, label: 'Docker', type: 'info' },
+      { icon: <Globe weight="fill" />, label: 'Figma', type: 'info' },
+      { icon: <Link weight="fill" />, label: 'Postman', type: 'info' },
+      { icon: <PaintBrush weight="fill" />, label: 'Adobe Creative Suite', type: 'info' },
+    ]
+  },
+  {
+    id: 'education',
+    title: 'Formação',
+    icon: <Book weight="fill" />,
+    items: [
+      { icon: <Book weight="fill" />, label: 'Ciência da Computação', type: 'info' },
+      { icon: <Globe weight="fill" />, label: 'Certificação AWS', type: 'info' },
+      { icon: <Code weight="fill" />, label: 'Certificação React', type: 'info' },
+      { icon: <Database weight="fill" />, label: 'Certificação Node.js', type: 'info' },
+    ]
+  },
+  {
+    id: 'experience',
+    title: 'Experiência',
+    icon: <Briefcase weight="fill" />,
+    items: [
+      { icon: <Briefcase weight="fill" />, label: 'Senior Developer - 2022-2024', type: 'info' },
+      { icon: <Code weight="fill" />, label: 'Full Stack Developer - 2020-2022', type: 'info' },
+      { icon: <Globe weight="fill" />, label: 'Frontend Developer - 2018-2020', type: 'info' },
+      { icon: <Database weight="fill" />, label: 'Junior Developer - 2016-2018', type: 'info' },
+    ]
+  },
+  {
+    id: 'languages',
+    title: 'Idiomas',
+    icon: <Globe weight="fill" />,
+    items: [
+      { icon: <Globe weight="fill" />, label: 'Português - Nativo', type: 'info' },
+      { icon: <Globe weight="fill" />, label: 'Inglês - Avançado', type: 'info' },
+      { icon: <Globe weight="fill" />, label: 'Espanhol - Intermediário', type: 'info' },
+      { icon: <Globe weight="fill" />, label: 'Francês - Básico', type: 'info' },
+    ]
+  },
+  {
+    id: 'certifications',
+    title: 'Certificações',
+    icon: <Calendar weight="fill" />,
+    items: [
+      { icon: <Database weight="fill" />, label: 'AWS Solutions Architect', type: 'link', url: '#' },
+      { icon: <Code weight="fill" />, label: 'React Developer Certification', type: 'link', url: '#' },
+      { icon: <Globe weight="fill" />, label: 'Google Cloud Professional', type: 'link', url: '#' },
+      { icon: <PaintBrush weight="fill" />, label: 'Adobe Certified Expert', type: 'link', url: '#' },
+      { icon: <Link weight="fill" />, label: 'Scrum Master Certification', type: 'link', url: '#' },
+    ]
+  },
 ];
 
 const Avatar = memo(() => (
@@ -217,10 +274,9 @@ const CategoryDropdown = memo(({ category, isOpen, onToggle }: {
 
 const CategoriesSection = memo(() => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [itemsPerView, setItemsPerView] = useState(3);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
   const containerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = (categoryId: string) => {
     setOpenDropdown(prev => prev === categoryId ? null : categoryId);
@@ -228,37 +284,46 @@ const CategoriesSection = memo(() => {
 
   // Calcular quantos items são visíveis baseado no tamanho da tela
   useEffect(() => {
-    const updateItemsPerView = () => {
+    const updateItemsPerPage = () => {
       const width = window.innerWidth;
-      if (width <= 480) {
-        setItemsPerView(1);
+      if (width <= 320) {
+        setItemsPerPage(1); // Mobile muito pequeno - 1 item
+      } else if (width <= 480) {
+        setItemsPerPage(2); // Mobile - 2 itens
       } else if (width <= 768) {
-        setItemsPerView(2);
+        setItemsPerPage(3); // Tablet portrait - 3 itens
       } else if (width <= 1024) {
-        setItemsPerView(3);
+        setItemsPerPage(4); // Tablet landscape - 4 itens
       } else {
-        setItemsPerView(4);
+        setItemsPerPage(5); // Desktop - 5 itens
       }
     };
 
-    updateItemsPerView();
-    window.addEventListener('resize', updateItemsPerView);
-    return () => window.removeEventListener('resize', updateItemsPerView);
+    updateItemsPerPage();
+    window.addEventListener('resize', updateItemsPerPage);
+    return () => window.removeEventListener('resize', updateItemsPerPage);
   }, []);
 
-  // Navegação do carrossel
-  const goToPrevious = () => {
-    setCurrentIndex(prev => Math.max(0, prev - 1));
+  // Calcular items da página atual
+  const totalPages = Math.ceil(dropdownCategories.length / itemsPerPage);
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = dropdownCategories.slice(startIndex, endIndex);
+
+  // Navegação de páginas
+  const goToPreviousPage = () => {
+    setCurrentPage(prev => Math.max(0, prev - 1));
+    setOpenDropdown(null); // Fecha dropdown ao navegar
   };
 
-  const goToNext = () => {
-    const maxIndex = Math.max(0, dropdownCategories.length - itemsPerView);
-    setCurrentIndex(prev => Math.min(maxIndex, prev + 1));
+  const goToNextPage = () => {
+    setCurrentPage(prev => Math.min(totalPages - 1, prev + 1));
+    setOpenDropdown(null); // Fecha dropdown ao navegar
   };
 
   // Calcular se os botões devem estar habilitados
-  const canGoPrevious = currentIndex > 0;
-  const canGoNext = currentIndex < dropdownCategories.length - itemsPerView;
+  const canGoPrevious = currentPage > 0;
+  const canGoNext = currentPage < totalPages - 1;
 
   // Fechar dropdown ao clicar fora
   useEffect(() => {
@@ -277,16 +342,6 @@ const CategoriesSection = memo(() => {
     };
   }, [openDropdown]);
 
-  // Atualizar posição do carrossel
-  useEffect(() => {
-    if (trackRef.current) {
-      const itemWidth = trackRef.current.children[0]?.getBoundingClientRect().width || 180;
-      const gap = 8; // 0.5rem = 8px
-      const translateX = -(currentIndex * (itemWidth + gap));
-      trackRef.current.style.transform = `translateX(${translateX}px)`;
-    }
-  }, [currentIndex]);
-
   return (
     <div 
       ref={containerRef}
@@ -295,9 +350,9 @@ const CategoriesSection = memo(() => {
       {/* Botão Anterior */}
       <button 
         className={`${styles.carouselButton} ${styles.carouselButtonLeft}`}
-        onClick={goToPrevious}
+        onClick={goToPreviousPage}
         disabled={!canGoPrevious}
-        aria-label="Categoria anterior"
+        aria-label="Página anterior"
       >
         <div className={styles.carouselButtonInner}>
           <div className={styles.carouselButtonTopWhite} />
@@ -306,26 +361,28 @@ const CategoriesSection = memo(() => {
       </button>
 
       {/* Container do Carrossel */}
-      <div className={styles.categoriesCarousel}>
-        <div ref={trackRef} className={styles.categoriesTrack}>
-          {dropdownCategories.map((category) => (
-            <div key={category.id} className={styles.categoryItem}>
-              <CategoryDropdown
-                category={category}
-                isOpen={openDropdown === category.id}
-                onToggle={() => toggleDropdown(category.id)}
-              />
-            </div>
-          ))}
+      <div className={`${styles.categoriesCarousel} ${openDropdown ? styles.hasOpenDropdown : ''}`}>
+        <div className={styles.carouselWrapper}>
+          <div className={styles.categoriesTrack}>
+            {currentItems.map((category) => (
+              <div key={category.id} className={styles.categoryItem}>
+                <CategoryDropdown
+                  category={category}
+                  isOpen={openDropdown === category.id}
+                  onToggle={() => toggleDropdown(category.id)}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Botão Próximo */}
       <button 
         className={`${styles.carouselButton} ${styles.carouselButtonRight}`}
-        onClick={goToNext}
+        onClick={goToNextPage}
         disabled={!canGoNext}
-        aria-label="Próxima categoria"
+        aria-label="Próxima página"
       >
         <div className={styles.carouselButtonInner}>
           <div className={styles.carouselButtonTopWhite} />
@@ -355,24 +412,26 @@ const Profile: React.FC = () => {
           <button className={`${styles.windowButton} ${styles.closeButton}`} aria-label="Fechar"></button>
         </div>
 
-        <div className={styles.profileInner}>
-          {/* Header com foto, nome, cargo e stats */}
-          <div className={styles.profileHeader}>
-            <Avatar />
-            <div className={styles.profileInfo}>
-              <div className={styles.nameBlock}>
-                <h2>Ivo Netto</h2>
-                <span className={styles.profileTitle}>Desenvolvedor Full Stack</span>
-              </div>
-              {/* Stats integradas ao header */}
-              <div className={styles.profileRow}>
-                <StatsSection />
+        <div className={styles.profileBorder}>
+          <div className={styles.profileInner}>
+            {/* Header com foto, nome, cargo e stats */}
+            <div className={styles.profileHeader}>
+              <Avatar />
+              <div className={styles.profileInfo}>
+                <div className={styles.nameBlock}>
+                  <h2>Ivo Netto</h2>
+                  <span className={styles.profileTitle}>Desenvolvedor Full Stack</span>
+                </div>
+                {/* Stats integradas ao header */}
+                <div className={styles.profileRow}>
+                  <StatsSection />
+                </div>
               </div>
             </div>
+            
+            {/* Hobbies marquee */}
+            <CategoriesSection />
           </div>
-          
-          {/* Hobbies marquee */}
-          <CategoriesSection />
         </div>
       </div>
     </div>

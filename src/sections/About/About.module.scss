@@ -16,7 +16,7 @@
   background: linear-gradient(135deg, #0a0d16 0%, #1a1d2e 25%, #2a2d3a 50%, #1e2139 75%, #0f1419 100%);
   position: relative;
   overflow: hidden;
-  padding: 10rem 0 6rem 0; // Reduzido pois o espaço do profile é gerenciado pelo container
+  padding: 15rem 0 6rem 0; // Reduzido pois o espaço do profile é gerenciado pelo container
   
   // Animated background particles
   &::before {
@@ -289,63 +289,6 @@
   display: none !important;
 }
 
-.bioSection {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  height: fit-content;
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
-}
-
-.sectionTitle {
-  font-size: 3rem;
-  font-family: $font-title;
-  font-weight: 800;
-  color: $color-text-light;
-  margin-bottom: 2rem;
-  position: relative;
-  line-height: 1.1;
-  
-  // Enhanced gradient text effect
-  background: linear-gradient(135deg, 
-    $color-text-light 0%, 
-    rgba(255, 255, 255, 0.9) 30%,
-    rgba($color-primary, 0.9) 70%,
-    $color-text-light 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  
-  // Text shadow for depth
-  text-shadow: 0 0 30px rgba($color-primary, 0.3);
-  
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -0.5rem;
-    left: 0;
-    width: 60px;
-    height: 4px;
-    background: linear-gradient(90deg, $color-primary, color.adjust($color-primary, $lightness: 20%));
-    border-radius: 2px;
-  }
-}
-
-.bioText {
-  font-size: 1.25rem;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 0;
-  margin-top: 0.2rem;
-  
-  strong {
-    color: $color-primary;
-    font-weight: 600;
-  }
-}
-
 .infoGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -403,13 +346,7 @@
     gap: 4rem;
   }
   
-  .sectionTitle {
-    font-size: 3.5rem;
-  }
-  
-  .bioText {
-    font-size: 1.4rem;
-  }
+
 }
 
 /* Desktop Médio (1200px - 1399px) */
@@ -426,7 +363,7 @@
 /* Desktop Pequeno / Tablet Grande (992px - 1199px) */
 @media (max-width: 1199px) {
   .about{
-    padding: 10rem 0 6rem 0;
+    padding: 15rem 0 6rem 0;
   }
   .about .container {
     padding: 2rem 1.5rem;
@@ -436,13 +373,7 @@
     gap: 2.5rem;
   }
   
-  .sectionTitle {
-    font-size: 2.5rem;
-  }
-  
-  .bioText {
-    font-size: 1.2rem;
-  }
+
   
   .infoCard {
     padding: 1.5rem;
@@ -467,34 +398,20 @@
     margin: 0 auto;
   }
   
-  .bioSection {
-    order: 2;
-    text-align: left;
-    gap: 2rem;
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .sectionTitle {
-    font-size: 2.2rem;
-    margin-bottom: 1.2rem;
-    
-  }
+
   
   .infoGrid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
   }
   
-  .bioText {
-    font-size: 1.1rem;
-  }
+
 }
 
 /* Tablet Pequeno (600px - 767px) */
-@media (max-width: 767px) and (min-width: 601px) {
+@media (max-width: 768px) and (min-width: 601px) {
   .about {
-    padding: 10rem 0 !important;
+    padding: 15rem 0 !important;
   }
   
   .aboutRow {
@@ -514,13 +431,7 @@
     font-size: 1.8rem;
   }
   
-  .sectionTitle {
-    font-size: 2rem;
-  }
-  
-  .bioText {
-    font-size: 1.1rem;
-  }
+
   
   .infoGrid {
     grid-template-columns: 1fr;
@@ -569,13 +480,7 @@
     font-size: 0.9rem;
   }
   
-  .sectionTitle {
-    font-size: 1.75rem;
-  }
-  
-  .bioText {
-    font-size: 1rem;
-  }
+
   
   .infoCard {
     padding: 1rem;
@@ -622,13 +527,7 @@
     font-size: 1.4rem;
   }
   
-  .sectionTitle {
-    font-size: 1.5rem;
-  }
-  
-  .bioText {
-    font-size: 0.95rem;
-  }
+
   
   .quickStats {
     flex-direction: row;
@@ -705,13 +604,7 @@
     font-size: 0.8rem;
   }
   
-  .sectionTitle {
-    font-size: 1.3rem;
-  }
-  
-  .bioText {
-    font-size: 0.9rem;
-  }
+
   
   .infoCard {
     padding: 0.5rem;
@@ -754,13 +647,7 @@
     padding: 0.5rem 2rem;
   }
   
-  .sectionTitle {
-    font-size: 1.2rem;
-  }
-  
-  .bioText {
-    font-size: 0.85rem;
-  }
+
 }
 
 @media (max-width: 900px) {
@@ -775,7 +662,7 @@
 /* Mobile tablets e dispositivos menores */
 @media (max-width: 600px) {
   .about {
-    padding: 10rem 0 !important;
+    padding: 15rem 0 !important;
   }
   
   .profileRow {
@@ -825,19 +712,7 @@
   .hobbiesFadeRight {
     background: linear-gradient(to left, rgba(10, 13, 22, 1) 0%, transparent 100%);
   }
-  .bioSection {
-    gap: 1.2rem;
-    margin-top: 1rem;
-    margin-bottom: 1.2rem;
-  }
-  .sectionTitle {
-    margin-bottom: 0.8rem;
-    font-size: 2rem;
-  }
-  .bioText {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.8);
-  }
+
   
   .statIcon {
     font-size: 1.1rem;

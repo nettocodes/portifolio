@@ -1,7 +1,9 @@
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import styles from './Projects.module.scss';
-import { motion, AnimatePresence, useScroll, useTransform, easeOut } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import SectionWrapper from '../../components/SectionWrapper';
+import HeaderSection from '../../components/HeaderSection';
+import RubiksCube from '../../components/RubiksCube/RubiksCube';
 import ordeskImg from '../../assets/ordesk.png';
 import dataImg from '../../assets/data.png';
 
@@ -122,27 +124,11 @@ const projects: Project[] = [
   }
 ];
 
-const headerVariants = {
-  hidden: { 
-    opacity: 0, 
-    y: -40 
-  },
-  show: { 
-    opacity: 1, 
-    y: 0,
-    transition: { 
-      duration: 0.8,
-      ease: easeOut
-    }
-  },
-};
-
 const Projects: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<number | null>(null);
 
   // Otimizar scroll animations
@@ -215,20 +201,6 @@ const Projects: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Memoizar estatísticas
-  const stats = useMemo(() => {
-    const completed = projects.filter(p => p.status === 'completed').length;
-    const inProgress = projects.filter(p => p.status === 'in-progress').length;
-    const totalTechnologies = [...new Set(projects.flatMap(p => p.technologies))].length;
-    
-    return [
-      { number: projects.length, label: 'Projetos' },
-      { number: completed, label: 'Concluídos' },
-      { number: inProgress, label: 'Em Andamento' },
-      { number: totalTechnologies, label: 'Tecnologias' }
-    ];
-  }, []);
-
   // Memoizar funções de status
   const getStatusText = useCallback((status: string) => {
     switch (status) {
@@ -238,85 +210,6 @@ const Projects: React.FC = () => {
       default: return status;
     }
   }, []);
-
-  // Memoizar ícones das estatísticas
-  const statIcons = useMemo(() => [
-    // Projetos
-    (
-      <svg className={styles.statIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-    ),
-    // Concluídos
-    (
-      <svg className={styles.statIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <circle cx="12" cy="12" r="10" strokeWidth="1.5"/>
-        <path d="M9 12l2 2l4-4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-    ),
-    // Em Andamento
-    (
-      <svg className={styles.statIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <circle cx="12" cy="12" r="10" strokeWidth="1.5"/>
-        <path d="M12 6v6l4 2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-    ),
-    // Tecnologias
-    (
-      <svg className={styles.statIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <path d="M14.7 6.3a5 5 0 0 0-6.6 6.6l-5.1 5.1a2 2 0 1 0 2.8 2.8l5.1-5.1a5 5 0 0 0 6.6-6.6z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-    ),
-  ], []);
-
-  // Animação count-up otimizada
-  const [countedStats, setCountedStats] = useState([0, 0, 0, 0]);
-  const [statsVisible, setStatsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setStatsVisible(true);
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    if (statsRef.current) {
-      observer.observe(statsRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!statsVisible) return;
-
-    const timeouts: number[] = [];
-    
-    stats.forEach((stat, idx) => {
-      let current = 0;
-      const increment = Math.max(1, Math.ceil(stat.number / 30));
-      
-      const animate = () => {
-        current += increment;
-        setCountedStats(prev => {
-          const arr = [...prev];
-          arr[idx] = current > stat.number ? stat.number : current;
-          return arr;
-        });
-        
-        if (current < stat.number) {
-          timeouts[idx] = window.setTimeout(animate, 50);
-        }
-      };
-      
-      timeouts[idx] = window.setTimeout(animate, idx * 100);
-    });
-
-    return () => timeouts.forEach(timeout => clearTimeout(timeout));
-  }, [statsVisible, stats]);
 
   return (
     <SectionWrapper id="projects" className={styles.projects}>
@@ -357,19 +250,11 @@ const Projects: React.FC = () => {
       </div>
 
       <div className="container">
-        <motion.div
-          className={styles.header}
-          variants={headerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          <h2 className={styles.title}>Projetos em Destaque</h2>
-          <p className={styles.subtitle}>
-            Uma curadoria dos meus principais projetos, focados em performance, design moderno e experiências interativas. 
-            Cada projeto representa uma solução única, desenvolvida com as melhores práticas e tecnologias atuais.
-          </p>
-        </motion.div>
+        <HeaderSection 
+          title="Projetos em Destaque"
+          subtitle="Uma curadoria dos meus principais projetos, focados em performance, design moderno e experiências interativas. Cada projeto representa uma solução única, desenvolvida com as melhores práticas e tecnologias atuais."
+          variant="light"
+        />
 
         {filteredProjects.length > 0 ? (
           <motion.div 
@@ -557,65 +442,64 @@ const Projects: React.FC = () => {
           </div>
         )}
 
-        {/* Estatísticas otimizadas */}
+        {/* Transforming Ideas Section */}
         <motion.div 
-          ref={statsRef} 
-          className={styles.statsRow}
+          className={styles.transformingSection}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true, amount: 0.3 }}
         >
-          {stats.map((stat, idx) => (
-            <motion.div
-              className={styles.statBar}
-              key={idx}
-              initial={{ 
-                opacity: 0, 
-                y: 20,
-                scale: 0.9
-              }}
-              whileInView={{ 
-                opacity: 1, 
-                y: 0,
-                scale: 1
-              }}
-              transition={{ 
-                duration: 0.4, 
-                delay: idx * 0.1,
-                ease: "easeOut"
-              }}
-              whileHover={{ 
-                scale: 1.02, 
-                y: -2,
-                transition: { duration: 0.2 }
-              }}
-              viewport={{ once: true, amount: 0.5 }}
+          <div className={styles.transformingContent}>
+            <motion.div 
+              className={styles.transformingText}
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              viewport={{ once: true, amount: 0.3 }}
             >
-              <div>
-                {statIcons[idx]}
-              </div>
-              <motion.span 
-                className={styles.statNumber}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ 
-                  duration: 0.3, 
-                  delay: idx * 0.1 + 0.2
-                }}
+              <motion.p 
+                className={styles.transformingTagline}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                viewport={{ once: true, amount: 0.3 }}
               >
-                {countedStats[idx]}
-              </motion.span>
-              <motion.span 
-                className={styles.statLabel}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: idx * 0.1 + 0.3 }}
+                Let's make things happen
+              </motion.p>
+              <motion.h2 
+                className={styles.transformingTitle}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+                viewport={{ once: true, amount: 0.3 }}
               >
-                {stat.label}
-              </motion.span>
+                Transformando <span className={styles.highlight}>Ideias</span> em 
+                <br />
+                <span className={styles.highlight}>Produtos Digitais</span> que brilham
+              </motion.h2>
+              <motion.p 
+                className={styles.transformingSubtitle}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+              >
+                Criamos soluções digitais inovadoras que ajudam empresas a prosperar na era digital, 
+                combinando design excepcional com tecnologia de ponta.
+              </motion.p>
             </motion.div>
-          ))}
+            
+            <motion.div 
+              className={styles.cubeContainer}
+              initial={{ opacity: 0, scale: 0.8, rotateY: -45 }}
+              whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
+              transition={{ duration: 1, delay: 0.6 }}
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <RubiksCube />
+            </motion.div>
+          </div>
         </motion.div>
       </div>
     </SectionWrapper>

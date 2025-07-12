@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './About.module.scss';
+import HeaderSection from '../../components/HeaderSection';
 import { motion, easeOut, easeInOut } from 'framer-motion';
 import {
   GraduationCap,
@@ -32,23 +33,6 @@ const containerVariants = {
     transition: {
       staggerChildren: 0.2,
       duration: 0.5
-    }
-  }
-};
-
-const itemVariants = {
-  hidden: { 
-    opacity: 0, 
-    y: 40,
-    scale: 0.95
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.6,
-      ease: easeOut
     }
   }
 };
@@ -90,27 +74,10 @@ const About: React.FC = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
       >
-        <div className={styles.aboutRow}>
-          <motion.div 
-            className={styles.bioSection} 
-            variants={itemVariants}
-          >
-            <motion.h2 
-              className={styles.sectionTitle}
-              variants={itemVariants}
-            >
-              Sobre Mim
-            </motion.h2>
-            <motion.p 
-              className={styles.bioText}
-              variants={itemVariants}
-            >
-              Sou movido por desafios e adoro aprender coisas novas. Acredito que tecnologia é uma ponte para 
-              transformar vidas e criar experiências incríveis. Valorizo <strong>design minimalista</strong>, 
-              código limpo e soluções criativas que fazem a diferença.
-            </motion.p>
-          </motion.div>
-        </div>
+        <HeaderSection 
+          title="Sobre Mim"
+          subtitle="Sou movido por desafios e adoro aprender coisas novas. Acredito que tecnologia é uma ponte para transformar vidas e criar experiências incríveis. Valorizo design minimalista, código limpo e soluções criativas que fazem a diferença."
+        />
 
         <motion.div 
           className={styles.infoGrid}

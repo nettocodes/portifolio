@@ -18,33 +18,39 @@
   // Sempre visível
   opacity: 1;
 
+  // Permite overflow em toda a hierarquia
+  overflow: visible;
+
   .profileContent {
     // Reativar pointer-events apenas no conteúdo
     pointer-events: all;
     width: 100%;
     margin: 0 auto;
-    padding: 2rem 0 0 0;
+    padding: 2rem 1rem 0 1rem;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
     position: relative;
     border-radius: 8px 8px 0 0;
+    
+    // Permite overflow para dropdown
+    overflow: visible;
 
     // Background de imagem 
     &::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: 
+      background:
         // Overlay escuro para melhor contraste
-        linear-gradient(135deg, 
-          rgba(0, 0, 0, 0.3) 0%, 
+        linear-gradient(135deg,
+          rgba(0, 0, 0, 0.3) 0%,
           rgba(0, 0, 0, 0.2) 25%,
           rgba(0, 0, 0, 0.1) 50%,
           rgba(0, 0, 0, 0.2) 75%,
           rgba(0, 0, 0, 0.3) 100%),
         // Imagem de fundo
-        url('../assets/ordesk.png');
+        url('../assets/windows_7.jpg');
       background-size: cover, cover;
       background-position: center, center;
       background-repeat: no-repeat, no-repeat;
@@ -53,81 +59,259 @@
 
     // Glassmorphism estilo Windows 7
     background: linear-gradient(180deg,
-        rgba(255, 255, 255, 0.9) 0%,
-        rgba(255, 255, 255, 0.85) 25%,
-        rgba(245, 248, 255, 0.8) 50%,
-        rgba(240, 245, 255, 0.85) 75%,
-        rgba(255, 255, 255, 0.9) 100%);
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0.85) 25%,
+      rgba(245, 248, 255, 0.8) 50%,
+      rgba(240, 245, 255, 0.85) 75%,
+      rgba(255, 255, 255, 0.9) 100%);
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
-    
+
     // Sombra e bordas estilo Windows 7
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.6) inset,
-      0 0 0 2px rgba(0, 0, 0, 0.1),
-      0 4px 12px rgba(0, 0, 0, 0.15),
-      0 8px 24px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    border-right: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6) inset,
+    0 0 0 2px rgba(0, 0, 0, 0.1),
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    0 8px 24px rgba(0, 0, 0, 0.1);
+
+    // Tablet landscape (1024px - 769px)
+    @media (max-width: 1024px) and (min-width: 769px) {
+
+      padding: 1.5rem 0.8rem 0 0.8rem;
+    }
+
+    // Tablet portrait (768px - 481px)
+    @media (max-width: 768px) and (min-width: 481px) {
+
+      padding: 1.2rem 0.6rem 0 0.6rem;
+      border-radius: 6px 6px 0 0;
+    }
+
+    // Mobile (480px e abaixo)
+    @media (max-width: 480px) {
+
+      padding: 1rem 0.5rem 0 0.5rem;
+      border-radius: 4px 4px 0 0;
+      
+      // Ajustar background para mobile
+      &::before {
+        background-size: cover, cover;
+        background-position: center top, center top;
+      }
+    }
+
+    // Mobile muito pequeno (320px e abaixo)
+    @media (max-width: 320px) {
+      padding: 0.8rem 0.4rem 0 0.4rem;
+      border-radius: 2px 2px 0 0;
+    }
   }
- 
+
 }
+
+// Container das bordas glassmorphism
+.profileBorder {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 2rem;
+  padding: 10px;
+  border-radius: 8px 8px 0 0;
+  
+  // Permite overflow quando dropdown está aberto
+  overflow: visible;
+  
+  // Bordas glassmorphism com blur
+  background: linear-gradient(180deg,
+      rgba(216, 216, 216, 0.9) 0%,
+      rgba(189, 189, 189, 0.5) 50%,
+      rgba(129, 129, 129, 0.9) 100%);
+  
+  // Efeito glassmorphism nas bordas
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 4px 16px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    max-width: 95%;
+    margin-top: 1.5rem;
+    padding: 8px;
+    border-radius: 6px 6px 0 0;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    max-width: 100%;
+    margin-top: 1.2rem;
+    padding: 6px;
+    border-radius: 4px 4px 0 0;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    max-width: 100%;
+    margin-top: 1rem;
+    padding: 4px;
+    border-radius: 2px 2px 0 0;
+    
+    // Sombra reduzida para mobile
+    box-shadow: 
+      0 4px 16px rgba(0, 0, 0, 0.1),
+      0 2px 8px rgba(0, 0, 0, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    margin-top: 0.8rem;
+    padding: 2px;
+    border-radius: 1px 1px 0 0;
+  }
+}
+
 .profileInner {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
   width: 100%;
-  max-width: 1200px;
-  margin-top: 1rembuild;
-  padding: 40px 1rem; // Padding top para acomodar a barra de título
+  z-index: 999;
+  padding: 20px 1rem;
   box-sizing: border-box;
-  
-  // Background transparente
-  background: transparent;
-  
-  // Borda estilo Windows 7 com transparência
-  border: 1px solid transparent;
-  border-radius: 0;
-  
-  // Gradiente de borda Windows 7 transparente
-  background: 
-    linear-gradient(transparent, transparent) padding-box,
-    linear-gradient(135deg, 
-      rgba(255, 255, 255, 0.3) 0%,
-      rgba(255, 255, 255, 0.1) 25%,
-      rgba(0, 0, 0, 0.1) 50%,
-      rgba(0, 0, 0, 0.2) 75%,
-      rgba(0, 0, 0, 0.3) 100%) border-box;
-  
-  // Sombra interna sutil estilo Windows 7
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.1),
-    inset 1px 0 0 rgba(255, 255, 255, 0.1),
-    inset -1px 0 0 rgba(0, 0, 0, 0.1);
 
-  @media (min-width: 769px) {
-    padding: 40px 2rem;
+  // Fundo transparente para o conteúdo
+  background: transparent;
+  border-radius: 8px;
+  
+  // Permite overflow quando dropdown está aberto
+  overflow: visible;
+
+  // Sombra interna sutil
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.02);
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    padding: 18px 0.8rem;
+    gap: 0.7rem;
+    border-radius: 6px;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    padding: 16px 0.6rem;
+    gap: 0.6rem;
+    border-radius: 4px;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    padding: 14px 0.5rem;
+    gap: 0.5rem;
+    border-radius: 2px;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    padding: 12px 0.4rem;
+    gap: 0.4rem;
+    border-radius: 1px;
   }
 }
 
 .profileHeader {
   display: flex;
-  gap: 1.2rem; // Reduzido
+  gap: 1.2rem;
   justify-content: flex-start;
+  align-items: flex-start;
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    gap: 1rem;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    gap: 0.8rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    gap: 0.6rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    gap: 0.5rem;
+  }
 }
 
 .profileInfo {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: flex-start;
   flex: 1;
+  gap: 1rem;
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    gap: 0.8rem;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    gap: 0.4rem;
+  }
 }
 
 .profileRow {
   display: flex;
   margin: 0.8rem 0 0 0;
+  justify-content: center;
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    margin: 0.6rem 0 0 0;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    margin: 0.5rem 0 0 0;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    margin: 0.4rem 0 0 0;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    margin: 0.3rem 0 0 0;
+  }
 }
 
 .avatar {
@@ -238,107 +422,272 @@
   text-align: left;
   flex: 1;
 
+  // Tablet portrait (768px - 481px)
+
   h2 {
-    font-size: 15px; // Especificação: 15px
-    font-weight: 400; // Regular
+    font-size: 15px;
+    font-weight: 400;
     color: $color-text-dark;
-    margin: 0 0 0.2rem 0; // Reduzido
-    font-family: 'Segoe UI', sans-serif; // Especificação: Segoe UI
+    margin: 0 0 0.2rem 0;
+    font-family: 'Segoe UI', sans-serif;
     background: linear-gradient(135deg, $color-text-dark 0%, $color-primary 50%, rgba(79, 140, 255, 0.8) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     letter-spacing: -0.02em;
     line-height: 1.2;
+
+    // Tablet landscape (1024px - 769px)
+    @media (max-width: 1024px) and (min-width: 769px) {
+      font-size: 14px;
+    }
+
+    // Tablet portrait (768px - 481px)
+    @media (max-width: 768px) and (min-width: 481px) {
+      font-size: 13px;
+    }
+
+    // Mobile (480px e abaixo)
+    @media (max-width: 480px) {
+      font-size: 12px;
+      margin: 0 0 0.15rem 0;
+    }
+
+    // Mobile muito pequeno (320px e abaixo)
+    @media (max-width: 320px) {
+      font-size: 11px;
+      margin: 0 0 0.1rem 0;
+    }
   }
 }
 
 .profileTitle {
-  font-size: 0.9rem; // Reduzido
+  font-size: 0.9rem;
   color: $color-primary;
-  font-weight: 600; // Semibold
-  font-family: 'Segoe UI', sans-serif; // Especificação: Segoe UI
+  font-weight: 600;
+  font-family: 'Segoe UI', sans-serif;
   opacity: 0.9;
   letter-spacing: 0.5px;
   text-transform: uppercase;
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    font-size: 0.8rem;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    font-size: 0.75rem;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
+    letter-spacing: 0.3px;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    font-size: 0.65rem;
+    letter-spacing: 0.2px;
+  }
 }
 
 .stats {
   display: flex;
-  gap: 1rem; // Reduzido
+  gap: 8px;
   align-items: center;
+  justify-content: center;
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    gap: 6px;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    gap: 5px;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    gap: 3px;
+  }
 }
 
 .statItem {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.3rem; // Reduzido
-  padding: 0.6rem 0.5rem; // Reduzido
-  border-radius: 12px; // Reduzido
-  background: linear-gradient(135deg, rgba(79, 140, 255, 0.06) 0%, rgba(255, 255, 255, 0.8) 100%);
-  border: 1px solid rgba(79, 140, 255, 0.1);
-  transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
-  min-width: 60px; // Reduzido
+  gap: 2px;
+  padding: 6px 8px;
+  background: 
+    linear-gradient(to bottom, 
+      #f0f0f0 0%, 
+      #e0e0e0 50%, 
+      #d0d0d0 100%);
+  border: 1px solid #a0a0a0;
+  border-top-color: #ffffff;
+  border-left-color: #ffffff;
+  box-shadow: 
+    inset 1px 1px 0 rgba(255, 255, 255, 0.8),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.2),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: all 0.1s ease;
+  min-width: 50px;
   position: relative;
-  overflow: hidden;
+  cursor: pointer;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-  // Brilho sutil no hover
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-    transition: left 0.5s ease;
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    padding: 5px 7px;
+    min-width: 45px;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    padding: 4px 6px;
+    min-width: 40px;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    padding: 3px 5px;
+    min-width: 35px;
+    gap: 1px;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    padding: 2px 4px;
+    min-width: 30px;
   }
 
   &:hover {
-    background: linear-gradient(135deg, rgba(79, 140, 255, 0.12) 0%, rgba(255, 255, 255, 0.95) 100%);
-    transform: translateY(-3px) scale(1.02);
-    border-color: rgba(79, 140, 255, 0.2);
-    box-shadow: 0 8px 25px rgba(79, 140, 255, 0.15);
+    background: 
+      linear-gradient(to bottom, 
+        #f8f8f8 0%, 
+        #e8e8e8 50%, 
+        #d8d8d8 100%);
+    border-color: #0078d4;
+    box-shadow: 
+      inset 1px 1px 0 rgba(255, 255, 255, 0.9),
+      inset -1px -1px 0 rgba(0, 0, 0, 0.2),
+      0 0 3px rgba(0, 120, 212, 0.5);
+  }
 
-    &::before {
-      left: 100%;
-    }
+  &:active {
+    background: 
+      linear-gradient(to bottom, 
+        #d0d0d0 0%, 
+        #e0e0e0 50%, 
+        #f0f0f0 100%);
+    box-shadow: 
+      inset -1px -1px 0 rgba(255, 255, 255, 0.8),
+      inset 1px 1px 0 rgba(0, 0, 0, 0.2);
+    transform: translateY(1px);
   }
 }
 
 .statIcon {
-  color: $color-primary;
-  font-size: 1.1rem; // Reduzido
+  color: #0078d4;
+  font-size: 16px;
   opacity: 0.9;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease;
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    font-size: 15px;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    font-size: 14px;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    font-size: 13px;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    font-size: 12px;
+  }
 
   .statItem:hover & {
-    color: rgba(79, 140, 255, 0.8);
-    transform: scale(1.1);
+    color: #106ebe;
   }
 }
 
 .statNumber {
-  font-size: 1rem; // Reduzido
-  font-weight: 800;
-  color: $color-text-dark;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333333;
   line-height: 1;
-  font-family: $font-mono;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    font-size: 13px;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    font-size: 12px;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    font-size: 11px;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    font-size: 10px;
+  }
 
   .statItem:hover & {
-    color: $color-primary;
+    color: #0078d4;
   }
 }
 
 .statLabel {
-  font-size: 0.7rem; // Reduzido
-  color: $color-gray-dark;
-  font-weight: 600;
-  opacity: 0.8;
-  font-family: $font-mono;
+  font-size: 10px;
+  color: #666666;
+  font-weight: normal;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    font-size: 9px;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    font-size: 8px;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    font-size: 7px;
+    letter-spacing: 0.3px;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    font-size: 6px;
+    letter-spacing: 0.2px;
+  }
 }
 
 // Carrossel Container - Estilo Windows 7
@@ -349,19 +698,56 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  
+
   // Background estilo Windows 7 toolbar
   background: linear-gradient(to bottom,
-    #ffffff 0%,
-    #f8f9fa 25%,
-    #f1f3f4 75%,
-    #e8eaed 100%);
+      #ffffff 0%,
+      #f8f9fa 25%,
+      #f1f3f4 75%,
+      #e8eaed 100%);
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 3px;
-  box-shadow: 
+  box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.8),
     0 1px 2px rgba(0, 0, 0, 0.05);
-  
+
+  // Sempre permite overflow para mostrar dropdowns
+  overflow: visible;
+  z-index: 9997;
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    padding: .4rem 0.8rem;
+    gap: 0.4rem;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    padding: .3rem 0.6rem;
+    gap: 0.3rem;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    padding: .2rem 0.4rem;
+    gap: 0.2rem;
+    border-radius: 2px;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    padding: .1rem 0.2rem;
+    gap: 0.1rem;
+    border-radius: 1px;
+  }
+
+  // Quando um dropdown está aberto, força visibilidade total
+  &.hasOpenDropdown {
+    overflow: visible !important; // Força dropdown aparecer
+    z-index: 9997 !important; // Menor que o dropdown mas ainda alto
+    position: relative !important; // Garante contexto de posicionamento
+  }
+
   // Overlay escuro quando um dropdown está aberto
   &::before {
     content: '';
@@ -373,7 +759,7 @@
     opacity: 0;
     visibility: hidden;
     transition: all 0.15s ease;
-    z-index: 999;
+    z-index: 9996;
     pointer-events: none;
   }
 
@@ -388,33 +774,29 @@
   // Força o hardware acceleration para melhor performance
   transform: translateZ(0);
   will-change: transform;
-  
+
   // Suporte para scroll horizontal em touch devices
   &.scrollable {
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
-    
-    .categoriesCarousel {
-      overflow: visible;
-    }
-    
+
     .categoriesTrack {
       scroll-snap-align: start;
     }
-    
+
     .categoryItem {
       scroll-snap-align: center;
     }
   }
-  
+
   // Estado de loading
   &.loading {
     .carouselButton {
       opacity: 0.5;
       pointer-events: none;
     }
-    
+
     .categoriesCarousel::after {
       content: '';
       position: absolute;
@@ -432,8 +814,13 @@
 }
 
 @keyframes spin {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 // Botões de navegação do carrossel - Template fornecido
@@ -447,6 +834,30 @@
   cursor: pointer;
   flex-shrink: 0;
   transition: all 0.1s ease;
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    width: 28px;
+    height: 28px;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    width: 26px;
+    height: 26px;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    width: 24px;
+    height: 24px;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    width: 22px;
+    height: 22px;
+  }
 
   &:disabled {
     opacity: 0.6;
@@ -469,13 +880,11 @@
   position: absolute;
   inset: 3px;
   border-radius: 50%;
-  background: radial-gradient(
-    circle at 50% 100%,
-    #30f8f8 10%,
-    #28cff1 30%,
-    #2d6284 60%,
-    #2c517b
-  );
+  background: radial-gradient(circle at 50% 100%,
+      #30f8f8 10%,
+      #28cff1 30%,
+      #2d6284 60%,
+      #2c517b);
 }
 
 .carouselButtonTopWhite {
@@ -502,6 +911,30 @@
     filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65));
     transition: all 0.1s ease;
     z-index: 2;
+
+    // Tablet landscape (1024px - 769px)
+    @media (max-width: 1024px) and (min-width: 769px) {
+      width: 13px;
+      height: 13px;
+    }
+
+    // Tablet portrait (768px - 481px)
+    @media (max-width: 768px) and (min-width: 481px) {
+      width: 12px;
+      height: 12px;
+    }
+
+    // Mobile (480px e abaixo)
+    @media (max-width: 480px) {
+      width: 11px;
+      height: 11px;
+    }
+
+    // Mobile muito pequeno (320px e abaixo)
+    @media (max-width: 320px) {
+      width: 10px;
+      height: 10px;
+    }
   }
 
   &:hover .arrow {
@@ -533,6 +966,30 @@
     filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65));
     transition: all 0.1s ease;
     z-index: 2;
+
+    // Tablet landscape (1024px - 769px)
+    @media (max-width: 1024px) and (min-width: 769px) {
+      width: 13px;
+      height: 13px;
+    }
+
+    // Tablet portrait (768px - 481px)
+    @media (max-width: 768px) and (min-width: 481px) {
+      width: 12px;
+      height: 12px;
+    }
+
+    // Mobile (480px e abaixo)
+    @media (max-width: 480px) {
+      width: 11px;
+      height: 11px;
+    }
+
+    // Mobile muito pequeno (320px e abaixo)
+    @media (max-width: 320px) {
+      width: 10px;
+      height: 10px;
+    }
   }
 
   &:hover .arrow {
@@ -552,19 +1009,20 @@
 // Container do carrossel - Estilo Windows 7
 .categoriesCarousel {
   flex: 1;
-  overflow: hidden;
   position: relative;
+  overflow: visible; // Permite overflow para dropdowns
   background: linear-gradient(to bottom,
-    #ffffff 0%,
-    #f8f9fa 15%,
-    #f1f3f4 85%,
-    #e8eaed 100%);
+      #ffffff 0%,
+      #f8f9fa 15%,
+      #f1f3f4 85%,
+      #e8eaed 100%);
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 2px;
-  box-shadow: 
+  box-shadow:
     inset 0 1px 2px rgba(0, 0, 0, 0.1),
     inset 0 0 1px rgba(0, 0, 0, 0.05);
-  
+  z-index: 1; // Index baixo para o carrossel
+
   // Bordas internas estilo Windows 7
   &::before {
     content: '';
@@ -574,13 +1032,13 @@
     right: 0;
     height: 1px;
     background: linear-gradient(to right,
-      transparent 0%,
-      rgba(255, 255, 255, 0.8) 10%,
-      rgba(255, 255, 255, 0.8) 90%,
-      transparent 100%);
+        transparent 0%,
+        rgba(255, 255, 255, 0.8) 10%,
+        rgba(255, 255, 255, 0.8) 90%,
+        transparent 100%);
     z-index: 1;
   }
-  
+
   &::after {
     content: '';
     position: absolute;
@@ -589,61 +1047,132 @@
     right: 0;
     height: 1px;
     background: linear-gradient(to right,
-      transparent 0%,
-      rgba(0, 0, 0, 0.05) 10%,
-      rgba(0, 0, 0, 0.05) 90%,
-      transparent 100%);
+        transparent 0%,
+        rgba(0, 0, 0, 0.05) 10%,
+        rgba(0, 0, 0, 0.05) 90%,
+        transparent 100%);
     z-index: 1;
+  }
+
+  // Wrapper interno - Simplificado para paginação
+  .carouselWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: visible; // Permite dropdowns sempre
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    min-height: 50px; // Altura mínima
+
+    // Mobile muito pequeno (320px e abaixo)
+    @media (max-width: 320px) {
+      min-height: 45px;
+    }
   }
 }
 
-// Track do carrossel - Melhorado
+// Track do carrossel - Paginação
 .categoriesTrack {
   display: flex;
   gap: 0.5rem;
-  transition: transform 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
   padding: 0.5rem;
   position: relative;
-  z-index: 2;
+  z-index: 3; // Acima do wrapper
   
-  // Smooth scroll para touch devices
-  scroll-behavior: smooth;
+  // Distribui uniformemente os itens na página - sem espaços vazios
+  justify-content: stretch;
+  align-items: stretch;
+  
+  // Ocupa toda a largura disponível
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: nowrap; // Não permite wrap
+  overflow: visible; // CORRIGIDO: Permite dropdowns aparecerem
+  min-height: 50px; // Altura mínima consistente
+
+  // Desktop (>1024px) - 5 itens
+  // Gap padrão: 0.5rem entre 5 itens = 4 gaps
+
+  // Tablet landscape (1024px - 769px) - 4 itens
+  @media (max-width: 1024px) and (min-width: 769px) {
+    gap: 0.4rem; // 3 gaps entre 4 itens
+    padding: 0.4rem;
+    min-height: 48px;
+  }
+
+  // Tablet portrait (768px - 481px) - 3 itens
+  @media (max-width: 768px) and (min-width: 481px) {
+    gap: 0.3rem; // 2 gaps entre 3 itens
+    padding: 0.3rem;
+    min-height: 46px;
+  }
+
+  // Mobile (480px - 321px) - 2 itens
+  @media (max-width: 480px) and (min-width: 321px) {
+    gap: 0.4rem; // 1 gap entre 2 itens (gap maior para melhor aparência)
+    padding: 0.3rem;
+    min-height: 44px;
+  }
+
+  // Mobile muito pequeno (320px e abaixo) - 1 item
+  @media (max-width: 320px) {
+    gap: 0; // Sem gaps para 1 item
+    padding: 0.2rem;
+    min-height: 42px;
+    justify-content: center; // Centraliza o único item
+  }
 }
 
-// Items do carrossel
+// Items do carrossel - Paginados com responsividade melhorada
 .categoryItem {
-  flex: 0 0 180px;
-  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  position: relative; // ADICIONADO: Necessário para o dropdown absolute
   
-  @media (max-width: 768px) {
-    flex: 0 0 150px;
-    min-width: 150px;
+  // Desktop (>1024px) - 5 itens
+  flex: 1;
+  min-width: 0; // Permite que o item seja menor quando necessário
+  max-width: calc((100% - 4 * 0.5rem) / 5); // Máximo baseado em 5 itens
+  width: calc((100% - 4 * 0.5rem) / 5); // Largura preferida
+
+  // Tablet landscape (1024px - 769px) - 4 itens
+  @media (max-width: 1024px) and (min-width: 769px) {
+    max-width: calc((100% - 3 * 0.4rem) / 4); // 4 itens com gaps
+    width: calc((100% - 3 * 0.4rem) / 4);
   }
-  
-  @media (max-width: 480px) {
-    flex: 0 0 120px;
-    min-width: 120px;
+
+  // Tablet portrait (768px - 481px) - 3 itens
+  @media (max-width: 768px) and (min-width: 481px) {
+    max-width: calc((100% - 2 * 0.3rem) / 3); // 3 itens com gaps
+    width: calc((100% - 2 * 0.3rem) / 3);
   }
-  
-  @media (max-width: 360px) {
-    flex: 0 0 100px;
-    min-width: 100px;
+
+  // Mobile (480px - 321px) - 2 itens
+  @media (max-width: 480px) and (min-width: 321px) {
+    max-width: calc((100% - 1 * 0.3rem) / 2); // 2 itens com gaps
+    width: calc((100% - 1 * 0.3rem) / 2);
   }
-  
+
+  // Mobile muito pequeno (320px e abaixo) - 1 item
   @media (max-width: 320px) {
-    flex: 0 0 80px;
-    min-width: 80px;
+    max-width: 100%; // 1 item ocupa toda largura
+    width: 100%;
   }
 }
 
 .categoryDropdown {
   position: relative;
   width: 100%;
-  z-index: 20;
+  height: 100%;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
 
   &.open {
-    z-index: 1000;
-
+    z-index: 99998 !important; // Muito alto para garantir que apareça
+    
+    // Garante que o dropdown aberto tenha prioridade visual
     .categoryButton {
       // Estilo Windows 7 menu pressed - azul mais escuro
       background: linear-gradient(to bottom,
@@ -652,12 +1181,26 @@
           rgba(186, 228, 249, 0.9) 100%);
       border: 1px solid rgba(60, 127, 177, 1);
       color: #000;
+      position: relative;
+      z-index: 99999;
+    }
+    
+    // Faz o dropdown escapar do wrapper mas ficar relativo ao carrossel
+    .dropdownContent {
+      position: absolute !important;
+      top: 100% !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 99999 !important;
+      // Força o dropdown a aparecer acima do carrossel
+      transform: translateZ(0);
     }
   }
 }
 
 .categoryButton {
   width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   gap: 0.6rem;
@@ -669,10 +1212,44 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 0.8rem;
   font-weight: 400;
+  min-height: 40px; // Altura mínima para touch targets
+  box-sizing: border-box;
 
   // Estilo Windows 7 menubar - sem fundo por padrão
   background: transparent;
   color: #000;
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    gap: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+    min-height: 38px;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    gap: 0.4rem;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.7rem;
+    min-height: 36px;
+  }
+
+  // Mobile (480px - 321px)
+  @media (max-width: 480px) and (min-width: 321px) {
+    gap: 0.3rem;
+    padding: 0.25rem 0.4rem;
+    font-size: 0.65rem;
+    min-height: 34px;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    gap: 0.2rem;
+    padding: 0.2rem 0.3rem;
+    font-size: 0.6rem;
+    min-height: 32px;
+  }
 
   &:hover {
     // Estilo Windows 7 menu hover - azul claro
@@ -703,6 +1280,26 @@
   align-items: center;
   justify-content: center;
   transition: all 0.1s ease;
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    font-size: 0.9rem;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    font-size: 0.8rem;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    font-size: 0.6rem;
+  }
 }
 
 .categoryTitle {
@@ -711,6 +1308,16 @@
   color: #2c3e50;
   font-weight: 400;
   letter-spacing: 0.1px;
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    letter-spacing: 0.05px;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    letter-spacing: 0px;
+  }
 }
 
 .categoryArrow {
@@ -720,16 +1327,35 @@
   display: flex;
   align-items: center;
 
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    font-size: 0.75rem;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    font-size: 0.7rem;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    font-size: 0.65rem;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    font-size: 0.6rem;
+  }
+
   &.rotated {
     transform: rotate(180deg);
   }
 }
 
 .dropdownContent {
-  position: absolute;
-  top: 100%;
+  position: absolute; // Volta para absolute
+  top: 100%; // Logo abaixo do botão
   left: 0;
-  right: 0;
   background: #f0f0f0;
   border: 1px solid #a0a0a0;
   border-top: none;
@@ -737,12 +1363,14 @@
   box-shadow:
     2px 2px 5px rgba(0, 0, 0, 0.3),
     0 0 0 1px rgba(255, 255, 255, 0.5) inset;
-  overflow: hidden;
+  overflow: visible; // CORRIGIDO: Permite conteúdo ser visível
   transform: translateY(-5px);
   opacity: 0;
   visibility: hidden;
   transition: all 0.1s ease;
-  z-index: 1000; // Z-index alto para ficar acima de tudo
+  z-index: 999999; // Z-index extremamente alto
+  min-width: max-content; // Largura baseada no conteúdo
+  white-space: nowrap; // Impede quebra de linha
 
   &.show {
     transform: translateY(0);
@@ -760,18 +1388,22 @@
   border: 1px solid rgba(0, 0, 0, .4);
   box-shadow: 4px 4px 3px -2px rgba(0, 0, 0, .5019607843137255);
   color: initial;
-  min-width: 150px;
+  min-width: max-content;
   padding: 2px;
   position: relative;
-&::before {
-      box-shadow: inset 1px 0 rgba(0, 0, 0, .14901960784313725), inset -1px 0 #fff;
-      content: "";
-      height: calc(100% - 4px);
-      left: 30px;
-      pointer-events: none;
-      position: absolute;
-      width: 2px;
-    }
+  white-space: nowrap;
+  overflow: visible; // CORRIGIDO: Permite conteúdo ser visível
+
+  &::before {
+    box-shadow: inset 1px 0 rgba(0, 0, 0, .14901960784313725), inset -1px 0 #fff;
+    content: "";
+    height: calc(100% - 4px);
+    left: 30px;
+    pointer-events: none;
+    position: absolute;
+    width: 2px;
+  }
+
   // Scrollbar estilo Windows 7 clássico
   &::-webkit-scrollbar {
     width: 17px;
@@ -796,7 +1428,7 @@
           #c0c0c0 100%);
     }
 
-    
+
 
     &:active {
       background: linear-gradient(to bottom,
@@ -833,6 +1465,30 @@
   border: none;
   background: transparent;
   color: #000;
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    gap: 0.6rem;
+    padding: 3px 20px 3px 30px;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    gap: 0.5rem;
+    padding: 3px 16px 3px 24px;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    gap: 0.4rem;
+    padding: 2px 12px 2px 18px;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    gap: 0.3rem;
+    padding: 2px 8px 2px 12px;
+  }
 
   &:hover {
     // Estilo Windows 7 menu item hover - azul claro
@@ -882,6 +1538,30 @@
   justify-content: center;
   transition: all 0.1s ease;
   min-width: 16px;
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    font-size: 0.85rem;
+    min-width: 14px;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    font-size: 0.8rem;
+    min-width: 12px;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    font-size: 0.75rem;
+    min-width: 10px;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    font-size: 0.7rem;
+    min-width: 8px;
+  }
 }
 
 .dropdownItemLabel {
@@ -891,6 +1571,26 @@
   font-weight: 400;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   transition: all 0.1s ease;
+
+  // Tablet landscape (1024px - 769px)
+  @media (max-width: 1024px) and (min-width: 769px) {
+    font-size: 0.75rem;
+  }
+
+  // Tablet portrait (768px - 481px)
+  @media (max-width: 768px) and (min-width: 481px) {
+    font-size: 0.7rem;
+  }
+
+  // Mobile (480px e abaixo)
+  @media (max-width: 480px) {
+    font-size: 0.65rem;
+  }
+
+  // Mobile muito pequeno (320px e abaixo)
+  @media (max-width: 320px) {
+    font-size: 0.6rem;
+  }
 }
 
 // Separador estilo Windows 7
@@ -921,50 +1621,52 @@
 @media (max-width: 1024px) and (min-width: 769px) {
   .categoriesContainer {
     gap: 0.4rem;
-    
+
     // Background otimizado para tablets
     background: linear-gradient(to bottom,
-      #ffffff 0%,
-      #f8f9fa 15%,
-      #f1f3f4 85%,
-      #e8eaed 100%);
+        #ffffff 0%,
+        #f8f9fa 15%,
+        #f1f3f4 85%,
+        #e8eaed 100%);
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 2px;
   }
-  
+
   .carouselButton {
     width: 26px;
     height: 26px;
-    
+
     .carouselButtonInner {
       inset: 2px;
     }
-    
+
     .arrow {
       width: 10px;
       height: 10px;
       filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65));
     }
   }
-  
+
   .categoriesCarousel {
     border-radius: 2px;
-    
+
     // Mantém bordas internas em tablets
     &::before,
     &::after {
       display: block;
     }
   }
-  
+
   .categoriesTrack {
     padding: 0.4rem;
     gap: 0.4rem;
   }
-  
+
   .categoryItem {
-    flex: 0 0 160px;
-    min-width: 160px;
+    // Alinha com a implementação principal - 4 itens em tablets
+    max-width: calc((100% - 3 * 0.4rem) / 4);
+    width: calc((100% - 3 * 0.4rem) / 4);
+    min-width: 0; // Flexível para telas menores
   }
 
   .categoryButton {
@@ -993,9 +1695,16 @@
 
   }
 
+  .profileBorder {
+    gap: 0.8rem;
+    max-width: 100%;
+    padding: 8px;
+  }
+
   .profileInner {
     gap: 0.8rem;
     max-width: 100%;
+    padding: 20px 1rem;
   }
 
   .profileHeader {
@@ -1017,12 +1726,15 @@
     transform: translate(0px, -40px);
 
   }
-  .profileContent{
-    padding: 1rem !important;
+
+  .profileBorder {
+    gap: 0.6rem;
+    padding: 6px;
   }
+
   .profileInner {
     gap: 0.6rem;
-    padding: 35px 0.3rem; // Ajustado para a barra de título
+    padding: 15px 0.3rem; // Ajustado para a barra de título
     max-width: 100%;
     min-width: 0;
   }
@@ -1103,13 +1815,13 @@
     width: 100%;
     min-width: 0;
     gap: 0.4rem;
-    
+
     // Ajuste do background para telas médias
     background: linear-gradient(to bottom,
-      #ffffff 0%,
-      #f8f9fa 20%,
-      #f1f3f4 80%,
-      #e8eaed 100%);
+        #ffffff 0%,
+        #f8f9fa 20%,
+        #f1f3f4 80%,
+        #e8eaed 100%);
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 2px;
   }
@@ -1117,11 +1829,11 @@
   .carouselButton {
     width: 28px;
     height: 28px;
-    
+
     .carouselButtonInner {
       inset: 2px;
     }
-    
+
     .arrow {
       width: 12px;
       height: 12px;
@@ -1131,7 +1843,7 @@
 
   .categoriesCarousel {
     border-radius: 2px;
-    
+
     // Ajuste das bordas internas
     &::before,
     &::after {
@@ -1140,8 +1852,10 @@
   }
 
   .categoryItem {
-    flex: 0 0 150px;
-    min-width: 150px;
+    // Alinha com a implementação principal - 3 itens em tablets portrait
+    max-width: calc((100% - 2 * 0.3rem) / 3);
+    width: calc((100% - 2 * 0.3rem) / 3);
+    min-width: 0; // Flexível para telas menores
   }
 
   .categoryButton {
@@ -1170,9 +1884,14 @@
 
   }
 
+  .profileBorder {
+    gap: 0.4rem;
+    padding: 4px;
+  }
+
   .profileInner {
     gap: 0.4rem;
-    padding: 35px 0.2rem; // Ajustado para a barra de título
+    padding: 15px 0.2rem; // Ajustado para a barra de título
     flex-direction: row;
     align-items: center;
     flex-wrap: wrap;
@@ -1236,12 +1955,12 @@
   .categoriesContainer {
     padding: 0.3rem 0;
     gap: 0.4rem;
-    
+
     // Background simplificado para mobile
     background: linear-gradient(to bottom,
-      #ffffff 0%,
-      #f5f5f5 50%,
-      #eeeeee 100%);
+        #ffffff 0%,
+        #f5f5f5 50%,
+        #eeeeee 100%);
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 2px;
   }
@@ -1249,11 +1968,11 @@
   .carouselButton {
     width: 24px;
     height: 24px;
-    
+
     .carouselButtonInner {
       inset: 2px;
     }
-    
+
     .arrow {
       width: 8px;
       height: 8px;
@@ -1263,7 +1982,7 @@
 
   .categoriesCarousel {
     border-radius: 2px;
-    
+
     // Remove detalhes decorativos em mobile
     &::before,
     &::after {
@@ -1277,8 +1996,10 @@
   }
 
   .categoryItem {
-    flex: 0 0 130px;
-    min-width: 130px;
+    // Alinha com a implementação principal - 3 itens em landscape mobile
+    max-width: calc((100% - 2 * 0.4rem) / 3);
+    width: calc((100% - 2 * 0.4rem) / 3);
+    min-width: 0; // Flexível para telas menores
   }
 
   .categoryButton {
@@ -1305,49 +2026,51 @@
   .categoriesContainer {
     gap: 0.3rem;
     padding: 0.3rem 0;
-    
+
     // Background simplificado para mobile pequeno
     background: linear-gradient(to bottom,
-      #ffffff 0%,
-      #f5f5f5 50%,
-      #eeeeee 100%);
+        #ffffff 0%,
+        #f5f5f5 50%,
+        #eeeeee 100%);
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 2px;
   }
-  
+
   .carouselButton {
     width: 22px;
     height: 22px;
-    
+
     .carouselButtonInner {
       inset: 2px;
     }
-    
+
     .arrow {
       width: 8px;
       height: 8px;
       filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65));
     }
   }
-  
+
   .categoriesCarousel {
     border-radius: 2px;
-    
+
     // Remove detalhes decorativos em mobile pequeno
     &::before,
     &::after {
       display: none;
     }
   }
-  
+
   .categoriesTrack {
     padding: 0.3rem;
     gap: 0.3rem;
   }
-  
+
   .categoryItem {
-    flex: 0 0 120px;
-    min-width: 120px;
+    // Alinha com a implementação principal - 2 itens em mobile
+    max-width: calc((100% - 1 * 0.3rem) / 2);
+    width: calc((100% - 1 * 0.3rem) / 2);
+    min-width: 0; // Flexível para telas menores
   }
 
   .categoryButton {
@@ -1373,48 +2096,50 @@
   .categoriesContainer {
     gap: 0.25rem;
     padding: 0.25rem 0;
-    
+
     // Background ainda mais simplificado
     background: linear-gradient(to bottom,
-      #ffffff 0%,
-      #f0f0f0 100%);
+        #ffffff 0%,
+        #f0f0f0 100%);
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 2px;
   }
-  
+
   .carouselButton {
     width: 20px;
     height: 20px;
-    
+
     .carouselButtonInner {
       inset: 2px;
     }
-    
+
     .arrow {
       width: 7px;
       height: 7px;
       filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65));
     }
   }
-  
+
   .categoriesCarousel {
     border-radius: 2px;
-    
+
     // Remove detalhes decorativos
     &::before,
     &::after {
       display: none;
     }
   }
-  
+
   .categoriesTrack {
     padding: 0.25rem;
     gap: 0.25rem;
   }
-  
+
   .categoryItem {
-    flex: 0 0 100px;
-    min-width: 100px;
+    // Alinha com a implementação principal - 2 itens em telas pequenas
+    max-width: calc((100% - 1 * 0.25rem) / 2);
+    width: calc((100% - 1 * 0.25rem) / 2);
+    min-width: 0; // Flexível para telas menores
   }
 
   .categoryButton {
@@ -1440,48 +2165,50 @@
   .categoriesContainer {
     gap: 0.2rem;
     padding: 0.2rem 0;
-    
+
     // Background mínimo para telas muito pequenas
     background: linear-gradient(to bottom,
-      #ffffff 0%,
-      #f0f0f0 100%);
+        #ffffff 0%,
+        #f0f0f0 100%);
     border: 1px solid rgba(0, 0, 0, 0.25);
     border-radius: 1px;
   }
-  
+
   .carouselButton {
     width: 18px;
     height: 18px;
-    
+
     .carouselButtonInner {
       inset: 1px;
     }
-    
+
     .arrow {
       width: 6px;
       height: 6px;
       filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65));
     }
   }
-  
+
   .categoriesCarousel {
     border-radius: 1px;
-    
+
     // Remove detalhes decorativos
     &::before,
     &::after {
       display: none;
     }
   }
-  
+
   .categoriesTrack {
     padding: 0.2rem;
     gap: 0.2rem;
   }
-  
+
   .categoryItem {
-    flex: 0 0 80px;
-    min-width: 80px;
+    // Alinha com a implementação principal - 1 item em telas muito pequenas
+    max-width: 100%;
+    width: 100%;
+    min-width: 0; // Flexível
   }
 
   .categoryButton {
@@ -1508,49 +2235,51 @@
   .categoriesContainer {
     gap: 0.3rem;
     padding: 0.3rem 0;
-    
+
     // Background otimizado para landscape
     background: linear-gradient(to bottom,
-      #ffffff 0%,
-      #f5f5f5 50%,
-      #eeeeee 100%);
+        #ffffff 0%,
+        #f5f5f5 50%,
+        #eeeeee 100%);
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 2px;
   }
-  
+
   .carouselButton {
     width: 22px;
     height: 22px;
-    
+
     .carouselButtonInner {
       inset: 2px;
     }
-    
+
     .arrow {
       width: 8px;
       height: 8px;
       filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.65));
     }
   }
-  
+
   .categoriesCarousel {
     border-radius: 2px;
-    
+
     // Remove detalhes decorativos em landscape
     &::before,
     &::after {
       display: none;
     }
   }
-  
+
   .categoriesTrack {
     padding: 0.3rem;
     gap: 0.3rem;
   }
-  
+
   .categoryItem {
-    flex: 0 0 110px;
-    min-width: 110px;
+    // Alinha com a implementação principal - 2 itens em landscape
+    max-width: calc((100% - 1 * 0.3rem) / 2);
+    width: calc((100% - 1 * 0.3rem) / 2);
+    min-width: 0; // Flexível para telas menores
   }
 
   .categoryButton {
@@ -1594,33 +2323,33 @@
   font-size: 10px;
   font-weight: bold;
   transition: all 0.1s ease;
-  
+
   // Gradiente base Windows 7
   background: linear-gradient(180deg,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(245, 245, 245, 0.9) 50%,
-    rgba(225, 225, 225, 0.9) 100%);
-  
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(245, 245, 245, 0.9) 50%,
+      rgba(225, 225, 225, 0.9) 100%);
+
   // Sombra interna
-  box-shadow: 
+  box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.8) inset,
     0 -1px 0 rgba(0, 0, 0, 0.1) inset,
     0 1px 2px rgba(0, 0, 0, 0.1);
 
   &:hover {
     background: linear-gradient(180deg,
-      rgba(255, 255, 255, 0.95) 0%,
-      rgba(250, 250, 250, 0.95) 50%,
-      rgba(235, 235, 235, 0.95) 100%);
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(250, 250, 250, 0.95) 50%,
+        rgba(235, 235, 235, 0.95) 100%);
     border-color: rgba(0, 0, 0, 0.4);
   }
 
   &:active {
     background: linear-gradient(180deg,
-      rgba(215, 215, 215, 0.95) 0%,
-      rgba(230, 230, 230, 0.95) 50%,
-      rgba(245, 245, 245, 0.95) 100%);
-    box-shadow: 
+        rgba(215, 215, 215, 0.95) 0%,
+        rgba(230, 230, 230, 0.95) 50%,
+        rgba(245, 245, 245, 0.95) 100%);
+    box-shadow:
       0 1px 0 rgba(255, 255, 255, 0.6) inset,
       0 -1px 0 rgba(0, 0, 0, 0.2) inset,
       0 1px 2px rgba(0, 0, 0, 0.15);
@@ -1630,7 +2359,7 @@
 .minimizeButton {
   width: 24.85px;
   height: 18px;
-  background: 
+  background:
     linear-gradient(180deg,
       #FFFFFF 0%,
       rgba(159, 160, 165, 0.4) 100%),
@@ -1642,7 +2371,7 @@
       rgba(0, 0, 0, 0.4) 65%,
       rgba(84, 84, 84, 0.4) 79%,
       #6F7077 93%);
-  
+
   &::after {
     content: '';
     width: 12px;
@@ -1653,9 +2382,9 @@
     background-position: center;
     filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.3));
   }
-  
+
   &:hover {
-    background: 
+    background:
       linear-gradient(180deg,
         #FFFFFF 0%,
         rgba(169, 170, 175, 0.5) 100%),
@@ -1667,14 +2396,14 @@
         rgba(10, 10, 10, 0.5) 65%,
         rgba(94, 94, 94, 0.5) 79%,
         #7F8087 93%);
-    
+
     &::after {
       filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.4)) brightness(1.1);
     }
   }
-  
+
   &:active {
-    background: 
+    background:
       linear-gradient(180deg,
         #F5F5F5 0%,
         rgba(149, 150, 155, 0.6) 100%),
@@ -1686,7 +2415,7 @@
         rgba(0, 0, 0, 0.6) 65%,
         rgba(74, 74, 74, 0.6) 79%,
         #5F6067 93%);
-    
+
     &::after {
       filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5)) brightness(0.9);
     }
@@ -1696,7 +2425,7 @@
 .maximizeButton {
   width: 24.85px;
   height: 18px;
-  background: 
+  background:
     linear-gradient(180deg,
       #FFFFFF 0%,
       rgba(159, 160, 165, 0.4) 100%),
@@ -1708,7 +2437,7 @@
       rgba(0, 0, 0, 0.4) 65%,
       rgba(84, 84, 84, 0.4) 79%,
       #6F7077 93%);
-  
+
   &::after {
     content: '';
     width: 12px;
@@ -1719,9 +2448,9 @@
     background-position: center;
     filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.3));
   }
-  
+
   &:hover {
-    background: 
+    background:
       linear-gradient(180deg,
         #FFFFFF 0%,
         rgba(169, 170, 175, 0.5) 100%),
@@ -1733,14 +2462,14 @@
         rgba(10, 10, 10, 0.5) 65%,
         rgba(94, 94, 94, 0.5) 79%,
         #7F8087 93%);
-    
+
     &::after {
       filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.4)) brightness(1.1);
     }
   }
-  
+
   &:active {
-    background: 
+    background:
       linear-gradient(180deg,
         #F5F5F5 0%,
         rgba(149, 150, 155, 0.6) 100%),
@@ -1752,7 +2481,7 @@
         rgba(0, 0, 0, 0.6) 65%,
         rgba(74, 74, 74, 0.6) 79%,
         #5F6067 93%);
-    
+
     &::after {
       filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5)) brightness(0.9);
     }
@@ -1763,11 +2492,11 @@
   width: 42px;
   height: 18px;
   background: linear-gradient(180deg,
-    #EBA79B 0%,
-    #9B2813 61%,
-    #B32E16 71%,
-    #B8644E 93%);
-  
+      #EBA79B 0%,
+      #9B2813 61%,
+      #B32E16 71%,
+      #B8644E 93%);
+
   &::after {
     content: '';
     width: 12px;
@@ -1778,26 +2507,26 @@
     background-position: center;
     filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5));
   }
-  
+
   &:hover {
     background: linear-gradient(180deg,
-      #F0B5AB 0%,
-      #A53A26 61%,
-      #C24128 71%,
-      #C8745E 93%);
-    
+        #F0B5AB 0%,
+        #A53A26 61%,
+        #C24128 71%,
+        #C8745E 93%);
+
     &::after {
       filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.7)) brightness(1.1);
     }
   }
-  
+
   &:active {
     background: linear-gradient(180deg,
-      #E0A59B 0%,
-      #952A16 61%,
-      #B22E16 71%,
-      #B8644E 93%);
-    
+        #E0A59B 0%,
+        #952A16 61%,
+        #B22E16 71%,
+        #B8644E 93%);
+
     &::after {
       filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.8)) brightness(0.9);
     }
@@ -1812,17 +2541,17 @@
   right: 0;
   height: 30px;
   background: linear-gradient(180deg,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(240, 245, 255, 0.9) 50%,
-    rgba(220, 230, 255, 0.95) 100%);
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(240, 245, 255, 0.9) 50%,
+      rgba(220, 230, 255, 0.95) 100%);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   padding: 0 8px;
   z-index: 5;
-  
+
   // Gradiente de foco
-  box-shadow: 
+  box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.8) inset,
     0 -1px 0 rgba(0, 0, 0, 0.1) inset;
 }
@@ -1839,7 +2568,7 @@
   color: white;
   font-size: 10px;
   font-weight: bold;
-  
+
   &::after {
     content: 'P';
   }
@@ -1869,22 +2598,22 @@
     width: 18px;
     height: 18px;
     font-size: 9px;
-    
+
     &.minimizeButton,
     &.maximizeButton {
       width: 20px;
       height: 15px;
-      
+
       &::after {
         width: 10px;
         height: 10px;
       }
     }
-    
+
     &.closeButton {
       width: 36px;
       height: 16px;
-      
+
       &::after {
         width: 10px;
         height: 10px;
@@ -1908,8 +2637,12 @@
     font-size: 10px;
   }
 
+  .profileBorder {
+    padding: 4px;
+  }
+
   .profileInner {
-    padding: 32px 0.3rem;
+    padding: 15px 0.3rem;
   }
 }
 
@@ -1924,22 +2657,22 @@
     width: 16px;
     height: 16px;
     font-size: 8px;
-    
+
     &.minimizeButton,
     &.maximizeButton {
       width: 18px;
       height: 13px;
-      
+
       &::after {
         width: 8px;
         height: 8px;
       }
     }
-    
+
     &.closeButton {
       width: 32px;
       height: 14px;
-      
+
       &::after {
         width: 8px;
         height: 8px;
@@ -1963,7 +2696,12 @@
     font-size: 9px;
   }
 
+  .profileBorder {
+    padding: 4px;
+  }
+
   .profileInner {
-    padding: 28px 0.3rem;
+    padding: 15px 0.3rem;
   }
 }
+

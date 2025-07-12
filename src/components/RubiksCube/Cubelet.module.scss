@@ -1,0 +1,99 @@
+// Estilos para o componente Cubelet individual
+.cubelet {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+  transform-origin: 30px 30px 30px; // Centro do cubelet
+  backface-visibility: visible; // Garantir visibilidade 3D
+  
+  &.animating {
+    transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); // Animação mais lenta e suave
+  }
+}
+
+.face {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border: 2px solid #222;
+  box-sizing: border-box;
+  opacity: 1;
+  border-radius: 4px;
+  backface-visibility: visible;
+  transform-style: preserve-3d;
+  z-index: 1;
+  
+  // Adicionar efeito 3D básico
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, transparent 100%);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+}
+
+// Posicionamento das faces com melhor visibilidade e z-index corrigido
+.front {
+  transform: rotateY(0deg) translateZ(30px);
+  z-index: 10;
+  backface-visibility: visible;
+}
+
+.back {
+  transform: rotateY(180deg) translateZ(30px);
+  z-index: 10;
+  backface-visibility: visible;
+}
+
+.right {
+  transform: rotateY(90deg) translateZ(30px);
+  z-index: 10;
+  backface-visibility: visible;
+}
+
+.left {
+  transform: rotateY(-90deg) translateZ(30px);
+  z-index: 10;
+  backface-visibility: visible;
+}
+
+.top {
+  transform: rotateX(90deg) translateZ(30px);
+  z-index: 10;
+  backface-visibility: visible;
+}
+
+.bottom {
+  transform: rotateX(-90deg) translateZ(30px);
+  z-index: 10;
+  backface-visibility: visible;
+}
+
+// Efeitos visuais específicos para cada face - melhorados
+.front {
+  box-shadow: 0 0 20px rgba(0, 155, 72, 0.4);
+}
+
+.back {
+  box-shadow: 0 0 20px rgba(0, 81, 186, 0.4);
+}
+
+.right {
+  box-shadow: 0 0 20px rgba(255, 88, 0, 0.4);
+}
+
+.left {
+  box-shadow: 0 0 20px rgba(196, 30, 58, 0.4);
+}
+
+.top {
+  box-shadow: 0 0 20px rgba(255, 213, 0, 0.4);
+}
+
+.bottom {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}

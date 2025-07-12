@@ -170,68 +170,6 @@
   margin-right: auto;
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 4rem;
-  position: relative;
-  
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, $color-primary, transparent);
-    border-radius: 2px;
-  }
-  
-  @media (max-width: 900px) {
-    margin-bottom: 3rem;
-  }
-  
-  @media (max-width: 600px) {
-    margin-bottom: 2.5rem;
-  }
-}
-
-.title {
-  font-size: clamp(2.5rem, 6vw, 3.5rem);
-  font-weight: 800;
-  color: $color-text-dark;
-  font-family: $font-title;
-  letter-spacing: -0.03em;
-  margin-bottom: 1.5rem;
-  line-height: 1.1;
-  text-align: left;
-  
-  // Enhanced gradient text effect para fundo claro
-  background: linear-gradient(135deg, $color-text-dark 0%, $color-primary 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  
-  @media (max-width: 600px) {
-    line-height: 1.2;
-  }
-}
-
-.subtitle {
-  color: $color-gray-dark;
-  font-size: clamp(1.1rem, 2.8vw, 1.3rem);
-  font-family: $font-body;
-  font-weight: 400;
-  line-height: 1.7;
-  margin: 0 auto;
-  
-  @media (max-width: 600px) {
-    font-size: clamp(1rem, 4vw, 1.1rem);
-    padding: 0 1rem;
-    line-height: 1.6;
-  }
-}
-
 // Enhanced Panoramic Carousel Styles
 .panoramaContainer {
   position: relative;
@@ -645,238 +583,552 @@
   }
 }
 
-// Stats Section
-.statsSection {
+// Transforming Ideas Section
+.transformingSection {
   margin-top: 4rem;
-  
-  @media (max-width: 600px) {
-    margin-top: 3rem;
-  }
-}
-
-// Enhanced Statistics Row
-.statsRow {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin: 0 auto;
-  gap: 0.5rem;
-  margin-top: 4rem;
-  align-items: stretch;
-  
-  @media (max-width: 700px) {
-    gap: 1.1rem;
-    margin-top: 2.5rem;
-    max-width: 99vw;
-    padding: 0 0.2rem;
-  }
-}
-
-.statBar {
-  width: 100%;
-  min-width: 0;
-  height: 90px;
-  display: flex;
-  align-items: center;
-  background: transparent;
-  border-radius: 20px;
-  box-shadow: 0 2px 15px rgba(79, 140, 255, 0.08);
-  padding: 0 2.5rem;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.98) 100%);
+  border-radius: 24px;
+  box-shadow: 
+    0 8px 40px rgba(79, 140, 255, 0.08),
+    0 2px 16px rgba(79, 140, 255, 0.04);
+  border: 1px solid rgba(79, 140, 255, 0.1);
   position: relative;
-  transition: all 0.4s cubic-bezier(0.4,0.2,0.2,1);
-  justify-content: flex-start;
-  cursor: pointer;
-  will-change: transform;
-  backface-visibility: hidden;
+  overflow: hidden;
   
   &::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(79, 140, 255, 0.02) 0%, rgba(79, 140, 255, 0.05) 100%);
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+      #4f8cff 0%, 
+      #7fb3ff 25%, 
+      #4f8cff 50%, 
+      #7fb3ff 75%, 
+      #4f8cff 100%
+    );
+    animation: gradientShift 3s ease-in-out infinite;
+  }
+  
+  @media (max-width: 768px) {
+    margin-top: 3rem;
+    padding: 2.5rem 1.5rem;
     border-radius: 20px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
   }
   
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(79, 140, 255, 0.15);
-    
-    &::before {
-      opacity: 1;
-    }
-  }
-  
-  @media (max-width: 900px) {
-    height: 74px;
-    padding: 0 1.5rem;
+  @media (max-width: 480px) {
+    margin-top: 2rem;
+    padding: 2rem 1rem;
     border-radius: 16px;
   }
-  
-  @media (max-width: 700px) {
-    align-items: center;
-    height: auto;
-    border-radius: 12px;
-    padding: 1rem;
-  }
 }
 
-.statBar.fromLeft {
-  justify-content: flex-start;
-  background: linear-gradient(90deg, rgba($color-primary, 0.08) 0%, transparent 80%);
-  text-align: left;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-  opacity: 0;
-  animation: fadeInFromRight 0.8s cubic-bezier(0.4,0.2,0.2,1) forwards;
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
-.statBar.fromRight {
-  justify-content: flex-end;
-  background: linear-gradient(270deg, rgba($color-primary, 0.08) 0%, transparent 80%);
-  text-align: right;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-  opacity: 0;
-  animation: fadeInFromLeft 0.8s cubic-bezier(0.4,0.2,0.2,1) forwards;
-}
-
-@keyframes fadeInFromRight {
-  0% { opacity: 0; transform: translateX(60px); }
-  100% { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes fadeInFromLeft {
-  0% { opacity: 0; transform: translateX(-60px); }
-  100% { opacity: 1; transform: translateX(0); }
-}
-
-.statIcon {
-  margin-right: 1.5rem;
-  width: 3rem;
-  height: 3rem;
-  min-width: 3rem;
-  min-height: 3rem;
-  display: flex;
+.transformingContent {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4rem;
   align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba($color-primary, 0.1) 0%, rgba($color-primary, 0.05) 100%);
-  color: $color-primary;
-  font-size: 1.7rem;
-  box-shadow: 0 2px 10px rgba($color-primary, 0.1);
-  transition: all 0.3s ease;
   
-  svg {
-    width: 1.6rem;
-    height: 1.6rem;
-    display: block;
-    stroke: $color-primary;
-    stroke-width: 2;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
   }
   
-  &:hover {
-    background: linear-gradient(135deg, rgba($color-primary, 0.15) 0%, rgba($color-primary, 0.08) 100%);
-    box-shadow: 0 4px 20px rgba($color-primary, 0.2);
+  @media (max-width: 480px) {
+    gap: 2rem;
   }
+}
+
+.transformingText {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   
-  @media (max-width: 900px) {
-    margin-right: 1rem;
-    width: 2.5rem;
-    height: 2.5rem;
-    min-width: 2.5rem;
-    min-height: 2.5rem;
+  @media (max-width: 768px) {
+    gap: 1rem;
+  }
+}
+
+.transformingTitle {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: $color-text-dark;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  
+  .highlight {
+    background: linear-gradient(135deg, 
+      $color-primary 0%, 
+      #7fb3ff 50%, 
+      $color-primary 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
     
-    svg {
-      width: 1.3rem;
-      height: 1.3rem;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        $color-primary 50%, 
+        transparent 100%
+      );
+      opacity: 0.3;
+      animation: underlineGlow 2s ease-in-out infinite;
     }
   }
-  @media (max-width: 700px) {
-    margin: 0 0 0.3rem 0;
-    width: 2.2rem;
-    height: 2.2rem;
-    min-width: 2.2rem;
-    min-height: 2.2rem;
-    background: linear-gradient(120deg, rgba($color-primary, 0.12) 60%, transparent 100%);
-    box-shadow: none;
-  }
-}
-.statBar.fromRight .statIcon {
-  margin-right: 0;
-  margin-left: 1.2rem;
-  @media (max-width: 700px) {
-    margin: 0 0 0.3rem 0;
+  
+  @media (max-width: 768px) {
+    text-align: center;
   }
 }
 
-.statNumber {
-  font-size: 2.1rem;
-  font-weight: 800;
+@keyframes underlineGlow {
+  0%, 100% { opacity: 0.3; transform: scaleX(0.8); }
+  50% { opacity: 0.6; transform: scaleX(1.2); }
+}
+
+.transformingSubtitle {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  color: rgba(0, 0, 0, 0.7);
+  line-height: 1.6;
+  font-weight: 400;
+  margin: 0;
+  
+  @media (max-width: 768px) {
+    text-align: center;
+  }
+}
+
+.transformingTagline {
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
   color: $color-primary;
-  margin-right: 1rem;
-  letter-spacing: -1px;
-  text-shadow: 0 2px 12px rgba($color-primary, 0.13);
-  @media (max-width: 900px) {
-    font-size: 1.5rem;
-    margin-right: 0.5rem;
-  }
-  @media (max-width: 700px) {
-    margin: 0 0 0.2rem 0;
-    font-size: 1.3rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+  
+  @media (max-width: 768px) {
     text-align: center;
-  }
-}
-.statBar.fromRight .statNumber {
-  margin-right: 0;
-  margin-left: 1rem;
-  @media (max-width: 700px) {
-    margin: 0 0 0.2rem 0;
   }
 }
 
-.statLabel {
-  font-size: 1.08rem;
-  color: $color-text-dark;
-  opacity: 0.8;
-  font-weight: 500;
-  letter-spacing: 0.1px;
-  text-align: left;
-  @media (max-width: 900px) {
-    font-size: 0.98rem;
-    text-align: left;
+// Rubik's Cube Animation - Mecânica Real Simplificada
+.cubeContainer {
+  perspective: 1500px;
+  width: 200px;
+  height: 200px;
+  position: relative;
+  
+  @media (max-width: 768px) {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
   }
-  @media (max-width: 700px) {
-    font-size: 0.92rem;
-    text-align: center;
-    margin: 0;
-  }
-}
-.statBar.fromRight .statLabel {
-  text-align: right;
-  @media (max-width: 700px) {
-    text-align: center;
+  
+  @media (max-width: 480px) {
+    width: 120px;
+    height: 120px;
   }
 }
-@media (max-width: 900px) {
-  .statBar {
-    flex: 1 1 100%;
-    border-radius: 12px !important;
-    text-align: left !important;
-  }
-  .statBar .statIcon {
-    margin-right: 0.8rem !important;
-    margin-left: 0 !important;
-  }
-  .statBar .statNumber {
-    margin-right: 0.5rem !important;
-    margin-left: 0 !important;
-  }
-  .statBar .statLabel {
-    text-align: left !important;
+
+.rubiksCube {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: cubeFloat 6s ease-in-out infinite;
+  
+  &:hover {
+    animation-play-state: paused;
   }
 }
+
+// Flutuação suave do cubo
+@keyframes cubeFloat {
+  0%, 100% { 
+    transform: translateY(0px) rotateX(-15deg) rotateY(15deg);
+  }
+  50% { 
+    transform: translateY(-10px) rotateX(-15deg) rotateY(15deg);
+  }
+}
+
+.cubeFace {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 3px;
+  padding: 6px;
+  border-radius: 8px;
+  
+  @media (max-width: 768px) {
+    gap: 2px;
+    padding: 4px;
+    border-radius: 6px;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 1px;
+    padding: 3px;
+    border-radius: 4px;
+  }
+}
+
+.cubeSquare {
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 
+    inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  // Brilho realista
+  &::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    height: 40%;
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.6) 0%, 
+      rgba(255, 255, 255, 0.2) 50%,
+      transparent 100%
+    );
+    border-radius: 2px;
+    pointer-events: none;
+  }
+  
+  // Reflexo dinâmico
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 45%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.1) 55%,
+      transparent 100%
+    );
+    border-radius: 4px;
+    animation: reflectionSweep 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  
+  @media (max-width: 768px) {
+    border-radius: 3px;
+  }
+  
+  @media (max-width: 480px) {
+    border-radius: 2px;
+  }
+}
+
+@keyframes reflectionSweep {
+  0%, 100% { 
+    transform: translateX(-100%) skewX(-25deg);
+    opacity: 0;
+  }
+  50% { 
+    transform: translateX(100%) skewX(-25deg);
+    opacity: 0.6;
+  }
+}
+
+// Cube faces positioning - 3D realista
+.cubeFace.front {
+  transform: rotateY(0deg) translateZ(100px);
+  
+  @media (max-width: 768px) {
+    transform: rotateY(0deg) translateZ(75px);
+  }
+  
+  @media (max-width: 480px) {
+    transform: rotateY(0deg) translateZ(60px);
+  }
+}
+
+.cubeFace.back {
+  transform: rotateY(180deg) translateZ(100px);
+  
+  @media (max-width: 768px) {
+    transform: rotateY(180deg) translateZ(75px);
+  }
+  
+  @media (max-width: 480px) {
+    transform: rotateY(180deg) translateZ(60px);
+  }
+}
+
+.cubeFace.right {
+  transform: rotateY(90deg) translateZ(100px);
+  
+  @media (max-width: 768px) {
+    transform: rotateY(90deg) translateZ(75px);
+  }
+  
+  @media (max-width: 480px) {
+    transform: rotateY(90deg) translateZ(60px);
+  }
+}
+
+.cubeFace.left {
+  transform: rotateY(-90deg) translateZ(100px);
+  
+  @media (max-width: 768px) {
+    transform: rotateY(-90deg) translateZ(75px);
+  }
+  
+  @media (max-width: 480px) {
+    transform: rotateY(-90deg) translateZ(60px);
+  }
+}
+
+.cubeFace.top {
+  transform: rotateX(90deg) translateZ(100px);
+  
+  @media (max-width: 768px) {
+    transform: rotateX(90deg) translateZ(75px);
+  }
+  
+  @media (max-width: 480px) {
+    transform: rotateX(90deg) translateZ(60px);
+  }
+}
+
+.cubeFace.bottom {
+  transform: rotateX(-90deg) translateZ(100px);
+  
+  @media (max-width: 768px) {
+    transform: rotateX(-90deg) translateZ(75px);
+  }
+  
+  @media (max-width: 480px) {
+    transform: rotateX(-90deg) translateZ(60px);
+  }
+}
+
+// Cores realistas de cubo mágico em escala de cinzas
+.cubeFace.front {
+  background: linear-gradient(135deg, rgba(240, 240, 240, 0.1), rgba(220, 220, 220, 0.05));
+  
+  .cubeSquare {
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.95) 0%, 
+      rgba(250, 250, 250, 0.9) 50%,
+      rgba(240, 240, 240, 0.85) 100%
+    );
+    
+    // Centro da face (sempre fixo)
+    &:nth-child(5) {
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 1) 0%, 
+        rgba(245, 245, 245, 0.95) 100%
+      );
+      box-shadow: 
+        inset 0 3px 6px rgba(255, 255, 255, 0.4),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.1),
+        0 3px 12px rgba(0, 0, 0, 0.15);
+      border: 2px solid rgba(79, 140, 255, 0.3);
+    }
+  }
+}
+
+.cubeFace.back {
+  background: linear-gradient(135deg, rgba(180, 180, 180, 0.1), rgba(160, 160, 160, 0.05));
+  
+  .cubeSquare {
+    background: linear-gradient(135deg, 
+      rgba(200, 200, 200, 0.9) 0%, 
+      rgba(190, 190, 190, 0.85) 50%,
+      rgba(180, 180, 180, 0.8) 100%
+    );
+    
+    &:nth-child(5) {
+      background: linear-gradient(135deg, 
+        rgba(210, 210, 210, 0.95) 0%, 
+        rgba(190, 190, 190, 0.9) 100%
+      );
+      border: 2px solid rgba(79, 140, 255, 0.2);
+    }
+  }
+}
+
+.cubeFace.right {
+  background: linear-gradient(135deg, rgba(220, 220, 220, 0.1), rgba(200, 200, 200, 0.05));
+  
+  .cubeSquare {
+    background: linear-gradient(135deg, 
+      rgba(230, 230, 230, 0.9) 0%, 
+      rgba(220, 220, 220, 0.85) 50%,
+      rgba(210, 210, 210, 0.8) 100%
+    );
+    
+    &:nth-child(5) {
+      background: linear-gradient(135deg, 
+        rgba(240, 240, 240, 0.95) 0%, 
+        rgba(220, 220, 220, 0.9) 100%
+      );
+      border: 2px solid rgba(79, 140, 255, 0.25);
+    }
+  }
+}
+
+.cubeFace.left {
+  background: linear-gradient(135deg, rgba(190, 190, 190, 0.1), rgba(170, 170, 170, 0.05));
+  
+  .cubeSquare {
+    background: linear-gradient(135deg, 
+      rgba(210, 210, 210, 0.9) 0%, 
+      rgba(200, 200, 200, 0.85) 50%,
+      rgba(190, 190, 190, 0.8) 100%
+    );
+    
+    &:nth-child(5) {
+      background: linear-gradient(135deg, 
+        rgba(220, 220, 220, 0.95) 0%, 
+        rgba(200, 200, 200, 0.9) 100%
+      );
+      border: 2px solid rgba(79, 140, 255, 0.2);
+    }
+  }
+}
+
+.cubeFace.top {
+  background: linear-gradient(135deg, rgba(250, 250, 250, 0.1), rgba(240, 240, 240, 0.05));
+  
+  .cubeSquare {
+    background: linear-gradient(135deg, 
+      rgba(250, 250, 250, 0.95) 0%, 
+      rgba(245, 245, 245, 0.9) 50%,
+      rgba(240, 240, 240, 0.85) 100%
+    );
+    
+    &:nth-child(5) {
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 1) 0%, 
+        rgba(250, 250, 250, 0.95) 100%
+      );
+      box-shadow: 
+        inset 0 4px 8px rgba(255, 255, 255, 0.5),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1),
+        0 4px 16px rgba(0, 0, 0, 0.1);
+      border: 2px solid rgba(79, 140, 255, 0.3);
+    }
+  }
+}
+
+.cubeFace.bottom {
+  background: linear-gradient(135deg, rgba(160, 160, 160, 0.1), rgba(140, 140, 140, 0.05));
+  
+  .cubeSquare {
+    background: linear-gradient(135deg, 
+      rgba(180, 180, 180, 0.9) 0%, 
+      rgba(170, 170, 170, 0.85) 50%,
+      rgba(160, 160, 160, 0.8) 100%
+    );
+    
+    &:nth-child(5) {
+      background: linear-gradient(135deg, 
+        rgba(190, 190, 190, 0.95) 0%, 
+        rgba(170, 170, 170, 0.9) 100%
+      );
+      border: 2px solid rgba(79, 140, 255, 0.2);
+    }
+  }
+}
+
+// Animação de movimentos de camadas simulando resolução
+.rubiksCube {
+  .cubeFace.front {
+    animation: layerFrontMove 24s ease-in-out infinite;
+  }
+  
+  .cubeFace.right {
+    animation: layerRightMove 24s ease-in-out infinite;
+  }
+  
+  .cubeFace.top {
+    animation: layerTopMove 24s ease-in-out infinite;
+  }
+}
+
+@keyframes layerFrontMove {
+  0%, 15% { transform: rotateY(0deg) translateZ(100px); }
+  16%, 20% { transform: rotateY(0deg) translateZ(100px) rotateZ(90deg); }
+  21%, 35% { transform: rotateY(0deg) translateZ(100px) rotateZ(0deg); }
+  50%, 65% { transform: rotateY(0deg) translateZ(100px); }
+  66%, 70% { transform: rotateY(0deg) translateZ(100px) rotateZ(-90deg); }
+  71%, 100% { transform: rotateY(0deg) translateZ(100px) rotateZ(0deg); }
+}
+
+@keyframes layerRightMove {
+  0%, 8% { transform: rotateY(90deg) translateZ(100px); }
+  9%, 13% { transform: rotateY(90deg) translateZ(100px) rotateX(90deg); }
+  14%, 28% { transform: rotateY(90deg) translateZ(100px) rotateX(0deg); }
+  40%, 55% { transform: rotateY(90deg) translateZ(100px); }
+  56%, 60% { transform: rotateY(90deg) translateZ(100px) rotateX(-90deg); }
+  61%, 100% { transform: rotateY(90deg) translateZ(100px) rotateX(0deg); }
+}
+
+@keyframes layerTopMove {
+  0%, 22% { transform: rotateX(90deg) translateZ(100px); }
+  23%, 27% { transform: rotateX(90deg) translateZ(100px) rotateY(90deg); }
+  28%, 42% { transform: rotateX(90deg) translateZ(100px) rotateY(0deg); }
+  58%, 73% { transform: rotateX(90deg) translateZ(100px); }
+  74%, 78% { transform: rotateX(90deg) translateZ(100px) rotateY(-90deg); }
+  79%, 100% { transform: rotateX(90deg) translateZ(100px) rotateY(0deg); }
+}
+
+// Efeito de resolução - peças se organizam
+@keyframes pieceResolve {
+  0% { 
+    transform: scale(0.95) rotate(5deg);
+    opacity: 0.8;
+  }
+  50% { 
+    transform: scale(1.05) rotate(0deg);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+// Animação das peças durante resolução
+.rubiksCube:not(:hover) .cubeSquare:not(:nth-child(5)) {
+  animation: pieceResolve 2s ease-in-out infinite;
+  animation-delay: calc(var(--piece-index, 0) * 0.1s);
+}
+
+
 
 // Loading and Empty States
 .loadingSpinner {

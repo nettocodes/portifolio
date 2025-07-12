@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Skills.module.scss';
+import HeaderSection from '../../components/HeaderSection';
 import { 
   FaReact, 
   FaNodeJs, 
@@ -154,13 +155,10 @@ const Skills: React.FC = () => {
       <BackgroundIcons />
       
       <div className="container">
-        <div className={styles.header}>
-          <h2>Skills & Expertise</h2>
-          <p className={styles.subtitle}>
-            Domínio técnico consolidado através de projetos reais e aprendizado contínuo.
-            Cada tecnologia representa soluções implementadas e desafios superados.
-          </p>
-        </div>
+        <HeaderSection 
+          title="Skills & Expertise"
+          subtitle="Domínio técnico consolidado através de projetos reais e aprendizado contínuo. Cada tecnologia representa soluções implementadas e desafios superados."
+        />
 
         <div className={styles.skillsGrid}>
           {skillCategories.map((category, categoryIndex) => (

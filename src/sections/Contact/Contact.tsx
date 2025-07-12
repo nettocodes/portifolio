@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './Contact.module.scss';
+import HeaderSection from '../../components/HeaderSection';
 import { FaGithub, FaLinkedin, FaEnvelope, FaWhatsapp, FaMapMarkerAlt, FaPhoneAlt, FaPaperPlane } from 'react-icons/fa';
 import ivoImg from '../../assets/ivo.jpg';
 
@@ -49,15 +50,11 @@ const Contact: React.FC = () => {
       <div className={styles.background}></div>
       <div className={styles.container}>
         <div className={styles.content}>
-          <div className={styles.header}>
-            <div className={styles.headerContent}>
-              <h2 className={styles.title}>Vamos conversar?</h2>
-              <p className={styles.subtitle}>
-                Entre em contato para projetos, parcerias ou oportunidades profissionais. 
-                Estou sempre aberto a novas ideias e colaborações.
-              </p>
-            </div>
-          </div>
+          <HeaderSection 
+            title="Vamos conversar?"
+            subtitle="Entre em contato para projetos, parcerias ou oportunidades profissionais. Estou sempre aberto a novas ideias e colaborações."
+            variant="light"
+          />
           
           <div className={styles.formContainer}>
             <div className={styles.imageSection}>
