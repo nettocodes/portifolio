@@ -15,7 +15,13 @@ const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
 
   const handleToggle = () => setMenuOpen((open) => !open);
-  const handleLinkClick = () => setMenuOpen(false);
+  const handleLinkClick = (href: string) => {
+    setMenuOpen(false);
+    const element = document.getElementById(href.replace('#', ''));
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,6 +61,10 @@ const Header: React.FC = () => {
               >
                 <motion.a 
                   href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleLinkClick(link.href);
+                  }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -267,7 +277,10 @@ const Header: React.FC = () => {
                   >
                     <motion.a 
                       href={link.href} 
-                      onClick={handleLinkClick}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleLinkClick(link.href);
+                      }}
                       whileHover={{ scale: 1.05, x: -10 }}
                       whileTap={{ scale: 0.95 }}
                     >

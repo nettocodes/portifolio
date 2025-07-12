@@ -12,6 +12,17 @@ const Hero: React.FC = () => {
   const buttonRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
 
+  // Função para scroll suave para seção de projetos
+  const scrollToProjects = () => {
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   useEffect(() => {
     let i = 0;
     const interval = setInterval(() => {
@@ -82,7 +93,7 @@ const Hero: React.FC = () => {
           Desenvolvedor Full Stack apaixonado por tecnologia e design elegante.
         </p>
         <div ref={buttonRef} className={styles.buttonWrapper}>
-          <AnimatedButton aria-label="Ver projetos">Ver Projetos</AnimatedButton>
+          <AnimatedButton aria-label="Ver projetos" onClick={scrollToProjects}>Ver Projetos</AnimatedButton>
         </div>
       </div>
       <div className={styles.background} ref={bgRef} aria-hidden="true"></div>
@@ -90,4 +101,4 @@ const Hero: React.FC = () => {
   );
 };
 
-export default Hero; 
+export default Hero;

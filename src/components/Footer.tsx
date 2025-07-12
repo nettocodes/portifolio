@@ -20,6 +20,13 @@ const Footer: React.FC = () => {
     });
   };
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   // Detecta quando o footer entra em vista
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -62,23 +69,23 @@ const Footer: React.FC = () => {
             <div className={styles.links}>
               <a href="#hero" onClick={(e) => {
                 e.preventDefault();
-                document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' });
+                scrollToSection('hero');
               }}>Início</a>
               <a href="#about" onClick={(e) => {
                 e.preventDefault();
-                document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+                scrollToSection('about');
               }}>Sobre</a>
               <a href="#projects" onClick={(e) => {
                 e.preventDefault();
-                document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+                scrollToSection('projects');
               }}>Projetos</a>
               <a href="#skills" onClick={(e) => {
                 e.preventDefault();
-                document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' });
+                scrollToSection('skills');
               }}>Habilidades</a>
               <a href="#contact" onClick={(e) => {
                 e.preventDefault();
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                scrollToSection('contact');
               }}>Contato</a>
             </div>
           </div>
@@ -184,7 +191,7 @@ const Footer: React.FC = () => {
           <div className={styles.copy}>
             <span>&copy; {new Date().getFullYear()} Ivo Netto. Todos os direitos reservados.</span>
             <span className={styles.credits}>
-              Desenvolvido com React, Vite e muito café ☕
+              Desenvolvido com React, Vite e muito café!
             </span>
           </div>
           <div className={styles.madeWith}>
