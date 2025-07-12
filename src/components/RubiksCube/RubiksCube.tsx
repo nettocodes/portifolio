@@ -24,18 +24,6 @@ const RubiksCube: React.FC = () => {
     bottom: '#ffffff'   // Branco
   };
 
-  // Função para determinar o tipo de cubelet baseado na posição
-  const getCubeletType = (position: [number, number, number]): 'corner' | 'edge' | 'center' => {
-    const [x, y, z] = position;
-    
-    // Contar quantas coordenadas são extremas (0 ou 2)
-    const extremeCount = [x, y, z].filter(coord => coord === 0 || coord === 2).length;
-    
-    if (extremeCount === 3) return 'corner';   // 8 cantos
-    if (extremeCount === 2) return 'edge';     // 12 arestas
-    return 'center';                           // 6 centros
-  };
-
   // Função para rotacionar uma camada - versão mais estável
   const rotateLayer = (axis: Axis, layer: Layer, direction: Direction) => {
     if (cubeState.isAnimating) return;
