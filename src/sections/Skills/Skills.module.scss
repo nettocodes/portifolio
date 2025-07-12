@@ -367,7 +367,6 @@
     // No mobile, resetar direções para layout simples
     &.fromLeft,
     &.fromRight {
-      background: linear-gradient(135deg, rgba($color-primary, 0.06) 0%, transparent 70%);
       border-radius: 12px;
       animation: fadeInUp 0.8s ease-out forwards;
       opacity: 0; // Resetar para animação

@@ -10,10 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@vercel/analytics": "^1.5.0",
     "aos": "^2.3.4",
     "chart.js": "^4.5.0",
-    "framer-motion": "^12.23.0",
+    "clippyjs": "^0.0.3",
+    "framer-motion": "^12.23.3",
     "gsap": "^3.13.0",
     "phosphor-react": "^1.4.1",
     "react": "^19.1.0",

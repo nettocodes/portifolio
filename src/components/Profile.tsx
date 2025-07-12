@@ -23,15 +23,22 @@ import {
   Link,
 } from 'phosphor-react';
 
+// Declaração do tipo para o Clippy
+declare global {
+  interface Window {
+    clippy: any;
+  }
+}
+
 const stats = [
   {
     icon: <Calendar weight="fill" />,
-    number: '5+',
+    number: '3+',
     label: 'Anos',
   },
   {
     icon: <FolderOpen weight="fill" />,
-    number: '50+',
+    number: '10+',
     label: 'Projetos',
   },
   {
@@ -75,10 +82,8 @@ const dropdownCategories: DropdownCategory[] = [
     icon: <FolderOpen weight="fill" />,
     items: [
       { icon: <Globe weight="fill" />, label: 'Portfolio Website', type: 'link', url: 'https://github.com/IvoBraatz/portifolio' },
-      { icon: <Database weight="fill" />, label: 'Sistema ERP', type: 'link', url: '#' },
-      { icon: <Code weight="fill" />, label: 'API RestFul', type: 'link', url: '#' },
-      { icon: <PaintBrush weight="fill" />, label: 'Design System', type: 'link', url: '#' },
-      { icon: <Globe weight="fill" />, label: 'E-commerce', type: 'link', url: '#' },
+      { icon: <Database weight="fill" />, label: 'DataRunner', type: 'link', url: '#' },
+      { icon: <Code weight="fill" />, label: 'Ordesk', type: 'link', url: '#' },
     ]
   },
   {
@@ -87,9 +92,9 @@ const dropdownCategories: DropdownCategory[] = [
     icon: <User weight="fill" />,
     items: [
       { icon: <Briefcase weight="fill" />, label: 'Desenvolvedor Full Stack', type: 'info' },
-      { icon: <Code weight="fill" />, label: '5+ anos de experiência', type: 'info' },
+      { icon: <Code weight="fill" />, label: '3+ anos de experiência', type: 'info' },
       { icon: <Heart weight="fill" />, label: 'Apaixonado por tecnologia', type: 'info' },
-      { icon: <Globe weight="fill" />, label: 'Brasileiro, São Paulo', type: 'info' },
+      { icon: <Globe weight="fill" />, label: 'Brasileiro, Santa Catarina', type: 'info' },
     ]
   },
   {
@@ -98,10 +103,10 @@ const dropdownCategories: DropdownCategory[] = [
     icon: <Code weight="fill" />,
     items: [
       { icon: <Globe weight="fill" />, label: 'React/Next.js', type: 'skill' },
-      { icon: <Database weight="fill" />, label: 'Node.js/Express', type: 'skill' },
       { icon: <Code weight="fill" />, label: 'TypeScript', type: 'skill' },
-      { icon: <Database weight="fill" />, label: 'PostgreSQL/MongoDB', type: 'skill' },
-      { icon: <PaintBrush weight="fill" />, label: 'SCSS/Tailwind', type: 'skill' },
+      { icon: <Database weight="fill" />, label: 'Node.js/Express', type: 'skill' },
+      { icon: <Database weight="fill" />, label: 'SQL/MySQL/MongoDB', type: 'skill' },
+      { icon: <PaintBrush weight="fill" />, label: 'SCSS/CSS', type: 'skill' },
     ]
   },
   {
@@ -110,9 +115,9 @@ const dropdownCategories: DropdownCategory[] = [
     icon: <Phone weight="fill" />,
     items: [
       { icon: <Link weight="fill" />, label: 'GitHub', type: 'link', url: 'https://github.com/IvoBraatz' },
-      { icon: <Link weight="fill" />, label: 'LinkedIn', type: 'link', url: '#' },
-      { icon: <Phone weight="fill" />, label: 'Email', type: 'link', url: 'mailto:ivo@exemplo.com' },
-      { icon: <Globe weight="fill" />, label: 'Website', type: 'link', url: '#' },
+      { icon: <Link weight="fill" />, label: 'LinkedIn', type: 'link', url: 'https://www.linkedin.com/in/ivobraatz/' },
+      { icon: <Phone weight="fill" />, label: 'Email', type: 'link', url: 'mailto:braatzivo@hotmail.com' },
+      { icon: <Globe weight="fill" />, label: 'Website', type: 'link', url: 'https://ivonetto.vercel.app' },
     ]
   },
   {
@@ -121,10 +126,14 @@ const dropdownCategories: DropdownCategory[] = [
     icon: <PaintBrush weight="fill" />,
     items: [
       { icon: <Code weight="fill" />, label: 'VS Code', type: 'info' },
-      { icon: <Database weight="fill" />, label: 'Docker', type: 'info' },
-      { icon: <Globe weight="fill" />, label: 'Figma', type: 'info' },
       { icon: <Link weight="fill" />, label: 'Postman', type: 'info' },
-      { icon: <PaintBrush weight="fill" />, label: 'Adobe Creative Suite', type: 'info' },
+      { icon: <Link weight="fill" />, label: 'Swagger', type: 'info' },
+      { icon: <Globe weight="fill" />, label: 'Figma', type: 'info' },
+      { icon: <Globe weight="fill" />, label: 'AWS', type: 'info' },
+      { icon: <Database weight="fill" />, label: 'Docker', type: 'info' },
+      { icon: <Database weight="fill" />, label: 'Git/GitHub', type: 'info' },
+      { icon: <Database weight="fill" />, label: 'MongoDB', type: 'info' },
+      { icon: <Database weight="fill" />, label: 'MySQL', type: 'info' },
     ]
   },
   {
@@ -132,10 +141,8 @@ const dropdownCategories: DropdownCategory[] = [
     title: 'Formação',
     icon: <Book weight="fill" />,
     items: [
-      { icon: <Book weight="fill" />, label: 'Ciência da Computação', type: 'info' },
-      { icon: <Globe weight="fill" />, label: 'Certificação AWS', type: 'info' },
-      { icon: <Code weight="fill" />, label: 'Certificação React', type: 'info' },
-      { icon: <Database weight="fill" />, label: 'Certificação Node.js', type: 'info' },
+      { icon: <Book weight="fill" />, label: 'Gestão de TI', type: 'info' },
+      { icon: <Globe weight="fill" />, label: '+ 40 Cursos de Programação', type: 'info' },
     ]
   },
   {
@@ -143,10 +150,7 @@ const dropdownCategories: DropdownCategory[] = [
     title: 'Experiência',
     icon: <Briefcase weight="fill" />,
     items: [
-      { icon: <Briefcase weight="fill" />, label: 'Senior Developer - 2022-2024', type: 'info' },
-      { icon: <Code weight="fill" />, label: 'Full Stack Developer - 2020-2022', type: 'info' },
-      { icon: <Globe weight="fill" />, label: 'Frontend Developer - 2018-2020', type: 'info' },
-      { icon: <Database weight="fill" />, label: 'Junior Developer - 2016-2018', type: 'info' },
+      { icon: <Briefcase weight="fill" />, label: 'Analista Field Service - 2022-Atual', type: 'info' },
     ]
   },
   {
@@ -155,9 +159,8 @@ const dropdownCategories: DropdownCategory[] = [
     icon: <Globe weight="fill" />,
     items: [
       { icon: <Globe weight="fill" />, label: 'Português - Nativo', type: 'info' },
-      { icon: <Globe weight="fill" />, label: 'Inglês - Avançado', type: 'info' },
-      { icon: <Globe weight="fill" />, label: 'Espanhol - Intermediário', type: 'info' },
-      { icon: <Globe weight="fill" />, label: 'Francês - Básico', type: 'info' },
+      { icon: <Globe weight="fill" />, label: 'Inglês - Intermediário', type: 'info' },
+      { icon: <Globe weight="fill" />, label: 'Espanhol - Básico', type: 'info' },
     ]
   },
   {
@@ -165,11 +168,11 @@ const dropdownCategories: DropdownCategory[] = [
     title: 'Certificações',
     icon: <Calendar weight="fill" />,
     items: [
-      { icon: <Database weight="fill" />, label: 'AWS Solutions Architect', type: 'link', url: '#' },
-      { icon: <Code weight="fill" />, label: 'React Developer Certification', type: 'link', url: '#' },
-      { icon: <Globe weight="fill" />, label: 'Google Cloud Professional', type: 'link', url: '#' },
-      { icon: <PaintBrush weight="fill" />, label: 'Adobe Certified Expert', type: 'link', url: '#' },
-      { icon: <Link weight="fill" />, label: 'Scrum Master Certification', type: 'link', url: '#' },
+      { icon: <Code weight="fill" />, label: 'C# Com foco em Backend', type: 'link', url: '#' },
+      { icon: <Code weight="fill" />, label: 'Javascript Com Foco em Backend', type: 'link', url: '#' },
+      { icon: <Code weight="fill" />, label: 'HTML e CSS', type: 'link', url: '#' },
+      { icon: <Database weight="fill" />, label: 'SQL com MySQL', type: 'link', url: '#' },
+      { icon: <Database weight="fill" />, label: 'Git e GitHub', type: 'link', url: '#' },
     ]
   },
 ];
@@ -395,6 +398,54 @@ const CategoriesSection = memo(() => {
 
 const Profile: React.FC = () => {
   const profileRef = useRef<HTMLDivElement>(null);
+  const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
+  const [tooltipTimeoutId, setTooltipTimeoutId] = useState<number | null>(null);
+
+  const handleButtonClick = (buttonType: string) => {
+    if (tooltipTimeoutId) {
+      clearTimeout(tooltipTimeoutId);
+    }
+    
+    setActiveTooltip(buttonType);
+    
+    // Auto-hide tooltip after 8 seconds
+    const timeoutId = setTimeout(() => {
+      setActiveTooltip(null);
+    }, 8000);
+    
+    setTooltipTimeoutId(timeoutId);
+  };
+
+  const handleTooltipClose = () => {
+    if (tooltipTimeoutId) {
+      clearTimeout(tooltipTimeoutId);
+      setTooltipTimeoutId(null);
+    }
+    setActiveTooltip(null);
+  };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (tooltipTimeoutId) {
+        clearTimeout(tooltipTimeoutId);
+      }
+    };
+  }, [tooltipTimeoutId]);
+
+  // Tooltip messages for each button
+  const tooltipMessages = {
+    minimize: "Ops! Não dá para me minimizar, estou sempre aqui! 😄",
+    maximize: "Já estou no meu tamanho máximo de fofura! 🤗",
+    close: "Você achou que poderia me fechar mesmo? 😂"
+  };
+
+  // Clippy icons for each button
+  const clippyIcons = {
+    minimize: "📎",
+    maximize: "📎",
+    close: "📎"
+  };
 
   return (
     <div className={styles.profile} ref={profileRef}>
@@ -407,9 +458,52 @@ const Profile: React.FC = () => {
 
         {/* Botões de controle de janela */}
         <div className={styles.windowControls}>
-          <button className={`${styles.windowButton} ${styles.minimizeButton}`} aria-label="Minimizar"></button>
-          <button className={`${styles.windowButton} ${styles.maximizeButton}`} aria-label="Maximizar"></button>
-          <button className={`${styles.windowButton} ${styles.closeButton}`} aria-label="Fechar"></button>
+          <button 
+            className={`${styles.windowButton} ${styles.minimizeButton}`} 
+            aria-label="Minimizar"
+            onClick={() => handleButtonClick('minimize')}
+          ></button>
+          <button 
+            className={`${styles.windowButton} ${styles.maximizeButton}`} 
+            aria-label="Maximizar"
+            onClick={() => handleButtonClick('maximize')}
+          ></button>
+          <button 
+            className={`${styles.windowButton} ${styles.closeButton}`} 
+            aria-label="Fechar"
+            onClick={() => handleButtonClick('close')}
+          ></button>
+          
+          {/* Clippy Tooltip */}
+          {activeTooltip && (
+            <div 
+              className={styles.clippyTooltip} 
+              data-tooltip={activeTooltip}
+              role="tooltip"
+            >
+              <div className={styles.clippyAvatar}>
+                <div className={styles.clippyBody}>
+                  {clippyIcons[activeTooltip as keyof typeof clippyIcons]}
+                </div>
+                <div className={styles.clippyEyes}>
+                  <div className={styles.clippyEye}></div>
+                  <div className={styles.clippyEye}></div>
+                </div>
+              </div>
+              <div className={styles.clippyBubble}>
+                <div className={styles.clippyMessage}>
+                  {tooltipMessages[activeTooltip as keyof typeof tooltipMessages]}
+                </div>
+                <button 
+                  className={styles.clippyCloseButton}
+                  onClick={handleTooltipClose}
+                  aria-label="Fechar tooltip"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className={styles.profileBorder}>

@@ -11,7 +11,6 @@
   align-items: center;
   justify-content: center;
   transform: translate(0px, -100px);
-
   // Garantir que não interfira no fluxo das outras sections
   pointer-events: none;
 
@@ -20,28 +19,12 @@
 
   // Permite overflow em toda a hierarquia
   overflow: visible;
-
-  .profileContent {
-    // Reativar pointer-events apenas no conteúdo
-    pointer-events: all;
-    width: 100%;
-    margin: 0 auto;
-    padding: 2rem 1rem 0 1rem;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    border-radius: 8px 8px 0 0;
-    
-    // Permite overflow para dropdown
-    overflow: visible;
-
-    // Background de imagem 
-    &::before {
+  &::before {
       content: '';
       position: absolute;
       inset: 0;
       background:
+      
         // Overlay escuro para melhor contraste
         linear-gradient(135deg,
           rgba(0, 0, 0, 0.3) 0%,
@@ -57,15 +40,34 @@
       z-index: -1;
     }
 
+  .profileContent {
+    // Reativar pointer-events apenas no conteúdo
+    pointer-events: all;
+    width: 100%;
+    margin: 1rem auto 0 auto; // Centralizar com margem automática
+    padding: 2.5rem 0 0 0; // Aumentar padding superior para dar espaço à barra de título
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    border-radius: 8px 8px 0 0;
+    width: 1200px;
+
+    // Permite overflow para dropdown
+    overflow: visible;
+
+    // Background de imagem 
+    
+
     // Glassmorphism estilo Windows 7
     background: linear-gradient(180deg,
-      rgba(255, 255, 255, 0.9) 0%,
-      rgba(255, 255, 255, 0.85) 25%,
-      rgba(245, 248, 255, 0.8) 50%,
-      rgba(240, 245, 255, 0.85) 75%,
-      rgba(255, 255, 255, 0.9) 100%);
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.2) 25%,
+      rgba(245, 248, 255, 0.2) 50%,
+      rgba(240, 245, 255, 0.2) 75%,
+      rgba(255, 255, 255, 0.4) 100%);
+    -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(10px);
 
     // Sombra e bordas estilo Windows 7
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6) inset,
@@ -75,23 +77,20 @@
 
     // Tablet landscape (1024px - 769px)
     @media (max-width: 1024px) and (min-width: 769px) {
-
-      padding: 1.5rem 0.8rem 0 0.8rem;
+      padding: 2rem 0.8rem 0 0.8rem; // Ajustar padding superior
     }
 
     // Tablet portrait (768px - 481px)
     @media (max-width: 768px) and (min-width: 481px) {
-
-      padding: 1.2rem 0.6rem 0 0.6rem;
+      padding: 1.8rem 0.6rem 0 0.6rem; // Ajustar padding superior
       border-radius: 6px 6px 0 0;
     }
 
     // Mobile (480px e abaixo)
     @media (max-width: 480px) {
-
-      padding: 1rem 0.5rem 0 0.5rem;
+      padding: 1.5rem 0.5rem 0 0.5rem; // Ajustar padding superior
       border-radius: 4px 4px 0 0;
-      
+
       // Ajustar background para mobile
       &::before {
         background-size: cover, cover;
@@ -101,7 +100,7 @@
 
     // Mobile muito pequeno (320px e abaixo)
     @media (max-width: 320px) {
-      padding: 0.8rem 0.4rem 0 0.4rem;
+      padding: 1.2rem 0.4rem 0 0.4rem; // Ajustar padding superior
       border-radius: 2px 2px 0 0;
     }
   }
@@ -113,23 +112,22 @@
   position: relative;
   width: 100%;
   max-width: 1200px;
-  margin-top: 2rem;
-  padding: 10px;
+  margin: 0 2rem; 
   border-radius: 8px 8px 0 0;
-  
+
   // Permite overflow quando dropdown está aberto
   overflow: visible;
-  
+
   // Bordas glassmorphism com blur
   background: linear-gradient(180deg,
       rgba(216, 216, 216, 0.9) 0%,
       rgba(189, 189, 189, 0.5) 50%,
       rgba(129, 129, 129, 0.9) 100%);
-  
+
   // Efeito glassmorphism nas bordas
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.1),
     0 4px 16px rgba(0, 0, 0, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 0.9),
@@ -138,7 +136,7 @@
   // Tablet landscape (1024px - 769px)
   @media (max-width: 1024px) and (min-width: 769px) {
     max-width: 95%;
-    margin-top: 1.5rem;
+    margin:1rem 1rem 0 1rem;
     padding: 8px;
     border-radius: 6px 6px 0 0;
   }
@@ -146,7 +144,7 @@
   // Tablet portrait (768px - 481px)
   @media (max-width: 768px) and (min-width: 481px) {
     max-width: 100%;
-    margin-top: 1.2rem;
+    margin: 0.5rem 0.5rem 0 0.5rem;
     padding: 6px;
     border-radius: 4px 4px 0 0;
   }
@@ -154,12 +152,12 @@
   // Mobile (480px e abaixo)
   @media (max-width: 480px) {
     max-width: 100%;
-    margin-top: 1rem;
+    margin: 1rem 0.3rem 0 0.3rem;
     padding: 4px;
     border-radius: 2px 2px 0 0;
-    
+
     // Sombra reduzida para mobile
-    box-shadow: 
+    box-shadow:
       0 4px 16px rgba(0, 0, 0, 0.1),
       0 2px 8px rgba(0, 0, 0, 0.05),
       inset 0 1px 0 rgba(255, 255, 255, 0.9),
@@ -168,7 +166,6 @@
 
   // Mobile muito pequeno (320px e abaixo)
   @media (max-width: 320px) {
-    margin-top: 0.8rem;
     padding: 2px;
     border-radius: 1px 1px 0 0;
   }
@@ -186,7 +183,7 @@
   // Fundo transparente para o conteúdo
   background: transparent;
   border-radius: 8px;
-  
+
   // Permite overflow quando dropdown está aberto
   overflow: visible;
 
@@ -527,15 +524,15 @@
   align-items: center;
   gap: 2px;
   padding: 6px 8px;
-  background: 
-    linear-gradient(to bottom, 
-      #f0f0f0 0%, 
-      #e0e0e0 50%, 
+  background:
+    linear-gradient(to bottom,
+      #f0f0f0 0%,
+      #e0e0e0 50%,
       #d0d0d0 100%);
   border: 1px solid #a0a0a0;
   border-top-color: #ffffff;
   border-left-color: #ffffff;
-  box-shadow: 
+  box-shadow:
     inset 1px 1px 0 rgba(255, 255, 255, 0.8),
     inset -1px -1px 0 rgba(0, 0, 0, 0.2),
     0 1px 2px rgba(0, 0, 0, 0.1);
@@ -571,25 +568,25 @@
   }
 
   &:hover {
-    background: 
-      linear-gradient(to bottom, 
-        #f8f8f8 0%, 
-        #e8e8e8 50%, 
+    background:
+      linear-gradient(to bottom,
+        #f8f8f8 0%,
+        #e8e8e8 50%,
         #d8d8d8 100%);
     border-color: #0078d4;
-    box-shadow: 
+    box-shadow:
       inset 1px 1px 0 rgba(255, 255, 255, 0.9),
       inset -1px -1px 0 rgba(0, 0, 0, 0.2),
       0 0 3px rgba(0, 120, 212, 0.5);
   }
 
   &:active {
-    background: 
-      linear-gradient(to bottom, 
-        #d0d0d0 0%, 
-        #e0e0e0 50%, 
+    background:
+      linear-gradient(to bottom,
+        #d0d0d0 0%,
+        #e0e0e0 50%,
         #f0f0f0 100%);
-    box-shadow: 
+    box-shadow:
       inset -1px -1px 0 rgba(255, 255, 255, 0.8),
       inset 1px 1px 0 rgba(0, 0, 0, 0.2);
     transform: translateY(1px);
@@ -1079,11 +1076,11 @@
   padding: 0.5rem;
   position: relative;
   z-index: 3; // Acima do wrapper
-  
+
   // Distribui uniformemente os itens na página - sem espaços vazios
   justify-content: stretch;
   align-items: stretch;
-  
+
   // Ocupa toda a largura disponível
   width: 100%;
   box-sizing: border-box;
@@ -1129,7 +1126,7 @@
   display: flex;
   flex-direction: column;
   position: relative; // ADICIONADO: Necessário para o dropdown absolute
-  
+
   // Desktop (>1024px) - 5 itens
   flex: 1;
   min-width: 0; // Permite que o item seja menor quando necessário
@@ -1171,7 +1168,7 @@
 
   &.open {
     z-index: 99998 !important; // Muito alto para garantir que apareça
-    
+
     // Garante que o dropdown aberto tenha prioridade visual
     .categoryButton {
       // Estilo Windows 7 menu pressed - azul mais escuro
@@ -1184,7 +1181,7 @@
       position: relative;
       z-index: 99999;
     }
-    
+
     // Faz o dropdown escapar do wrapper mas ficar relativo ao carrossel
     .dropdownContent {
       position: absolute !important;
@@ -2136,7 +2133,7 @@
   }
 
   .categoryItem {
-    // Alinha com a implementação principal - 2 itens em telas pequenas
+    // Alinha com a implementação principal - 2 itens em telas muito pequenas
     max-width: calc((100% - 1 * 0.25rem) / 2);
     width: calc((100% - 1 * 0.25rem) / 2);
     min-width: 0; // Flexível para telas menores
@@ -2153,7 +2150,7 @@
   }
 
   .dropdownItem {
-    padding: 0.3rem 0.5rem;
+    padding: 0.25rem 0.4rem;
   }
 
   .dropdownItemLabel {
@@ -2301,6 +2298,363 @@
   }
 }
 
+// Clippy Tooltip estilo Windows 7
+.clippyTooltip {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  // Animação suave de entrada
+  animation: clippyFadeIn 0.4s ease-out;
+}
+
+.clippyAvatar {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(240, 240, 240, 0.9) 100%);
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  animation: clippyBounce 2s infinite;
+}
+
+.clippyBody {
+  font-size: 24px;
+  animation: clippyRotate 3s linear infinite;
+}
+
+.clippyEyes {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+}
+
+.clippyEye {
+  width: 3px;
+  height: 3px;
+  background: #000;
+  border-radius: 50%;
+  animation: clippyBlink 3s infinite;
+}
+
+.clippyBubble {
+  position: relative;
+  min-width: 220px;
+  max-width: 300px;
+
+  // Estilos do Windows 7 balloon
+  background: linear-gradient(180deg, #fff, #ebebeb);
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
+  box-shadow: 5px 5px 3px -3px rgba(0, 0, 0, 0.4);
+  padding: 12px 24px 12px 16px;
+
+  // Fonte Segoe UI como no Windows 7
+  font: 9pt "Segoe UI", sans-serif;
+  color: #000;
+  line-height: 1.4;
+
+  // Seta do tooltip (aponta para a esquerda)
+  &::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: -8px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid rgba(0, 0, 0, 0.4);
+    z-index: 1001;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: -7px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid #fff;
+    z-index: 1002;
+  }
+
+  // Hover effect
+  &:hover {
+    background: linear-gradient(180deg, #f8f8f8, #e8e8e8);
+  }
+}
+
+.clippyMessage {
+  margin: 0;
+  word-wrap: break-word;
+  user-select: none;
+  font: 9pt "Segoe UI", sans-serif;
+  line-height: 1.4;
+  color: #000;
+}
+
+// Animações
+@keyframes clippyFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes clippyBounce {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-5px);
+  }
+
+  60% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes clippyRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-10deg);
+  }
+
+  50% {
+    transform: rotate(0deg);
+  }
+
+  75% {
+    transform: rotate(10deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes clippyBlink {
+
+  0%,
+  90%,
+  100% {
+    opacity: 1;
+  }
+
+  95% {
+    opacity: 0;
+  }
+}
+
+// Variações de animação baseadas no tipo de tooltip
+.clippyTooltip[data-tooltip="minimize"] {
+  .clippyAvatar {
+    animation: clippyBounce 2s infinite, clippyPulse 1.5s infinite;
+  }
+}
+
+.clippyTooltip[data-tooltip="maximize"] {
+  .clippyAvatar {
+    animation: clippyBounce 2s infinite, clippyGrow 2s infinite;
+  }
+}
+
+.clippyTooltip[data-tooltip="close"] {
+  .clippyAvatar {
+    animation: clippyBounce 2s infinite, clippyShake 1s infinite;
+  }
+}
+
+// Novas animações específicas
+@keyframes clippyPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes clippyGrow {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+@keyframes clippyShake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-2px);
+  }
+
+  75% {
+    transform: translateX(2px);
+  }
+}
+
+// Responsividade para o tooltip
+@media (max-width: 768px) {
+  .clippyTooltip {
+    right: -50px;
+    gap: 8px;
+  }
+
+  .clippyAvatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .clippyBody {
+    font-size: 20px;
+  }
+
+  .clippyBubble {
+    min-width: 180px;
+    max-width: 250px;
+    font-size: 8pt;
+    padding: 10px 20px 10px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .clippyTooltip {
+    right: -80px;
+    gap: 6px;
+  }
+
+  .clippyAvatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .clippyBody {
+    font-size: 18px;
+  }
+
+  .clippyBubble {
+    min-width: 160px;
+    max-width: 220px;
+    font-size: 7pt;
+    padding: 8px 16px 8px 10px;
+  }
+}
+
+.clippyCloseButton {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 16px;
+  height: 16px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #000;
+  }
+
+  &:active {
+    background: rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Barra de título Windows 7
+.titleBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(245, 245, 245, 0.95) 50%,
+      rgba(225, 225, 225, 0.95) 100%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  font-size: 11px;
+  font-family: "Segoe UI", sans-serif;
+  color: #000;
+  z-index: 11;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.titleBarIcon {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  background: linear-gradient(45deg, #4a90e2, #2c5aa0);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::after {
+    content: "📄";
+    font-size: 10px;
+    filter: brightness(1.2);
+  }
+}
+
+.titleBarText {
+  flex: 1;
+  font-weight: 400;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+  user-select: none;
+}
+
 // Botões de controle de janela Windows 7
 .windowControls {
   position: absolute;
@@ -2308,7 +2662,7 @@
   right: 8px;
   display: flex;
   gap: 2px;
-  z-index: 10;
+  z-index: 12;
 }
 
 .windowButton {
@@ -2523,185 +2877,12 @@
   &:active {
     background: linear-gradient(180deg,
         #E0A59B 0%,
-        #952A16 61%,
-        #B22E16 71%,
-        #B8644E 93%);
+        #952216 61%,
+        #B23115 71%,
+        #B8544E 93%);
 
     &::after {
       filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.8)) brightness(0.9);
     }
   }
 }
-
-// Barra de título Windows 7
-.titleBar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 30px;
-  background: linear-gradient(180deg,
-      rgba(255, 255, 255, 0.95) 0%,
-      rgba(240, 245, 255, 0.9) 50%,
-      rgba(220, 230, 255, 0.95) 100%);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  padding: 0 8px;
-  z-index: 5;
-
-  // Gradiente de foco
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.8) inset,
-    0 -1px 0 rgba(0, 0, 0, 0.1) inset;
-}
-
-.titleBarIcon {
-  width: 16px;
-  height: 16px;
-  margin-right: 8px;
-  background: linear-gradient(45deg, #4f8cff, #2563eb);
-  border-radius: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 10px;
-  font-weight: bold;
-
-  &::after {
-    content: 'P';
-  }
-}
-
-.titleBarText {
-  flex: 1;
-  font-size: 11px;
-  font-weight: 400;
-  color: #2c3e50;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-// Responsive para os controles de janela
-@media (max-width: 768px) {
-  .windowControls {
-    top: 6px;
-    right: 6px;
-    gap: 1px;
-  }
-
-  .windowButton {
-    width: 18px;
-    height: 18px;
-    font-size: 9px;
-
-    &.minimizeButton,
-    &.maximizeButton {
-      width: 20px;
-      height: 15px;
-
-      &::after {
-        width: 10px;
-        height: 10px;
-      }
-    }
-
-    &.closeButton {
-      width: 36px;
-      height: 16px;
-
-      &::after {
-        width: 10px;
-        height: 10px;
-      }
-    }
-  }
-
-  .titleBar {
-    height: 26px;
-    padding: 0 6px;
-  }
-
-  .titleBarIcon {
-    width: 14px;
-    height: 14px;
-    margin-right: 6px;
-    font-size: 8px;
-  }
-
-  .titleBarText {
-    font-size: 10px;
-  }
-
-  .profileBorder {
-    padding: 4px;
-  }
-
-  .profileInner {
-    padding: 15px 0.3rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .windowControls {
-    top: 4px;
-    right: 4px;
-    gap: 1px;
-  }
-
-  .windowButton {
-    width: 16px;
-    height: 16px;
-    font-size: 8px;
-
-    &.minimizeButton,
-    &.maximizeButton {
-      width: 18px;
-      height: 13px;
-
-      &::after {
-        width: 8px;
-        height: 8px;
-      }
-    }
-
-    &.closeButton {
-      width: 32px;
-      height: 14px;
-
-      &::after {
-        width: 8px;
-        height: 8px;
-      }
-    }
-  }
-
-  .titleBar {
-    height: 22px;
-    padding: 0 4px;
-  }
-
-  .titleBarIcon {
-    width: 12px;
-    height: 12px;
-    margin-right: 4px;
-    font-size: 7px;
-  }
-
-  .titleBarText {
-    font-size: 9px;
-  }
-
-  .profileBorder {
-    padding: 4px;
-  }
-
-  .profileInner {
-    padding: 15px 0.3rem;
-  }
-}
-

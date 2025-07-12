@@ -8,6 +8,30 @@
   padding: 2rem;
   perspective: 1200px;
   perspective-origin: center center;
+  
+  @media (max-width: 1024px) {
+    min-height: 350px;
+    padding: 1.5rem;
+    perspective: 1000px;
+  }
+  
+  @media (max-width: 768px) {
+    min-height: 300px;
+    padding: 1rem;
+    perspective: 800px;
+  }
+  
+  @media (max-width: 480px) {
+    min-height: 250px;
+    padding: 0.8rem;
+    perspective: 600px;
+  }
+  
+  @media (max-width: 360px) {
+    min-height: 200px;
+    padding: 0.5rem;
+    perspective: 500px;
+  }
 }
 
 // Container do cubo 3D - configuração correta para manter 3D
@@ -25,6 +49,26 @@
   * {
     transform-style: preserve-3d;
     backface-visibility: visible;
+  }
+  
+  @media (max-width: 1024px) {
+    width: 160px;
+    height: 160px;
+  }
+  
+  @media (max-width: 768px) {
+    width: 140px;
+    height: 140px;
+  }
+  
+  @media (max-width: 480px) {
+    width: 120px;
+    height: 120px;
+  }
+  
+  @media (max-width: 360px) {
+    width: 100px;
+    height: 100px;
   }
 }
 
@@ -138,6 +182,17 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .cubeContainer {
+    perspective: 900px;
+  }
+  
+  .cube {
+    width: 150px;
+    height: 150px;
+  }
+}
+
 @media (max-width: 768px) {
   .cubeContainer {
     min-height: 300px;
@@ -164,6 +219,19 @@
   }
 }
 
+@media (max-width: 360px) {
+  .cubeContainer {
+    min-height: 200px;
+    padding: 0.3rem;
+    perspective: 500px;
+  }
+  
+  .cube {
+    width: 100px;
+    height: 100px;
+  }
+}
+
 // Estilo para prevenir quebras de layout
 .cubeContainer * {
   box-sizing: border-box;
@@ -173,4 +241,29 @@
 .cube > * {
   transform-style: preserve-3d;
   backface-visibility: visible;
+}
+
+// Reduzir animações em dispositivos móveis para melhor performance
+@media (max-width: 768px) {
+  .cube {
+    animation-duration: 80s; // Animação mais lenta em mobile
+  }
+}
+
+@media (max-width: 480px) {
+  .cube {
+    animation-duration: 100s; // Ainda mais lenta em telas pequenas
+  }
+}
+
+// Pausar animações para usuários que preferem menos movimento
+@media (prefers-reduced-motion: reduce) {
+  .cube {
+    animation: none;
+    transform: rotateX(15deg) rotateY(15deg) rotateZ(0deg);
+  }
+  
+  .rotateXCW, .rotateXCCW, .rotateYCW, .rotateYCCW, .rotateZCW, .rotateZCCW {
+    animation: none;
+  }
 }

@@ -13,7 +13,6 @@ export interface CubeletProps {
   isAnimating?: boolean;
   animationClass?: string;
   layerGroup?: string;
-  rotation?: [number, number, number]; // rotação do cubelet (rotX, rotY, rotZ)
 }
 
 export interface CubeletData {

@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import styles from './Contact.module.scss';
 import HeaderSection from '../../components/HeaderSection';
+import AnimatedGridOptimized from '../../components/AnimatedGridOptimized';
 import { FaGithub, FaLinkedin, FaEnvelope, FaWhatsapp, FaMapMarkerAlt, FaPhoneAlt, FaPaperPlane } from 'react-icons/fa';
 import ivoImg from '../../assets/ivo.jpg';
+import emailjs from '@emailjs/browser';
+import { emailConfig, emailTemplateParams, isEmailJSConfigured } from '../../config/emailjs';
 
 const socials = [
-  { href: 'https://github.com/SEUUSER', label: 'GitHub', icon: <FaGithub /> },
-  { href: 'https://linkedin.com/in/SEUUSER', label: 'LinkedIn', icon: <FaLinkedin /> },
-  { href: 'https://wa.me/SEUNUMERO', label: 'WhatsApp', icon: <FaWhatsapp /> },
+  { href: 'https://github.com/IvoBraatz', label: 'GitHub', icon: <FaGithub /> },
+  { href: 'https://www.linkedin.com/in/ivobraatz/', label: 'LinkedIn', icon: <FaLinkedin /> },
+  { href: 'https://wa.me/5547991403388', label: 'WhatsApp', icon: <FaWhatsapp /> },
 ];
 
 const Contact: React.FC = () => {
@@ -28,8 +31,9 @@ const Contact: React.FC = () => {
   const validateEmail = (email: string) => /.+@.+\..+/.test(email);
   const validatePhone = (phone: string) => phone === '' || /^(\(\d{2}\)\s?)?\d{4,5}-\d{4}$/.test(phone);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
     if (!validateEmail(form.email)) {
       setStatus('error');
       return;
@@ -38,11 +42,56 @@ const Contact: React.FC = () => {
       setStatus('error');
       return;
     }
+
     setStatus('sending');
-    setTimeout(() => {
-      setStatus(Math.random() > 0.15 ? 'success' : 'error');
-      setTimeout(() => setStatus('idle'), 2500);
-    }, 1200);
+
+    try {
+      // Verificar se o EmailJS está configurado
+      if (!isEmailJSConfigured()) {
+        console.warn('EmailJS não está configurado. Configure as variáveis de ambiente.');
+        // Fallback para simulação se não estiver configurado
+        setTimeout(() => {
+          setStatus(Math.random() > 0.15 ? 'success' : 'error');
+          setTimeout(() => setStatus('idle'), 3000);
+        }, 1200);
+        return;
+      }
+
+      // Envio do email usando EmailJS
+      const templateParams = {
+        from_name: form.name,
+        from_email: form.email,
+        subject: form.subject,
+        company: form.company,
+        phone: form.phone,
+        message: form.message,
+        ...emailTemplateParams
+      };
+
+      await emailjs.send(
+        emailConfig.serviceId,
+        emailConfig.templateId,
+        templateParams,
+        emailConfig.publicKey
+      );
+
+      setStatus('success');
+      // Limpar o formulário após envio bem-sucedido
+      setForm({
+        name: '',
+        email: '',
+        subject: '',
+        company: '',
+        phone: '',
+        message: '',
+      });
+    } catch (error) {
+      console.error('Erro ao enviar email:', error);
+      setStatus('error');
+    }
+
+    // Limpar status após 3 segundos
+    setTimeout(() => setStatus('idle'), 3000);
   };
 
   return (
@@ -58,6 +107,7 @@ const Contact: React.FC = () => {
           
           <div className={styles.formContainer}>
             <div className={styles.imageSection}>
+              <AnimatedGridOptimized />
               <div className={styles.imageWrapper}>
                 <img 
                   src={ivoImg} 
@@ -160,12 +210,12 @@ const Contact: React.FC = () => {
                 
                 {status === 'success' && (
                   <div className={styles.feedback + ' ' + styles.success}>
-                    Mensagem enviada com sucesso! 🚀
+                    ✅ Mensagem enviada com sucesso! Obrigado pelo contato, responderei em breve.
                   </div>
                 )}
                 {status === 'error' && (
                   <div className={styles.feedback + ' ' + styles.error}>
-                    Erro ao enviar mensagem. Verifique os dados e tente novamente.
+                    ❌ Erro ao enviar mensagem. Verifique os dados e tente novamente ou entre em contato diretamente.
                   </div>
                 )}
               </form>

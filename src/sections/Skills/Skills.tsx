@@ -18,7 +18,7 @@ import {
   SiMongodb,
   SiJavascript,
   SiExpress,
-  SiPostgresql,
+  SiMysql,
   SiVercel
 } from 'react-icons/si';
 import SectionWrapper from '../../components/SectionWrapper';
@@ -33,7 +33,7 @@ const techIcons: { [key: string]: React.ComponentType } = {
   'Node.js': FaNodeJs,
   'Express/NestJS': SiExpress,
   'MongoDB': SiMongodb,
-  'PostgreSQL': SiPostgresql,
+  'MySQL': SiMysql,
   'Docker': FaDocker,
   'Git/GitHub': FaGitAlt,
   'AWS': FaAws,
@@ -66,7 +66,7 @@ const skillCategories = [
     description: "Desenvolvimento de APIs robustas com Node.js e frameworks modernos. Experiência sólida em bancos de dados NoSQL e SQL, além de containerização com Docker.",
     icon: FaNodeJs,
     color: '#339933',
-    mainTechs: ['Node.js', 'Express/NestJS', 'MongoDB', 'PostgreSQL', 'Docker'],
+    mainTechs: ['Node.js', 'Express/NestJS', 'MongoDB', 'MySQL', 'Docker'],
   },
   {
     title: "DevOps & Tools",
