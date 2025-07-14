@@ -107,18 +107,20 @@ const Projects: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<number | null>(null);
 
-  // Otimizar scroll animations
+  // Otimizar scroll animations - reduzir cálculos
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, -30]);
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+  // Simplificar transformações para melhor performance
+  const y = useTransform(scrollYProgress, [0, 1], [0, -20]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
+  // Memoizar projetos para evitar re-renders
   const filteredProjects = useMemo(() => projects, []);
 
-  // Otimizar funções de navegação
+  // Otimizar funções de navegação com useCallback
   const nextSlide = useCallback(() => {
     setCurrentSlide(prev => (prev + 1) % filteredProjects.length);
   }, [filteredProjects.length]);
@@ -128,21 +130,23 @@ const Projects: React.FC = () => {
   }, [filteredProjects.length]);
 
   const goToSlide = useCallback((index: number) => {
-    setCurrentSlide(index);
-  }, []);
+    if (index !== currentSlide) { // Só muda se for diferente
+      setCurrentSlide(index);
+    }
+  }, [currentSlide]);
 
   // Otimizar mouse handlers
   const handleMouseEnter = useCallback(() => {
-    setIsPaused(true);
-  }, []);
+    if (!isPaused) setIsPaused(true);
+  }, [isPaused]);
 
   const handleMouseLeave = useCallback(() => {
-    setIsPaused(false);
-  }, []);
+    if (isPaused) setIsPaused(false);
+  }, [isPaused]);
 
-  // Auto-play otimizado
+  // Auto-play otimizado com cleanup melhorado
   useEffect(() => {
-    if (isPaused || !isVisible) {
+    if (isPaused || !isVisible || filteredProjects.length <= 1) {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
@@ -150,34 +154,36 @@ const Projects: React.FC = () => {
       return;
     }
 
-    intervalRef.current = window.setInterval(() => {
-      nextSlide();
-    }, 5000);
+    intervalRef.current = window.setInterval(nextSlide, 5000);
 
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
+        intervalRef.current = null;
       }
     };
-  }, [isPaused, isVisible, nextSlide]);
+  }, [isPaused, isVisible, nextSlide, filteredProjects.length]);
 
-  // Intersection Observer para otimizar performance
+  // Intersection Observer otimizado com thresholds menores
   useEffect(() => {
+    if (!sectionRef.current) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.1 }
+      { 
+        threshold: 0.1,
+        rootMargin: "50px 0px" // Preload quando próximo
+      }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+    observer.observe(sectionRef.current);
 
     return () => observer.disconnect();
   }, []);
 
-  // Memoizar funções de status
+  // Memoizar função de status para evitar re-renders
   const getStatusText = useCallback((status: string) => {
     switch (status) {
       case 'completed': return 'Concluído';
@@ -186,6 +192,12 @@ const Projects: React.FC = () => {
       default: return status;
     }
   }, []);
+
+  // Memoizar o projeto atual para evitar re-renders desnecessários
+  const currentProject = useMemo(() => 
+    filteredProjects[currentSlide], 
+    [filteredProjects, currentSlide]
+  );
 
   return (
     <SectionWrapper id="projects" className={styles.projects}>
@@ -255,44 +267,46 @@ const Projects: React.FC = () => {
               {!isPaused ? 'Auto-play' : 'Pausado'}
             </motion.div>
 
-            {/* Slide principal */}
+            {/* Slide principal otimizado */}
             <div className={styles.panoramaTrack}>
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={filteredProjects[currentSlide].id}
+                  key={currentProject.id}
                   className={styles.panoramaSlide}
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -30 }}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
-                  whileHover={{ scale: 1.01 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  whileHover={{ scale: 1.005 }}
                   aria-hidden="false"
                 >
                   <motion.img
-                    src={filteredProjects[currentSlide].image}
-                    alt={filteredProjects[currentSlide].title}
+                    src={currentProject.image}
+                    alt={currentProject.title}
                     className={styles.slideImage}
-                    initial={{ scale: 1.05 }}
+                    initial={{ scale: 1.02 }}
                     animate={{ scale: 1 }}
-                    transition={{ duration: 0.6 }}
+                    transition={{ duration: 0.4 }}
+                    loading="lazy"
+                    decoding="async"
                   />
                   <motion.div 
                     className={styles.slideContent}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1, duration: 0.4 }}
+                    transition={{ delay: 0.1, duration: 0.3 }}
                   >
                     <div className={styles.slideContentBg} />
                     <motion.div 
                       className={styles.slideTags}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      transition={{ delay: 0.2 }}
+                      transition={{ delay: 0.15 }}
                     >
-                      {filteredProjects[currentSlide].tags.map((tag, i) => (
+                      {currentProject.tags.map((tag, i) => (
                         <span 
                           className={styles.slideTag} 
-                          key={i}
+                          key={`${currentProject.id}-tag-${i}`}
                         >
                           {tag}
                         </span>
@@ -304,57 +318,57 @@ const Projects: React.FC = () => {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.2 }}
                     >
-                      {filteredProjects[currentSlide].title}
+                      {currentProject.title}
                     </motion.h3>
                     <motion.p 
                       className={styles.slideDescription}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      transition={{ delay: 0.3 }}
+                      transition={{ delay: 0.25 }}
                     >
-                      {filteredProjects[currentSlide].description}
+                      {currentProject.description}
                     </motion.p>
                     <motion.div 
                       className={styles.statusContainer}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      transition={{ delay: 0.4 }}
+                      transition={{ delay: 0.3 }}
                     >
                       <span 
-                        className={`${styles.statusDot} ${styles[`status-${filteredProjects[currentSlide].status}`]}`}
+                        className={`${styles.statusDot} ${styles[`status-${currentProject.status}`]}`}
                       />
-                      <span className={`${styles.statusText} ${styles[`status-${filteredProjects[currentSlide].status}`]}`}>
-                        {getStatusText(filteredProjects[currentSlide].status)}
+                      <span className={`${styles.statusText} ${styles[`status-${currentProject.status}`]}`}>
+                        {getStatusText(currentProject.status)}
                       </span>
                     </motion.div>
                     <motion.div 
                       className={styles.slideLinks}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      transition={{ delay: 0.5 }}
+                      transition={{ delay: 0.35 }}
                     >
-                      {filteredProjects[currentSlide].github && (
+                      {currentProject.github && (
                         <motion.a
-                          href={filteredProjects[currentSlide].github}
+                          href={currentProject.github}
                           className={styles.slideLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`GitHub de ${filteredProjects[currentSlide].title}`}
-                          whileHover={{ scale: 1.03 }}
-                          whileTap={{ scale: 0.97 }}
+                          aria-label={`GitHub de ${currentProject.title}`}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
                         >
                           GitHub
                         </motion.a>
                       )}
-                      {filteredProjects[currentSlide].link && filteredProjects[currentSlide].link !== '#' && (
+                      {currentProject.link && currentProject.link !== '#' && (
                         <motion.a
-                          href={filteredProjects[currentSlide].link}
+                          href={currentProject.link}
                           className={styles.slideLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`Ver projeto ${filteredProjects[currentSlide].title}`}
-                          whileHover={{ scale: 1.03 }}
-                          whileTap={{ scale: 0.97 }}
+                          aria-label={`Ver projeto ${currentProject.title}`}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
                         >
                           Ver Projeto
                         </motion.a>
@@ -365,14 +379,15 @@ const Projects: React.FC = () => {
               </AnimatePresence>
             </div>
 
-            {/* Navegação */}
+            {/* Navegação otimizada */}
             <div className={styles.panoramaNavigation}>
               <motion.button
                 className={styles.navButton}
                 onClick={prevSlide}
                 aria-label="Anterior"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.15 }}
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -382,8 +397,9 @@ const Projects: React.FC = () => {
                 className={styles.navButton}
                 onClick={nextSlide}
                 aria-label="Próximo"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.15 }}
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -391,11 +407,11 @@ const Projects: React.FC = () => {
               </motion.button>
             </div>
 
-            {/* Paginação */}
+            {/* Paginação otimizada */}
             <div className={styles.panoramaPagination}>
               {filteredProjects.map((_, idx) => (
                 <motion.div
-                  key={idx}
+                  key={`pagination-${idx}`}
                   className={
                     idx === currentSlide
                       ? `${styles.paginationDot} ${styles.active}`
@@ -404,8 +420,9 @@ const Projects: React.FC = () => {
                   onClick={() => goToSlide(idx)}
                   aria-label={`Ir para slide ${idx + 1}`}
                   role="button"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.92 }}
+                  transition={{ duration: 0.15 }}
                 />
               ))}
             </div>

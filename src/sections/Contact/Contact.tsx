@@ -136,7 +136,7 @@ const Contact: React.FC = () => {
   return (
     <section className={styles.contact} aria-label="Seção de contato" role="region">
       <div className={styles.background}></div>
-      <div className={styles.container}>
+      <div className="container">
         <div className={styles.content}>
           <HeaderSection 
             title="Vamos conversar?"

@@ -1,43 +1,44 @@
-@use '../styles/variables.scss' as *;
+@use '../../styles/variables.scss' as *;
 
-.profile {
-  // Posicionamento de pseudo-section flutuante
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
+.sectionContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.profileSection {
+  // Estrutura da section normal
+  position: relative;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translate(0px, -100px);
-  // Garantir que não interfira no fluxo das outras sections
-  pointer-events: none;
-
-  // Sempre visível
-  opacity: 1;
+  
+  // Remove background próprio para usar o da seção About
+  background: transparent;
+  
+  // Remove sombras para melhor integração
+  box-shadow: none;
 
   // Permite overflow em toda a hierarquia
   overflow: visible;
 
   .profileContent {
-    // Reativar pointer-events apenas no conteúdo
-    pointer-events: all;
     width: 100%;
-    margin: 1rem auto 0 auto; // Centralizar com margem automática
-    padding: 2.5rem 0 0 0; // Aumentar padding superior para dar espaço à barra de título
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1rem 0 1rem; // Ajusta padding superior
+    margin-top: 2rem;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
     position: relative;
     border-radius: 8px 8px 0 0;
-    width: 1200px;
+    z-index: 999;
 
     // Permite overflow para dropdown
     overflow: visible;
-
-    // Background de imagem 
-    
 
     // Glassmorphism estilo Windows 7
     background: linear-gradient(180deg,
@@ -88,68 +89,7 @@
 }
 
 // Container das bordas glassmorphism
-.profileBorder {
-  position: relative;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 2rem; 
-  border-radius: 8px 8px 0 0;
 
-  // Permite overflow quando dropdown está aberto
-  overflow: visible;
-
-  // Bordas glassmorphism com blur
-  background: linear-gradient(180deg,
-      rgba(216, 216, 216, 0.9) 0%,
-      rgba(189, 189, 189, 0.5) 50%,
-      rgba(129, 129, 129, 0.9) 100%);
-
-  // Efeito glassmorphism nas bordas
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    0 4px 16px rgba(0, 0, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.2);
-
-  // Tablet landscape (1024px - 769px)
-  @media (max-width: 1024px) and (min-width: 769px) {
-    max-width: 95%;
-    margin:1rem 1rem 0 1rem;
-    padding: 8px;
-    border-radius: 6px 6px 0 0;
-  }
-
-  // Tablet portrait (768px - 481px)
-  @media (max-width: 768px) and (min-width: 481px) {
-    max-width: 100%;
-    margin: 0.5rem 0.5rem 0 0.5rem;
-    padding: 6px;
-    border-radius: 4px 4px 0 0;
-  }
-
-  // Mobile (480px e abaixo)
-  @media (max-width: 480px) {
-    max-width: 100%;
-    margin: 1rem 0.3rem 0 0.3rem;
-    padding: 4px;
-    border-radius: 2px 2px 0 0;
-
-    // Sombra reduzida para mobile
-    box-shadow:
-      0 4px 16px rgba(0, 0, 0, 0.1),
-      0 2px 8px rgba(0, 0, 0, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.2);
-  }
-
-  // Mobile muito pequeno (320px e abaixo)
-  @media (max-width: 320px) {
-    padding: 2px;
-    border-radius: 1px 1px 0 0;
-  }
-}
 
 .profileInner {
   display: flex;
@@ -157,20 +97,9 @@
   gap: 0.8rem;
   width: 100%;
   z-index: 999;
-  padding: 20px 1rem;
   box-sizing: border-box;
-
-  // Fundo transparente para o conteúdo
   background: transparent;
-  border-radius: 8px;
-
-  // Permite overflow quando dropdown está aberto
   overflow: visible;
-
-  // Sombra interna sutil
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.02);
 
   // Tablet landscape (1024px - 769px)
   @media (max-width: 1024px) and (min-width: 769px) {
@@ -440,7 +369,11 @@
 
 .profileTitle {
   font-size: 0.9rem;
-  color: $color-primary;
+  background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.9) 30%, rgba(216, 216, 216, 0.9) 70%, #fff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: #fff;
   font-weight: 600;
   font-family: 'Segoe UI', sans-serif;
   opacity: 0.9;
@@ -881,7 +814,7 @@
     transform: translate(-50%, -50%);
     width: 14px;
     height: 14px;
-    background-image: url('../assets/left.png');
+    background-image: url('../../assets/left.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -936,7 +869,7 @@
     transform: translate(-50%, -50%);
     width: 14px;
     height: 14px;
-    background-image: url('../assets/right.png');
+    background-image: url('../../assets/right.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -1671,12 +1604,6 @@
 
   }
 
-  .profileBorder {
-    gap: 0.8rem;
-    max-width: 100%;
-    padding: 8px;
-  }
-
   .profileInner {
     gap: 0.8rem;
     max-width: 100%;
@@ -1701,11 +1628,6 @@
   .profile {
     transform: translate(0px, -40px);
 
-  }
-
-  .profileBorder {
-    gap: 0.6rem;
-    padding: 6px;
   }
 
   .profileInner {
@@ -1858,11 +1780,6 @@
   .profile {
     transform: translate(0px, -20px);
 
-  }
-
-  .profileBorder {
-    gap: 0.4rem;
-    padding: 4px;
   }
 
   .profileInner {
@@ -2383,6 +2300,7 @@
 .clippyMessage {
   margin: 0;
   word-wrap: break-word;
+  -webkit-user-select: none;
   user-select: none;
   font: 9pt "Segoe UI", sans-serif;
   line-height: 1.4;
@@ -2660,6 +2578,7 @@
   flex: 1;
   font-weight: 400;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -2738,7 +2657,7 @@
     content: '';
     width: 12px;
     height: 12px;
-    background-image: url('../assets/minimise.png');
+    background-image: url('../../assets/minimise.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -2804,7 +2723,7 @@
     content: '';
     width: 12px;
     height: 12px;
-    background-image: url('../assets/maximize.png');
+    background-image: url('../../assets/maximize.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -2863,7 +2782,7 @@
     content: '';
     width: 12px;
     height: 12px;
-    background-image: url('../assets/close.png');
+    background-image: url('../../assets/close.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

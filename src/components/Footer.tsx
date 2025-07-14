@@ -52,7 +52,7 @@ const Footer: React.FC = () => {
 
   return (
     <footer className={`${styles.footer} ${isVisible ? styles.visible : ''}`}>
-      <div className={styles.container}>
+      <div className="container">
         {/* Seção Principal */}
         <div className={styles.mainSection}>
           <div className={styles.brand}>

@@ -1,26 +1,24 @@
 import React from 'react';
 import styles from './About.module.scss';
 import HeaderSection from '../../components/HeaderSection';
+import Profile from '../Profile/Profile';
+import ContactFloating from '../ContactFloating/ContactFloating';
 import { motion, easeOut, easeInOut } from 'framer-motion';
-import {
-  GraduationCap,
-  Briefcase,
-  Trophy,
-} from 'phosphor-react';
+import { Icon } from '@iconify/react';
 
 const infoData = [
   {
-    icon: <GraduationCap weight="duotone" />, 
+    icon: <Icon icon="pixelarticons:book-open" width="32" height="32" style={{color: 'white'}} />, 
     title: 'Formação',
     text: 'Gestão da Tecnologia da Informação pelo Centro Universitário Leonardo da Vinci'
   },
   {
-    icon: <Briefcase weight="duotone" />, 
+    icon: <Icon icon="pixelarticons:briefcase" width="32" height="32" style={{color: 'white'}} />, 
     title: 'Experiência',
     text: '3+ anos em projetos web modernos'
   },
   {
-    icon: <Trophy weight="duotone" />, 
+    icon: <Icon icon="pixelarticons:trophy" width="32" height="32" style={{color: 'white'}} />, 
     title: 'Conquistas',
     text: 'Mais de 30 certificados de cursos'
   }
@@ -68,12 +66,14 @@ const About: React.FC = () => {
       id="about"
     >
       <motion.div
-        className="container"
+        className={`container ${styles.unifiedContainer}`}
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
       >
+        <Profile />
+        
         <HeaderSection 
           title="Sobre Mim"
           subtitle="Sou movido por desafios e adoro aprender coisas novas. Acredito que tecnologia é uma ponte para transformar vidas e criar experiências incríveis. Valorizo design minimalista, código limpo e soluções criativas que fazem a diferença."
@@ -106,6 +106,8 @@ const About: React.FC = () => {
             </motion.div>
           ))}
         </motion.div>
+
+        <ContactFloating />
       </motion.div>
     </section>
   );
