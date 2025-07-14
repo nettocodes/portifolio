@@ -1,7 +1,6 @@
 import React, { memo, useRef, useState, useEffect } from 'react';
 import styles from './Profile.module.scss';
 import ivoImg from '../../assets/ivo.jpg';
-import HeaderSection from '../../components/HeaderSection';
 import {
     Calendar,
     FolderOpen,

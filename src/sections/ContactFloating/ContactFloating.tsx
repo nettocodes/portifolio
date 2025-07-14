@@ -2,7 +2,6 @@ import React, { memo, useRef, useEffect, useState } from 'react';
 import styles from './ContactFloating.module.scss';
 import { FaGithub, FaLinkedin, FaEnvelope, FaWhatsapp } from 'react-icons/fa';
 import networkIcon from '../../assets/network.png';
-import HeaderSection from '../../components/HeaderSection';
 
 const contactMethods = [
   {
