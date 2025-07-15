@@ -71,10 +71,6 @@ const Footer: React.FC = () => {
                 e.preventDefault();
                 scrollToSection('hero');
               }}>Início</a>
-              <a href="#about" onClick={(e) => {
-                e.preventDefault();
-                scrollToSection('about');
-              }}>Sobre</a>
               <a href="#projects" onClick={(e) => {
                 e.preventDefault();
                 scrollToSection('projects');

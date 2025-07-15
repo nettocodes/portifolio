@@ -12,7 +12,7 @@
 src/
 ├── assets/         # Imagens, ícones, fontes
 ├── components/     # Botões, cards, wrappers reutilizáveis
-├── sections/       # Hero, About, Projects, Skills, Contact
+├── sections/       # Hero, Projects, Skills, Contact
 ├── styles/         # SCSS globais e variáveis
 ├── utils/          # Helpers, animações, hooks customizados
 ```
