@@ -1,45 +1,26 @@
 {
   "name": "portifolio",
+  "version": "0.1.0",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
-    "@iconify/react": "^6.0.0",
-    "@pixel/icons": "^0.0.15",
-    "@vercel/analytics": "^1.5.0",
-    "aos": "^2.3.4",
-    "chart.js": "^4.5.0",
-    "clippyjs": "^0.0.3",
-    "framer-motion": "^12.23.3",
     "gsap": "^3.13.0",
-    "phosphor-react": "^1.4.1",
-    "react": "^19.1.0",
-    "react-chartjs-2": "^5.3.0",
-    "react-dom": "^19.1.0",
-    "react-icons": "^5.5.0",
-    "sass": "^1.89.2",
-    "swiper": "^11.2.10"
+    "next": "15.5.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.29.0",
-    "@types/node": "^24.0.13",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "@vitejs/plugin-react": "^4.5.2",
-    "eslint": "^9.29.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.20",
-    "globals": "^16.2.0",
-    "terser": "^5.43.1",
-    "typescript": "~5.8.3",
-    "typescript-eslint": "^8.34.1",
-    "vite": "^7.0.0"
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.0",
+    "typescript": "^5"
   }
 }

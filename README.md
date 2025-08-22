@@ -1,34 +1,46 @@
-# Portfólio Moderno — React + TypeScript + SCSS
+# Portfolio - Ivo Developer
 
-## Stack
-- React 18 + TypeScript
-- Vite
-- SCSS Modules
-- GSAP, Framer Motion, AOS (animações)
-- React Icons
+A modern, responsive portfolio website built with Next.js, TypeScript, and GSAP animations.
 
-## Estrutura
-```
-src/
-├── assets/         # Imagens, ícones, fontes
-├── components/     # Botões, cards, wrappers reutilizáveis
-├── sections/       # Hero, Projects, Skills, Contact
-├── styles/         # SCSS globais e variáveis
-├── utils/          # Helpers, animações, hooks customizados
-```
+## 🚀 Features
 
-## Scripts
+- **Modern Design**: Clean, monochrome design with professional typography
+- **Responsive**: Fully responsive across all devices
+- **Smooth Animations**: GSAP-powered animations and transitions
+- **TypeScript**: Full type safety
+- **Professional Icons**: Custom SVG icon system
+- **Optimized**: SEO and performance optimized
+
+## 📦 Tech Stack
+
+- **Framework**: Next.js 15.5.0
+- **Language**: TypeScript
+- **Styling**: CSS with CSS-in-JS
+- **Animations**: GSAP 3.13.0
+- **Fonts**: Krona One & Manrope (Google Fonts)
+- **Icons**: Custom SVG icons
+
+## 🛠 Getting Started
+
 ```bash
-npm install      # Instala dependências
-npm run dev      # Inicia o servidor de desenvolvimento
-npm run build    # Gera build de produção
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
 ```
 
-## Personalização
-- Edite as seções em `src/sections/`
-- Adicione imagens em `src/assets/`
-- Ajuste variáveis de cor/tipografia em `src/styles/variables.scss`
+## 🚀 Deploy
+
+This project is configured for automatic deployment on Vercel:
+
+1. Push to GitHub
+2. Connect repository to Vercel
+3. Automatic deployment on every push
 
 ---
 
-Desenvolvido por Ivo. Sinta-se livre para customizar e evoluir!
+**Built with passion by Ivo Developer**
