@@ -5,11 +5,9 @@ import {
   ArrowUpRight, 
   Code, 
   ExternalLink, 
-  Github, 
   Mail, 
   MapPin, 
-  Send,
-  MessageCircle
+  Send
 } from 'lucide-react';
 import { 
   FaLinkedin, 
@@ -788,24 +786,24 @@ function CodeDisplay() {
       <div className="code-line code-indent">
         <span className="code-property">name</span>
         <span className="code-punctuation">:</span>{' '}
-        <span className="code-string">'Ivo Netto'</span>
+        <span className="code-string">&apos;Ivo Netto&apos;</span>
         <span className="code-punctuation">,</span>
       </div>
       <div className="code-line code-indent">
         <span className="code-property">skills</span>
         <span className="code-punctuation">:</span>{' '}
-        <span className="code-punctuation">['</span>
+        <span className="code-punctuation">[&apos;</span>
         <span className="code-string">React</span>
-        <span className="code-punctuation">',</span>{' '}
+        <span className="code-punctuation">&apos;,</span>{' '}
         <span className="code-string">Next.js</span>
-        <span className="code-punctuation">',</span>{' '}
+        <span className="code-punctuation">&apos;,</span>{' '}
         <span className="code-string">Node.js</span>
-        <span className="code-punctuation">'],</span>
+        <span className="code-punctuation">&apos;],</span>
       </div>
       <div className="code-line code-indent">
         <span className="code-property">passion</span>
         <span className="code-punctuation">:</span>{' '}
-        <span className="code-string">'Clean Code'</span>
+        <span className="code-string">&apos;Clean Code&apos;</span>
         <span className="code-punctuation">,</span>
       </div>
       <div className="code-line code-indent">
@@ -895,7 +893,7 @@ function AboutSection() {
           </div>
           
           <div className="skills-grid">
-            {skills.map((category, index) => (
+            {skills.map((category) => (
               <div key={category.name} className="skill-category">
                 <h3 className="skill-category-title">
                   {category.name}
