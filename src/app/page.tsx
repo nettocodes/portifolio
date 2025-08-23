@@ -1,1250 +1,1613 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
+import { 
+  ArrowUpRight, 
+  Code, 
+  ExternalLink, 
+  Github, 
+  Mail, 
+  MapPin, 
+  Send,
+  MessageCircle
+} from 'lucide-react';
+import { 
+  FaLinkedin, 
+  FaGithub, 
+  FaDiscord 
+} from 'react-icons/fa';
+import { 
+  SiThreads 
+} from 'react-icons/si';
 
-export default function Home() {
-  const [showMainContent, setShowMainContent] = useState(false);
+export default function Portfolio() {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const loadingRef = useRef<HTMLDivElement>(null);
-  const text1Ref = useRef<HTMLDivElement>(null);
-  const text2Ref = useRef<HTMLDivElement>(null);
-  const mainContentRef = useRef<HTMLDivElement>(null);
+  const [showCustomCursor, setShowCustomCursor] = useState(false);
   const cursorRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
 
-  // Custom cursor effect
+  // Custom cursor
   useEffect(() => {
-    if (!showMainContent || typeof window === 'undefined') return;
+    // Check if we should show custom cursor (desktop only)
+    if (typeof window !== 'undefined') {
+      const checkScreenSize = () => {
+        const shouldShow = window.innerWidth > 768;
+        setShowCustomCursor(shouldShow);
+        
+        if (shouldShow) {
+          document.documentElement.classList.add('cursor-enabled');
+        } else {
+          document.documentElement.classList.remove('cursor-enabled');
+        }
+      };
 
-    const moveCursor = (e: MouseEvent) => {
-      if (cursorRef.current && window.innerWidth > 768) {
-        gsap.to(cursorRef.current, {
-          x: e.clientX,
-          y: e.clientY,
-          duration: 0.1,
-          ease: "power2.out"
-        });
-      }
-    };
+      checkScreenSize();
+      window.addEventListener('resize', checkScreenSize);
 
-    window.addEventListener('mousemove', moveCursor);
-    return () => window.removeEventListener('mousemove', moveCursor);
-  }, [showMainContent]);
+      const handleMouseMove = (e: MouseEvent) => {
+        if (cursorRef.current && showCustomCursor) {
+          cursorRef.current.style.left = e.clientX + 'px';
+          cursorRef.current.style.top = e.clientY + 'px';
+        }
+      };
 
+      const handleMouseDown = () => {
+        if (cursorRef.current && showCustomCursor) {
+          cursorRef.current.style.transform = 'translate(-50%, -50%) scale(0.8)';
+        }
+      };
+
+      const handleMouseUp = () => {
+        if (cursorRef.current && showCustomCursor) {
+          cursorRef.current.style.transform = 'translate(-50%, -50%) scale(1)';
+        }
+      };
+
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mousedown', handleMouseDown);
+      window.addEventListener('mouseup', handleMouseUp);
+
+      return () => {
+        window.removeEventListener('resize', checkScreenSize);
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mousedown', handleMouseDown);
+        window.removeEventListener('mouseup', handleMouseUp);
+        document.documentElement.classList.remove('cursor-enabled');
+      };
+    }
+  }, [showCustomCursor]);
+
+  // Loading sequence
   useEffect(() => {
-    const timeline = gsap.timeline();
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 2500);
 
-    // Set initial states
-    gsap.set([text1Ref.current, text2Ref.current], { 
-      opacity: 0, 
-      y: 50,
-      scale: 0.8
-    });
-
-    // Entrance animation with more personality
-    timeline.to(text1Ref.current, 
-      { 
-        opacity: 1, 
-        y: 0,
-        scale: 1,
-        duration: 1.2, 
-        ease: "back.out(1.7)" 
-      }
-    );
-
-    timeline.to(text2Ref.current, 
-      { 
-        opacity: 1, 
-        y: 0,
-        scale: 1,
-        duration: 1, 
-        ease: "back.out(1.4)" 
-      }, "-=0.4"
-    );
-
-    // Typing effect simulation
-    timeline.to({}, { duration: 2.8 });
-
-    // Exit animation
-    timeline.to([text1Ref.current, text2Ref.current], {
-      x: typeof window !== 'undefined' ? -window.innerWidth : -1000,
-      duration: 1,
-      stagger: 0.15,
-      ease: "power3.inOut",
-      onComplete: () => {
-        setShowMainContent(true);
-      }
-    });
-
-    // Loading screen exit
-    timeline.to(loadingRef.current, {
-      x: typeof window !== 'undefined' ? -window.innerWidth : -1000,
-      duration: 0.8,
-      ease: "power3.inOut"
-    }, "-=0.3");
-
-    // Main content entrance
-    timeline.fromTo(mainContentRef.current,
-      { 
-        opacity: 0, 
-        y: 30
-      },
-      { 
-        opacity: 1, 
-        y: 0, 
-        duration: 1.2, 
-        ease: "power2.out" 
-      }
-    );
-
+    return () => clearTimeout(timer);
   }, []);
 
-  // Project data with more personality
-  const projects = [
-    {
-      title: 'E-commerce Revolution',
-      subtitle: 'Full-Stack Development',
-      description: 'Transforming online retail with cutting-edge technology. Built a comprehensive platform handling 10k+ daily transactions with real-time inventory, advanced analytics, and seamless payment processing.',
-      tech: ['React', 'Node.js', 'MongoDB', 'Stripe API', 'Redis'],
-      highlight: 'Increased conversion rate by 340%',
-      year: '2024'
-    },
-    {
-      title: 'Creative Studio Portfolio',
-      subtitle: 'Interactive Design',
-      description: 'Award-winning portfolio showcasing creative work through immersive animations and micro-interactions. Features advanced GSAP animations and WebGL effects.',
-      tech: ['Next.js', 'GSAP', 'Three.js', 'Framer Motion'],
-      highlight: 'Featured on Awwwards',
-      year: '2024'
-    },
-    {
-      title: 'TeamFlow Dashboard',
-      subtitle: 'Collaboration Platform',
-      description: 'Revolutionary task management platform with real-time collaboration, AI-powered insights, and intuitive drag-and-drop interface. Used by 500+ teams worldwide.',
-      tech: ['React', 'Firebase', 'WebSockets', 'Chart.js'],
-      highlight: 'Boosted team productivity by 65%',
-      year: '2023'
-    },
-    {
-      title: 'DataViz Analytics',
-      subtitle: 'Business Intelligence',
-      description: 'Interactive analytics dashboard transforming complex data into actionable insights. Features real-time visualizations and customizable reporting.',
-      tech: ['Vue.js', 'D3.js', 'Python', 'PostgreSQL'],
-      highlight: 'Processing 1M+ data points daily',
-      year: '2023'
-    }
+  // Intersection Observer for active sections
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    const sections = document.querySelectorAll('section[id]');
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, [isLoaded]);
+
+  const navigation = [
+    { id: 'home', label: 'Início' },
+    { id: 'about', label: 'Sobre' },
+    { id: 'experience', label: 'Experiência' },
+    { id: 'projects', label: 'Projetos' },
+    { id: 'contact', label: 'Contato' }
   ];
 
-  const skills = [
-    { 
-      name: 'Frontend Magic', 
-      description: 'React, Next.js, TypeScript', 
-      icon: (
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2L13.09 8.26L19 7L17.74 13.26L24 12L17.74 10.74L19 17L13.09 15.74L12 22L10.91 15.74L5 17L6.26 10.74L0 12L6.26 13.26L5 7L10.91 8.26L12 2Z"/>
-        </svg>
-      )
-    },
-    { 
-      name: 'Backend Power', 
-      description: 'Node.js, Python, APIs', 
-      icon: (
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H11V20H8V22H16V20H13V18H20Z"/>
-        </svg>
-      )
-    },
-    { 
-      name: 'Design Thinking', 
-      description: 'UX/UI, Animations, GSAP', 
-      icon: (
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z"/>
-        </svg>
-      )
-    },
-    { 
-      name: 'Cloud & DevOps', 
-      description: 'AWS, Docker, CI/CD', 
-      icon: (
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M6.5,20Q4.22,20 2.61,18.43Q1,16.85 1,14.58Q1,12.63 2.17,11.1Q3.35,9.57 5.25,9.15Q5.88,6.85 7.75,5.43Q9.63,4 12,4Q14.93,4 16.96,6.04Q19,8.07 19,11Q20.73,11.2 21.86,12.5Q23,13.78 23,15.5A4.5,4.5 0 0,1 18.5,20H6.5Z"/>
-        </svg>
-      )
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
     }
-  ];
+    setIsMenuOpen(false);
+  };
+
+  if (!isLoaded) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>
-      {/* Custom Cursor */}
-      {showMainContent && typeof window !== 'undefined' && window.innerWidth > 768 && (
+      {/* Custom Cursor - Only show on desktop */}
+      {showCustomCursor && (
         <div 
           ref={cursorRef}
+          className="cursor-custom"
           style={{
             position: 'fixed',
-            width: '20px',
-            height: '20px',
-            backgroundColor: '#2A2D34',
+            width: '24px',
+            height: '24px',
+            border: `2px solid var(--brand-black)`,
             borderRadius: '50%',
             pointerEvents: 'none',
-            zIndex: 9999,
+            zIndex: 10000,
             transform: 'translate(-50%, -50%)',
-            mixBlendMode: 'difference'
+            transition: 'transform 0.1s ease',
+            mixBlendMode: 'difference',
+            display: 'block'
           }}
         />
       )}
 
-      {/* Loading Screen */}
-      <div 
-        ref={loadingRef}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
-          backgroundColor: '#2A2D34',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          zIndex: 9999,
-          gap: '3rem',
-          overflow: 'hidden'
-        }}
-      >
-        
-        <div 
-          ref={text1Ref}
-          className="font-krona"
-          style={{
-            fontSize: 'clamp(3rem, 12vw, 8rem)',
-            fontWeight: '400',
-            color: '#E5E4E2',
-            textAlign: 'center',
-            letterSpacing: '-0.01em',
-            lineHeight: '0.9',
-            position: 'relative'
-          }}
-        >
-          Hello World
-          <div style={{
-            position: 'absolute',
-            bottom: '-10px',
-            left: '0',
-            right: '0',
-            height: '2px',
-            backgroundColor: '#E5E4E2',
-            transform: 'scaleX(0)',
-            transformOrigin: 'left',
-            animation: 'expandLine 1.5s ease-out 1s forwards'
-          }} />
-        </div>
-        
-        <div 
-          ref={text2Ref}
-          className="font-manrope"
-          style={{
-            fontSize: 'clamp(1.5rem, 6vw, 3.5rem)',
-            fontWeight: '300',
-            color: '#E5E4E2',
-            textAlign: 'center',
-            letterSpacing: '0.05em',
-            opacity: 0.9
-          }}
-        >
-          I&apos;m Ivo, and I craft digital experiences
-        </div>
+      {/* Navigation */}
+      <Navigation 
+        navigation={navigation}
+        activeSection={activeSection}
+        scrollToSection={scrollToSection}
+        isMenuOpen={isMenuOpen}
+        setIsMenuOpen={setIsMenuOpen}
+      />
 
-      </div>
+      {/* Main Content */}
+      <main ref={mainRef} className="main-content">
+        <HeroSection />
+        <AboutSection />
+        <ExperienceSection />
+        <ProjectsSection />
+        <ContactSection />
+      </main>
 
-      {/* Mobile Menu Toggle */}
-      <button
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
-        style={{
-          position: 'fixed',
-          top: '2rem',
-          right: '2rem',
-          zIndex: 1001,
-          background: 'none',
-          border: 'none',
-          fontSize: '1.5rem',
-          color: '#2A2D34',
-          cursor: 'pointer',
-          display: showMainContent ? 'block' : 'none'
-        }}
-        className="mobile-menu-toggle"
-      >
-        {isMenuOpen ? 
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
-          </svg> :
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/>
-          </svg>
+      <Footer />
+    </>
+  );
+}
+
+// Loading Screen Component
+function LoadingScreen() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          return 100;
         }
-      </button>
+        return prev + 2;
+      });
+    }, 40);
 
-      {/* Header */}
-      <header style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 1000,
-        backgroundColor: 'rgba(229, 228, 226, 0.95)',
-        backdropFilter: 'blur(10px)',
-        borderBottom: '1px solid rgba(42, 45, 52, 0.1)',
-        padding: '1.5rem 0',
-        transition: 'all 0.3s ease',
-        display: showMainContent ? 'block' : 'none'
-      }}>
-        <nav className="container" style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}>
-          <div style={{
-            fontSize: '1.4rem',
-            fontWeight: '300',
-            color: '#2A2D34',
-            letterSpacing: '2px',
-            position: 'relative'
-          }}>
-            IVO
-            <span style={{
-              position: 'absolute',
-              bottom: '-3px',
-              left: '0',
-              right: '0',
-              height: '1px',
-              backgroundColor: '#2A2D34',
-              transform: 'scaleX(0.7)'
-            }} />
-          </div>
-          
-          {/* Desktop Navigation */}
-          <div className="desktop-nav" style={{
-            display: 'flex',
-            gap: '3rem',
-            alignItems: 'center'
-          }}>
-            {[
-              { name: 'About', href: '#about' },
-              { name: 'Experience', href: '#experience' },
-              { name: 'Work', href: '#work' },
-              { name: 'Contact', href: '#contact' }
-            ].map((item) => (
-              <a key={item.name} href={item.href} style={{
-                fontSize: '0.95rem',
-                color: '#2A2D34',
-                textDecoration: 'none',
-                fontWeight: '300',
-                letterSpacing: '0.5px',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer',
-                position: 'relative',
-                padding: '0.5rem 0',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.opacity = '0.7';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.opacity = '1';
-              }}
-              >
-                {item.name}
-              </a>
-            ))}
-          </div>
+    return () => clearInterval(interval);
+  }, []);
 
-          {/* Mobile Navigation */}
-          <div className="mobile-nav" style={{
-            position: 'fixed',
-            top: '0',
-            right: isMenuOpen ? '0' : '-100%',
-            width: '100%',
-            height: '100vh',
-            backgroundColor: '#E5E4E2',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: '2rem',
-            transition: 'right 0.3s ease',
-            zIndex: 999
-          }}>
-            {[
-              { name: 'About', href: '#about' },
-              { name: 'Experience', href: '#experience' },
-              { name: 'Work', href: '#work' },
-              { name: 'Contact', href: '#contact' }
-            ].map((item) => (
-              <a 
-                key={item.name} 
-                href={item.href} 
-                onClick={() => setIsMenuOpen(false)}
-                style={{
-                  fontSize: '2rem',
-                  color: '#2A2D34',
-                  textDecoration: 'none',
-                  fontWeight: '200',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '1rem'
-                }}
+  return (
+    <div className="loading-screen">
+      <div className="loading-content">
+        <div className="loading-logo">
+          <span className="text-6xl font-bold font-mono">IVO NETTO</span>
+        </div>
+        
+        <div className="loading-progress">
+          <div className="progress-bar">
+            <div 
+              className="progress-fill"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          <span className="progress-text font-mono text-sm">
+            {progress.toString().padStart(3, '0')}%
+          </span>
+        </div>
+        
+        <p className="loading-subtitle text-secondary font-medium">
+          Carregando experiência digital
+        </p>
+      </div>
+      
+      <style jsx>{`
+        .loading-screen {
+          position: fixed;
+          inset: 0;
+          background: var(--color-bg-primary);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+        }
+        
+        .loading-content {
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: var(--space-8);
+        }
+        
+        .loading-logo {
+          position: relative;
+        }
+        
+        .loading-logo::after {
+          content: '';
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: var(--brand-black);
+          animation: logo-line 1.5s ease-in-out infinite alternate;
+        }
+        
+        .loading-progress {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: var(--space-3);
+        }
+        
+        .progress-bar {
+          width: 200px;
+          height: 2px;
+          background: var(--color-border);
+          border-radius: var(--radius-full);
+          overflow: hidden;
+        }
+        
+        .progress-fill {
+          height: 100%;
+          background: var(--brand-black);
+          border-radius: var(--radius-full);
+          transition: width 0.1s ease;
+        }
+        
+        .progress-text {
+          font-weight: 600;
+          letter-spacing: 2px;
+        }
+        
+        .loading-subtitle {
+          font-size: 0.9rem;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+        }
+        
+        @keyframes logo-line {
+          0% { transform: scaleX(0.3); }
+          100% { transform: scaleX(1); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+// Navigation Component
+interface NavigationProps {
+  navigation: Array<{ id: string; label: string }>;
+  activeSection: string;
+  scrollToSection: (sectionId: string) => void;
+  isMenuOpen: boolean;
+  setIsMenuOpen: (open: boolean) => void;
+}
+
+function Navigation({ navigation, activeSection, scrollToSection, isMenuOpen, setIsMenuOpen }: NavigationProps) {
+  return (
+    <>
+      <header className="header">
+        <div className="container">
+          <div className="header-content">
+            {/* Logo */}
+            <button 
+              onClick={() => scrollToSection('home')}
+              className="logo"
+            >
+              <span className="font-mono font-bold text-xl">IVO NETTO</span>
+            </button>
+
+            {/* Desktop Navigation */}
+            <nav className="nav-desktop">
+              {navigation.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`nav-link ${activeSection === item.id ? 'active' : ''}`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="menu-button"
+              aria-label="Toggle menu"
+            >
+              <div className={`menu-icon ${isMenuOpen ? 'open' : ''}`}>
+                <span></span>
+                <span></span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        <nav className={`nav-mobile ${isMenuOpen ? 'open' : ''}`}>
+          <div className="nav-mobile-content">
+            {navigation.map((item, index) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className="nav-mobile-link"
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
-                {item.name}
-              </a>
+                {item.label}
+              </button>
             ))}
           </div>
         </nav>
       </header>
 
-      {/* Main Website */}
-      <div 
-        ref={mainContentRef}
-        style={{
-          display: showMainContent ? 'block' : 'none',
-          backgroundColor: '#E5E4E2'
-        }}
-      >
-        {/* Hero Section */}
-        <section style={{
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          paddingTop: '8rem',
-          textAlign: 'center',
-          position: 'relative'
-        }}>
-          <div className="container" style={{ margin: '0 auto' }}>
-            <div className="font-manrope" style={{
-              fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
-              color: '#2A2D34',
-              fontWeight: '500',
-              marginBottom: '1rem',
-              letterSpacing: '3px',
-              textTransform: 'uppercase',
-              opacity: 0.7
-            }}>
-              Creative Developer & Digital Craftsman
-            </div>
-            <h1 className="font-krona" style={{ 
-              fontSize: 'clamp(2.5rem, 10vw, 7rem)', 
-              fontWeight: '400', 
-              marginBottom: '2rem',
-              color: '#2A2D34',
-              letterSpacing: '-0.02em',
-              lineHeight: '0.9',
-              position: 'relative'
-            }}>
-              I Build
-              <br />
-              <span style={{ 
-                position: 'relative',
-                display: 'inline-block'
-              }}>
-                Digital Magic
-                <span style={{
-                  position: 'absolute',
-                  bottom: '0',
-                  left: '0',
-                  right: '0',
-                  height: '3px',
-                  backgroundColor: '#2A2D34',
-                  animation: 'expandLine 2s ease-out 0.5s forwards',
-                  transform: 'scaleX(0)',
-                  transformOrigin: 'left'
-                }} />
+      <style jsx>{`
+        .header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 1000;
+          background: rgba(250, 250, 250, 0.95);
+          backdrop-filter: blur(20px);
+          border-bottom: 1px solid var(--color-border);
+          transition: all 0.3s ease;
+        }
+
+        .header-content {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: var(--space-5) 0;
+        }
+
+        .logo {
+          background: none;
+          border: none;
+          cursor: pointer;
+          transition: opacity 0.2s ease;
+          position: relative;
+        }
+
+        .logo:hover {
+          opacity: 0.7;
+        }
+
+        .logo::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: var(--brand-black);
+          transform: scaleX(0);
+          transition: transform 0.2s ease;
+        }
+
+        .logo:hover::after {
+          transform: scaleX(1);
+        }
+
+        .nav-desktop {
+          display: flex;
+          align-items: center;
+          gap: var(--space-8);
+        }
+
+        .nav-link {
+          background: none;
+          border: none;
+          font-size: 0.9rem;
+          font-weight: 500;
+          color: var(--color-text-secondary);
+          cursor: pointer;
+          padding: var(--space-2) 0;
+          position: relative;
+          transition: color 0.2s ease;
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+          color: var(--brand-black);
+        }
+
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: var(--brand-black);
+          transform: scaleX(0);
+          transition: transform 0.2s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+          transform: scaleX(1);
+        }
+
+        .menu-button {
+          display: none;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: var(--space-2);
+          z-index: 1001;
+        }
+
+        .menu-icon {
+          width: 24px;
+          height: 20px;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
+        .menu-icon span {
+          display: block;
+          width: 100%;
+          height: 2px;
+          background: var(--brand-black);
+          transition: all 0.3s ease;
+        }
+
+        .menu-icon.open span:first-child {
+          transform: rotate(45deg) translate(7px, 7px);
+        }
+
+        .menu-icon.open span:last-child {
+          transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .nav-mobile {
+          position: fixed;
+          top: 0;
+          right: -100%;
+          width: 100vw;
+          height: 100vh;
+          background: var(--color-bg-primary);
+          z-index: 999;
+          transition: right 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .nav-mobile.open {
+          right: 0;
+        }
+
+        .nav-mobile-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: var(--space-8);
+        }
+
+        .nav-mobile-link {
+          background: none;
+          border: none;
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: var(--brand-black);
+          cursor: pointer;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          opacity: 0;
+          transform: translateY(20px);
+          animation: fade-in-up 0.5s ease forwards;
+        }
+
+        @keyframes fade-in-up {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .nav-desktop {
+            display: none;
+          }
+
+          .menu-button {
+            display: block;
+          }
+        }
+      `}</style>
+    </>
+  );
+}
+
+// Hero Section
+function HeroSection() {
+  return (
+    <section id="home" className="hero-section">
+      <div className="container">
+        <div className="hero-content">
+          <div className="hero-text">
+            <div className="hero-greeting">
+              <span className="font-mono text-sm font-medium text-secondary">
+                &gt; Olá mundo_
               </span>
+            </div>
+            
+            <h1 className="hero-title">
+              <span className="hero-name">Ivo Netto</span>
+              <span className="hero-profession">Desenvolvedor Full-Stack</span>
             </h1>
-            <p style={{ 
-              fontSize: 'clamp(1rem, 2.5vw, 1.3rem)', 
-              color: '#2A2D34', 
-              lineHeight: '1.6',
-              fontWeight: '300',
-              marginBottom: '4rem',
-              margin: '0 auto 4rem',
-              opacity: 0.8
-            }}>
-              Passionate about creating meaningful digital experiences that blend cutting-edge technology with thoughtful design. Let&apos;s build something extraordinary together.
+
+            <p className="hero-description">
+              Crio soluções digitais modernas que unem tecnologia, design e performance. Minha missão é transformar ideias em produtos funcionais e intuitivos.
             </p>
-            <div style={{ 
-              display: 'flex', 
-              gap: '1.5rem', 
-              flexWrap: 'wrap',
-              justifyContent: 'center'
-            }}>
-              <a href="#work" className="cta-button primary font-krona" style={{
-                padding: '1rem 3rem',
-                fontSize: '0.9rem',
-                border: '2px solid #2A2D34',
-                backgroundColor: '#2A2D34',
-                color: '#E5E4E2',
-                borderRadius: '0',
-                cursor: 'pointer',
-                fontWeight: '400',
-                letterSpacing: '1px',
-                textTransform: 'uppercase',
-                transition: 'all 0.3s ease',
-                textDecoration: 'none',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                position: 'relative',
-                overflow: 'hidden'
-              }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4C16.42,4 20,7.58 20,12C20,13.85 19.37,15.55 18.31,16.9L8.5,7.09C9.85,6.03 11.15,5.4 12,5.4V4M7.1,8.5L16.91,18.31C15.55,19.37 13.85,20 12,20C7.58,20 4,16.42 4,12C4,11.15 4.63,9.85 5.69,8.5L7.1,8.5Z"/>
-                </svg>
-                Explore My Work
-              </a>
-              <a href="#contact" className="cta-button secondary font-krona" style={{
-                padding: '1rem 3rem',
-                fontSize: '0.9rem',
-                border: '2px solid #2A2D34',
-                backgroundColor: 'transparent',
-                color: '#2A2D34',
-                borderRadius: '0',
-                cursor: 'pointer',
-                fontWeight: '400',
-                letterSpacing: '1px',
-                textTransform: 'uppercase',
-                transition: 'all 0.3s ease',
-                textDecoration: 'none',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem'
-              }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12,2C13.1,2 14,2.9 14,4C14,5.1 13.1,6 12,6C10.9,6 10,5.1 10,4C10,2.9 10.9,2 12,2M21,9V7L15,1H5C3.89,1 3,1.89 3,3V21A2,2 0 0,0 5,23H19A2,2 0 0,0 21,21V9M19,9H14V4H15V7A2,2 0 0,0 17,9H19M12,15C13.1,15 14,15.9 14,17C14,18.1 13.1,19 12,19C10.9,19 10,18.1 10,17C10,15.9 10.9,15 12,15Z"/>
-                </svg>
-                Say Hello
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* About Section */}
-        <section id="about" style={{
-          padding: '10rem 0',
-          backgroundColor: '#2A2D34',
-          color: '#E5E4E2'
-        }}>
-          <div className="container" style={{
-            margin: '0 auto'
-          }}>
-            <div style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', 
-              gap: '5rem',
-              alignItems: 'center'
-            }}>
-              <div className="fade-in-section">
-                <div style={{
-                  fontSize: '0.9rem',
-                  fontWeight: '300',
-                  letterSpacing: '3px',
-                  textTransform: 'uppercase',
-                  opacity: 0.7,
-                  marginBottom: '2rem'
-                }}>
-                  Who I Am
-                </div>
-                <h2 style={{
-                  fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-                  fontWeight: '100',
-                  color: '#E5E4E2',
-                  marginBottom: '3rem',
-                  letterSpacing: '-0.02em',
-                  lineHeight: '1.1'
-                }}>
-                  Crafting Digital
-                  <br />
-                  <span style={{ fontWeight: '300' }}>Experiences</span>
-                </h2>
-                <p style={{
-                  fontSize: '1.2rem',
-                  lineHeight: '1.8',
-                  color: '#E5E4E2',
-                  fontWeight: '300',
-                  marginBottom: '2rem',
-                  opacity: 0.9
-                }}>
-                  I&apos;m a passionate full-stack developer with 5+ years of experience turning complex problems into elegant solutions. My journey spans from startup environments to enterprise-level projects.
-                </p>
-                <p style={{
-                  fontSize: '1.1rem',
-                  lineHeight: '1.8',
-                  color: '#E5E4E2',
-                  fontWeight: '300',
-                  opacity: 0.8,
-                  marginBottom: '3rem'
-                }}>
-                  I believe in the power of clean code, intuitive design, and meaningful user experiences. When I&apos;m not coding, you&apos;ll find me exploring new technologies, contributing to open-source projects, or mentoring fellow developers.
-                </p>
-                
-                {/* Personal touch */}
-                <div style={{
-                  display: 'flex',
-                  gap: '2rem',
-                  flexWrap: 'wrap',
-                  marginTop: '2rem'
-                }}>
-                  <div>
-                    <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>
-                      <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M2,21H20V19H2M20,8H18V5H20M20,3H4V13A4,4 0 0,0 8,17H14A4,4 0 0,0 18,13V10H20A2,2 0 0,0 22,8V5C22,3.89 21.1,3 20,3Z"/>
-                      </svg>
-                    </div>
-                    <div style={{ fontSize: '0.9rem', opacity: 0.7 }}>Coffee Addict</div>
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>
-                      <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12,3V12.26C11.5,12.09 11,12 10.5,12C8.57,12 7,13.57 7,15.5S8.57,19 10.5,19 14,17.43 14,15.5V7H18V5H12V3Z"/>
-                      </svg>
-                    </div>
-                    <div style={{ fontSize: '0.9rem', opacity: 0.7 }}>Music Lover</div>
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>
-                      <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.22,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.22,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/>
-                      </svg>
-                    </div>
-                    <div style={{ fontSize: '0.9rem', opacity: 0.7 }}>Always Learning</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-                gap: '2rem'
-              }} className="fade-in-section">
-                {skills.map((skill, index) => (
-                  <div key={index} className="skill-card" style={{
-                    padding: '2.5rem',
-                    border: '1px solid rgba(229, 228, 226, 0.2)',
-                    backgroundColor: 'rgba(229, 228, 226, 0.05)',
-                    borderRadius: '16px',
-                    transition: 'all 0.3s ease',
-                    position: 'relative',
-                    overflow: 'hidden'
-                  }}>
-                    <div className="skill-icon" style={{ marginBottom: '1.5rem' }}>
-                      {skill.icon}
-                    </div>
-                    <h3 className="font-krona" style={{
-                      fontSize: '1.1rem',
-                      fontWeight: '400',
-                      marginBottom: '1rem',
-                      color: '#E5E4E2',
-                      letterSpacing: '0.5px'
-                    }}>
-                      {skill.name}
-                    </h3>
-                    <p className="font-manrope" style={{
-                      fontSize: '0.95rem',
-                      color: '#E5E4E2',
-                      opacity: 0.8,
-                      fontWeight: '300',
-                      lineHeight: '1.6'
-                    }}>
-                      {skill.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Experience Timeline */}
-        <section id="experience" style={{
-          padding: '10rem 0',
-          backgroundColor: '#E5E4E2'
-        }}>
-          <div className="container" style={{ margin: '0 auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-              <div style={{
-                fontSize: '0.9rem',
-                fontWeight: '300',
-                letterSpacing: '3px',
-                textTransform: 'uppercase',
-                opacity: 0.7,
-                marginBottom: '2rem',
-                color: '#2A2D34'
-              }}>
-                My Journey
-              </div>
-              <h2 style={{
-                fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-                fontWeight: '100',
-                color: '#2A2D34',
-                letterSpacing: '-0.02em'
-              }} className="fade-in-section">
-                Professional
-                <br />
-                <span style={{ fontWeight: '300' }}>Experience</span>
-              </h2>
-            </div>
             
-            <div style={{ position: 'relative', margin: '0 auto' }}>
-              {/* Timeline line */}
-              <div style={{
-                position: 'absolute',
-                left: '2rem',
-                top: '0',
-                bottom: '0',
-                width: '2px',
-                backgroundColor: '#2A2D34',
-                opacity: 0.3
-              }} />
+            <div className="hero-actions">
+              <button onClick={() => {
+                const element = document.getElementById('projects');
+                element?.scrollIntoView({ behavior: 'smooth' });
+              }} className="btn-primary">
+                Ver Trabalhos
+                <ArrowUpRight size={16} />
+              </button>
               
-              {[
-                { 
-                  year: '2024', 
-                  title: 'Senior Full Stack Developer', 
-                  company: 'TechFlow Solutions', 
-                  description: 'Leading a team of 5 developers in building scalable web applications. Implemented microservices architecture resulting in 40% performance improvement.',
-                  achievements: ['Reduced load times by 60%', 'Led migration to cloud infrastructure', 'Mentored 3 junior developers']
-                },
-                { 
-                  year: '2022', 
-                  title: 'Full Stack Developer', 
-                  company: 'Digital Innovators', 
-                  description: 'Developed responsive web applications for 20+ clients across various industries. Specialized in React, Node.js, and cloud deployment.',
-                  achievements: ['Delivered 25+ successful projects', 'Improved client satisfaction by 35%', 'Implemented automated testing']
-                },
-                { 
-                  year: '2020', 
-                  title: 'Frontend Developer', 
-                  company: 'StartupHub', 
-                  description: 'Built user-friendly interfaces for mobile-first applications. Collaborated closely with UX designers to create seamless user experiences.',
-                  achievements: ['Increased user engagement by 45%', 'Reduced bounce rate by 30%', 'Implemented PWA features']
-                },
-                { 
-                  year: '2019', 
-                  title: 'Junior Developer', 
-                  company: 'CodeCraft Inc.', 
-                  description: 'Started my professional journey learning modern frameworks and best practices. Contributed to various projects and gained valuable experience.',
-                  achievements: ['Completed React certification', 'Contributed to 10+ projects', 'Learned agile methodologies']
-                }
-              ].map((item, index) => (
-                <div key={index} style={{
-                  position: 'relative',
-                  paddingLeft: '5rem',
-                  paddingBottom: '4rem'
-                }} className="timeline-item">
-                  {/* Timeline dot */}
-                  <div style={{
-                    position: 'absolute',
-                    left: '1.2rem',
-                    top: '1rem',
-                    width: '1.6rem',
-                    height: '1.6rem',
-                    backgroundColor: '#2A2D34',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '0.8rem'
-                  }}>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
-                    </svg>
-                  </div>
-                  
-                  <div className="timeline-card" style={{
-                    padding: '2rem',
-                    backgroundColor: '#2A2D34',
-                    color: '#E5E4E2',
-                    position: 'relative',
-                    transition: 'all 0.3s ease'
-                  }}>
-                    <div style={{
-                      fontSize: '0.9rem',
-                      fontWeight: '300',
-                      color: '#E5E4E2',
-                      opacity: 0.7,
-                      marginBottom: '0.5rem',
-                      letterSpacing: '2px'
-                    }}>
-                      {item.year}
-                    </div>
-                    <h3 style={{
-                      fontSize: '1.3rem',
-                      fontWeight: '400',
-                      color: '#E5E4E2',
-                      marginBottom: '0.5rem'
-                    }}>
-                      {item.title}
-                    </h3>
-                    <div style={{
-                      fontSize: '1rem',
-                      color: '#E5E4E2',
-                      opacity: 0.8,
-                      marginBottom: '1rem',
-                      fontWeight: '300'
-                    }}>
-                      {item.company}
-                    </div>
-                    <p style={{
-                      fontSize: '0.95rem',
-                      lineHeight: '1.6',
-                      color: '#E5E4E2',
-                      opacity: 0.9,
-                      marginBottom: '1.5rem',
-                      fontWeight: '300'
-                    }}>
-                      {item.description}
-                    </p>
-                    <div style={{
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      gap: '0.5rem'
-                    }}>
-                      {item.achievements.map((achievement, i) => (
-                        <span key={i} style={{
-                          fontSize: '0.8rem',
-                          padding: '0.3rem 0.8rem',
-                          border: '1px solid rgba(229, 228, 226, 0.3)',
-                          borderRadius: '20px',
-                          color: '#E5E4E2',
-                          opacity: 0.8
-                        }}>
-                          {achievement}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
+              <button onClick={() => {
+                const element = document.getElementById('contact');
+                element?.scrollIntoView({ behavior: 'smooth' });
+              }} className="btn-secondary">
+                Contato
+              </button>
             </div>
           </div>
-        </section>
-
-        {/* Projects Section */}
-        <section id="work" style={{
-          padding: '10rem 0',
-          backgroundColor: '#2A2D34',
-          color: '#E5E4E2'
-        }}>
-          <div className="container">
-            <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-              <div style={{
-                fontSize: '0.9rem',
-                fontWeight: '300',
-                letterSpacing: '3px',
-                textTransform: 'uppercase',
-                opacity: 0.7,
-                marginBottom: '2rem'
-              }}>
-                Featured Projects
-              </div>
-              <h2 style={{
-                fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-                fontWeight: '100',
-                letterSpacing: '-0.02em'
-              }} className="fade-in-section">
-                Selected
-                <br />
-                <span style={{ fontWeight: '300' }}>Work</span>
-              </h2>
-            </div>
-            
-            <div style={{
-              display: 'grid',
-              gap: '3rem'
-            }}>
-              {projects.map((project, index) => (
-                <div key={index} 
-                  className="project-card fade-in-section"
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: index % 2 === 0 ? '1fr 1fr' : '1fr 1fr',
-                    gap: '3rem',
-                    alignItems: 'center',
-                    padding: '3rem',
-                    border: '1px solid rgba(229, 228, 226, 0.1)',
-                    backgroundColor: 'rgba(229, 228, 226, 0.03)',
-                    transition: 'all 0.3s ease'
-                  }}
-                >
-                  <div style={{ order: index % 2 === 0 ? 1 : 2 }}>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '1rem',
-                      marginBottom: '1rem'
-                    }}>
-                      <span style={{
-                        fontSize: '0.8rem',
-                        padding: '0.3rem 1rem',
-                        border: '1px solid rgba(229, 228, 226, 0.3)',
-                        borderRadius: '20px',
-                        opacity: 0.7
-                      }}>
-                        {project.year}
-                      </span>
-                      <span style={{
-                        fontSize: '0.9rem',
-                        opacity: 0.8,
-                        fontWeight: '300'
-                      }}>
-                        {project.subtitle}
-                      </span>
-                    </div>
-                    
-                    <h3 style={{
-                      fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
-                      fontWeight: '300',
-                      marginBottom: '1.5rem',
-                      lineHeight: '1.2'
-                    }}>
-                      {project.title}
-                    </h3>
-                    
-                    <p style={{
-                      fontSize: '1rem',
-                      lineHeight: '1.7',
-                      opacity: 0.9,
-                      marginBottom: '2rem',
-                      fontWeight: '300'
-                    }}>
-                      {project.description}
-                    </p>
-                    
-                    <div className="font-manrope" style={{
-                      padding: '1rem',
-                      backgroundColor: 'rgba(229, 228, 226, 0.1)',
-                      marginBottom: '2rem',
-                      borderLeft: '3px solid #E5E4E2'
-                    }}>
-                      <strong style={{ fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M9,21C9,22.1 9.9,23 11,23H13C14.1,23 15,22.1 15,21V20H9V21M12,2C8.14,2 5,5.14 5,9C5,11.38 6.19,13.47 8,14.74V17C8,17.55 8.45,18 9,18H15C15.55,18 16,17.55 16,17V14.74C17.81,13.47 19,11.38 19,9C19,5.14 15.86,2 12,2Z"/>
-                        </svg>
-                        {project.highlight}
-                      </strong>
-                    </div>
-                    
-                    <div style={{
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      gap: '0.8rem',
-                      marginBottom: '2rem'
-                    }}>
-                      {project.tech.map((tech, i) => (
-                        <span key={i} style={{
-                          fontSize: '0.85rem',
-                          padding: '0.4rem 1rem',
-                          backgroundColor: 'rgba(229, 228, 226, 0.1)',
-                          border: '1px solid rgba(229, 228, 226, 0.2)',
-                          fontWeight: '300'
-                        }}>
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                    
-                    <div style={{
-                      display: 'flex',
-                      gap: '1rem'
-                    }}>
-                      <button className="project-btn" style={{
-                        padding: '0.8rem 2rem',
-                        border: '1px solid #E5E4E2',
-                        backgroundColor: 'transparent',
-                        color: '#E5E4E2',
-                        fontSize: '0.9rem',
-                        fontWeight: '300',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease',
-                        letterSpacing: '0.5px'
-                      }}>
-                        View Project →
-                      </button>
-                      <button className="project-btn" style={{
-                        padding: '0.8rem 2rem',
-                        border: '1px solid rgba(229, 228, 226, 0.3)',
-                        backgroundColor: 'transparent',
-                        color: 'rgba(229, 228, 226, 0.7)',
-                        fontSize: '0.9rem',
-                        fontWeight: '300',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease',
-                        letterSpacing: '0.5px'
-                      }}>
-                        GitHub ↗
-                      </button>
-                    </div>
-                  </div>
-                  
-                  <div style={{ 
-                    order: index % 2 === 0 ? 2 : 1,
-                    height: '300px',
-                    backgroundColor: 'rgba(229, 228, 226, 0.1)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '3rem',
-                    opacity: 0.3,
-                    border: '1px solid rgba(229, 228, 226, 0.1)'
-                  }}>
-                    <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor" style={{ opacity: 0.3 }}>
-                      <path d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z"/>
-                    </svg>
-                  </div>
-                </div>
-              ))}
+          
+          <div className="hero-visual">
+            <div className="code-block">
+              <CodeDisplay />
             </div>
           </div>
-        </section>
+        </div>
+      </div>
 
-        {/* Contact Section */}
-        <section id="contact" style={{
-          padding: '10rem 0',
-          backgroundColor: '#E5E4E2',
-          color: '#2A2D34'
-        }}>
-          <div className="container fade-in-section" style={{ 
-            margin: '0 auto',
-            textAlign: 'center'
-          }}>
-            <div style={{
-              fontSize: '0.9rem',
-              fontWeight: '300',
-              letterSpacing: '3px',
-              textTransform: 'uppercase',
-              opacity: 0.7,
-              marginBottom: '2rem'
-            }}>
-              Get In Touch
-            </div>
-            <h2 style={{
-              fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-              fontWeight: '100',
-              marginBottom: '2rem',
-              letterSpacing: '-0.02em',
-              lineHeight: '1.1'
-            }}>
-              Let&apos;s Create
-              <br />
-              <span style={{ fontWeight: '300' }}>Something Amazing</span>
+      <style jsx>{`
+        .hero-section {
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          padding-top: 80px;
+          position: relative;
+          background: 
+            radial-gradient(circle at 20% 80%, rgba(10, 10, 10, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(10, 10, 10, 0.03) 0%, transparent 50%);
+        }
+
+        .hero-content {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: var(--space-20);
+          align-items: center;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        .hero-greeting {
+          margin-bottom: var(--space-6);
+          opacity: 0;
+          animation: fade-in-up 0.8s ease 0.2s forwards;
+        }
+
+        .hero-title {
+          margin-bottom: var(--space-8);
+          opacity: 0;
+          animation: fade-in-up 0.8s ease 0.4s forwards;
+        }
+
+        .hero-name {
+          display: block;
+          font-size: clamp(3rem, 8vw, 5rem);
+          font-weight: 800;
+          line-height: 0.9;
+          color: var(--brand-black);
+          margin-bottom: var(--space-4);
+        }
+
+        .hero-profession {
+          display: block;
+          font-size: clamp(1.2rem, 3vw, 1.8rem);
+          font-weight: 300;
+          color: var(--color-text-secondary);
+          font-family: var(--font-family-mono);
+          letter-spacing: 1px;
+        }
+
+        .hero-description {
+          font-size: 1.1rem;
+          line-height: 1.7;
+          color: var(--color-text-secondary);
+          margin-bottom: var(--space-10);
+          opacity: 0;
+          animation: fade-in-up 0.8s ease 0.6s forwards;
+        }
+
+        .hero-actions {
+          display: flex;
+          gap: var(--space-6);
+          flex-wrap: wrap;
+          opacity: 0;
+          animation: fade-in-up 0.8s ease 0.8s forwards;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+          padding: var(--space-4) var(--space-8);
+          border-radius: var(--radius-md);
+          font-weight: 500;
+          text-decoration: none;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: inline-flex;
+          align-items: center;
+          gap: var(--space-3);
+          font-size: 0.95rem;
+          letter-spacing: 0.5px;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .btn-primary {
+          background: var(--brand-black);
+          color: var(--brand-white);
+          border: 2px solid var(--brand-black);
+        }
+
+        .btn-primary::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+          transform: translateX(-100%);
+          transition: transform 0.6s ease;
+        }
+
+        .btn-primary:hover::before {
+          transform: translateX(100%);
+        }
+
+        .btn-primary:hover {
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+          background: transparent;
+          color: var(--brand-black);
+          border: 2px solid var(--color-border);
+        }
+
+        .btn-secondary:hover {
+          background: var(--brand-black);
+          color: var(--brand-white);
+          border-color: var(--brand-black);
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-lg);
+        }
+
+        .hero-visual {
+          opacity: 0;
+          animation: fade-in-up 0.8s ease 1s forwards;
+        }
+
+        .code-block {
+          background: var(--color-bg-secondary);
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-xl);
+          padding: var(--space-8);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .code-block::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 40px;
+          background: var(--color-border);
+          display: flex;
+          align-items: center;
+          padding: 0 var(--space-5);
+        }
+
+        .code-block::after {
+          content: '● ● ●';
+          position: absolute;
+          top: 12px;
+          left: var(--space-5);
+          font-size: 0.8rem;
+          color: var(--color-text-muted);
+          letter-spacing: 4px;
+        }
+
+        @keyframes fade-in-up {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .hero-content {
+            grid-template-columns: 1fr;
+            gap: var(--space-12);
+            text-align: center;
+          }
+
+          .hero-actions {
+            justify-content: center;
+          }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+// Code Display Component
+function CodeDisplay() {
+  return (
+    <div className="code-display">
+      <div className="code-line">
+        <span className="code-keyword">const</span>{' '}
+        <span className="code-variable">developer</span>{' '}
+        <span className="code-operator">=</span>{' '}
+        <span className="code-punctuation">{'{'}</span>
+      </div>
+      <div className="code-line code-indent">
+        <span className="code-property">name</span>
+        <span className="code-punctuation">:</span>{' '}
+        <span className="code-string">'Ivo Netto'</span>
+        <span className="code-punctuation">,</span>
+      </div>
+      <div className="code-line code-indent">
+        <span className="code-property">skills</span>
+        <span className="code-punctuation">:</span>{' '}
+        <span className="code-punctuation">['</span>
+        <span className="code-string">React</span>
+        <span className="code-punctuation">',</span>{' '}
+        <span className="code-string">Next.js</span>
+        <span className="code-punctuation">',</span>{' '}
+        <span className="code-string">Node.js</span>
+        <span className="code-punctuation">'],</span>
+      </div>
+      <div className="code-line code-indent">
+        <span className="code-property">passion</span>
+        <span className="code-punctuation">:</span>{' '}
+        <span className="code-string">'Clean Code'</span>
+        <span className="code-punctuation">,</span>
+      </div>
+      <div className="code-line code-indent">
+        <span className="code-property">available</span>
+        <span className="code-punctuation">:</span>{' '}
+        <span className="code-boolean">true</span>
+      </div>
+      <div className="code-line">
+        <span className="code-punctuation">{'}'}</span>
+        <span className="code-punctuation">;</span>
+      </div>
+
+      <style jsx>{`
+        .code-display {
+          font-family: var(--font-family-mono);
+          font-size: 0.9rem;
+          line-height: 1.8;
+          padding-top: 40px;
+        }
+
+        .code-line {
+          display: block;
+          margin-bottom: 2px;
+        }
+
+        .code-indent {
+          padding-left: var(--space-6);
+        }
+
+        .code-keyword {
+          color: #d73a49;
+          font-weight: 600;
+        }
+
+        .code-variable {
+          color: #6f42c1;
+          font-weight: 600;
+        }
+
+        .code-property {
+          color: #005cc5;
+        }
+
+        .code-string {
+          color: #032f62;
+        }
+
+        .code-boolean {
+          color: #d73a49;
+        }
+
+        .code-operator,
+        .code-punctuation {
+          color: var(--color-text-secondary);
+        }
+      `}</style>
+    </div>
+  );
+}
+
+// About Section
+function AboutSection() {
+  const skills = [
+    { name: 'Frontend', tech: ['React', 'Next.js', 'TypeScript', 'CSS'] },
+    { name: 'Backend', tech: ['Node.js', 'Python', 'MySQL', 'C#'] },
+    { name: 'Tools', tech: ['Git', 'Docker', 'AWS', 'Figma'] },
+    { name: 'Mobile', tech: ['Flutter'] }
+  ];
+
+  return (
+    <section id="about" className="section-lg bg-secondary">
+      <div className="container">
+        <div className="about-content">
+          <div className="about-text">
+            <h2 className="section-title">
+              Sobre <span className="font-mono">&lt;/mim&gt;</span>
             </h2>
-            <p style={{
-              fontSize: '1.2rem',
-              opacity: 0.8,
-              fontWeight: '300',
-              marginBottom: '4rem',
-              lineHeight: '1.6',
-              margin: '0 auto 4rem'
-            }}>
-              I&apos;m always excited about new projects and collaborations. 
-              Whether you have a crazy idea or need help bringing your vision to life, 
-              let&apos;s have a conversation and create something amazing together.
-            </p>
             
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: '2rem',
-              marginBottom: '4rem',
-              margin: '0 auto 4rem'
-            }}>
-              <div className="contact-card" style={{
-                padding: '2.5rem 2rem',
-                backgroundColor: '#2A2D34',
-                color: '#E5E4E2',
-                textAlign: 'center',
-                borderRadius: '16px',
-                transition: 'all 0.3s ease'
-              }}>
-                <div className="contact-icon">
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"/>
-                  </svg>
-                </div>
-                <h3 className="font-krona" style={{
-                  fontSize: '1rem',
-                  fontWeight: '400',
-                  marginBottom: '1rem',
-                  letterSpacing: '0.5px'
-                }}>
-                  Email Me
-                </h3>
-                <p className="font-manrope" style={{
-                  fontSize: '1rem',
-                  opacity: 0.8,
-                  fontWeight: '400',
-                  marginBottom: '1rem'
-                }}>
-                  ivo.developer@email.com
-                </p>
-                <p className="font-manrope" style={{
-                  fontSize: '0.85rem',
-                  opacity: 0.6,
-                  fontWeight: '300'
-                }}>
-                  Perfect for project discussions
-                </p>
-              </div>
-              
-              <div className="contact-card" style={{
-                padding: '2.5rem 2rem',
-                backgroundColor: '#2A2D34',
-                color: '#E5E4E2',
-                textAlign: 'center',
-                borderRadius: '16px',
-                transition: 'all 0.3s ease'
-              }}>
-                <div className="contact-icon">
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M8.5,9A1.5,1.5 0 0,1 10,10.5A1.5,1.5 0 0,1 8.5,12A1.5,1.5 0 0,1 7,10.5A1.5,1.5 0 0,1 8.5,9M15.5,9A1.5,1.5 0 0,1 17,10.5A1.5,1.5 0 0,1 15.5,12A1.5,1.5 0 0,1 14,10.5A1.5,1.5 0 0,1 15.5,9M12,17.23C10.25,17.23 8.71,16.5 7.81,15.42L9.07,14.81C9.71,15.58 10.81,16.08 12,16.08C13.19,16.08 14.29,15.58 14.93,14.81L16.19,15.42C15.29,16.5 13.75,17.23 12,17.23Z"/>
-                  </svg>
-                </div>
-                <h3 className="font-krona" style={{
-                  fontSize: '1rem',
-                  fontWeight: '400',
-                  marginBottom: '1rem',
-                  letterSpacing: '0.5px'
-                }}>
-                  Let&apos;s Chat
-                </h3>
-                <p className="font-manrope" style={{
-                  fontSize: '1rem',
-                  opacity: 0.8,
-                  fontWeight: '400',
-                  marginBottom: '1rem'
-                }}>
-                  LinkedIn / Twitter
-                </p>
-                <p className="font-manrope" style={{
-                  fontSize: '0.85rem',
-                  opacity: 0.6,
-                  fontWeight: '300'
-                }}>
-                  Quick questions & networking
-                </p>
-              </div>
-              
-              <div className="contact-card" style={{
-                padding: '2.5rem 2rem',
-                backgroundColor: '#2A2D34',
-                color: '#E5E4E2',
-                textAlign: 'center',
-                borderRadius: '16px',
-                transition: 'all 0.3s ease'
-              }}>
-                <div className="contact-icon">
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
-                  </svg>
-                </div>
-                <h3 className="font-krona" style={{
-                  fontSize: '1rem',
-                  fontWeight: '400',
-                  marginBottom: '1rem',
-                  letterSpacing: '0.5px'
-                }}>
-                  Quick Response
-                </h3>
-                <p style={{
-                  fontSize: '1rem',
-                  opacity: 0.8,
-                  fontWeight: '300',
-                  marginBottom: '1rem'
-                }}>
-                  Usually within 24h
-                </p>
-                <p style={{
-                  fontSize: '0.85rem',
-                  opacity: 0.6,
-                  fontWeight: '300'
-                }}>
-                  I love talking about code!
-                </p>
-              </div>
-            </div>
-
-            <button style={{
-              padding: '1.2rem 3rem',
-              fontSize: '1rem',
-              border: '2px solid #2A2D34',
-              backgroundColor: '#2A2D34',
-              color: '#E5E4E2',
-              borderRadius: '0',
-              cursor: 'pointer',
-              fontWeight: '400',
-              letterSpacing: '1px',
-              textTransform: 'uppercase',
-              transition: 'all 0.3s ease',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.8rem'
-            }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M2.81,14.12L5.64,11.29L8.17,10.79C11.39,6.41 17.55,4.22 19.78,4.22C19.78,6.45 17.59,12.61 13.21,15.83L12.71,18.36L9.88,21.19C9.29,21.78 8.32,21.85 7.65,21.33L2.81,17.05C2.26,16.65 2.26,15.74 2.81,15.19L5.5,12.5L2.81,14.12M16.5,9.5A1.5,1.5 0 0,0 18,8A1.5,1.5 0 0,0 16.5,6.5A1.5,1.5 0 0,0 15,8A1.5,1.5 0 0,0 16.5,9.5Z"/>
-              </svg>
-              Start A Conversation
-            </button>
-          </div>
-        </section>
-
-        {/* Footer */}
-        <footer className="container" style={{
-          padding: '3rem 0',
-          backgroundColor: '#2A2D34',
-          color: '#E5E4E2',
-          borderTop: '1px solid rgba(229, 228, 226, 0.1)',
-          textAlign: 'center'
-        }}>
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '2rem'
-          }}>
-            <div>
-              <p style={{
-                fontSize: '0.9rem',
-                opacity: 0.7,
-                fontWeight: '300',
-                margin: 0
-              }}>
-                © 2025 Ivo Developer. Crafted with passion and dedication.
+            <div className="about-description">
+              <p>
+                Sou um desenvolvedor full-stack com foco em criar experiências digitais funcionais e intuitivas. Tenho experiência no desenvolvimento de aplicações web e mobile, sempre buscando unir desempenho, boas práticas e uma interface agradável ao usuário.
+              </p>
+              <p>
+                Minha motivação está em transformar ideias em soluções reais, explorando constantemente novas tecnologias e aprimorando meu processo de desenvolvimento. Além do código, valorizo a colaboração, a troca de conhecimento e o impacto positivo que a tecnologia pode gerar.
               </p>
             </div>
-            <div style={{
-              display: 'flex',
-              gap: '2rem'
-            }}>
-              {['GitHub', 'LinkedIn', 'Twitter'].map((social) => (
-                <a key={social} href="#" style={{
-                  fontSize: '0.9rem',
-                  color: '#E5E4E2',
-                  textDecoration: 'none',
-                  opacity: 0.7,
-                  transition: 'opacity 0.3s ease'
-                }}>
-                  {social}
-                </a>
-              ))}
+          </div>
+          
+          <div className="skills-grid">
+            {skills.map((category, index) => (
+              <div key={category.name} className="skill-category">
+                <h3 className="skill-category-title">
+                  {category.name}
+                </h3>
+                <div className="skill-tags">
+                  {category.tech.map((tech) => (
+                    <span key={tech} className="skill-tag">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <style jsx>{`
+        .about-content {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: var(--space-20);
+          align-items: start;
+        }
+
+        .section-title {
+          font-size: clamp(2.5rem, 5vw, 3.5rem);
+          font-weight: 700;
+          margin-bottom: var(--space-12);
+          color: var(--brand-black);
+        }
+
+        .about-description {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-6);
+        }
+
+        .about-description p {
+          font-size: 1.1rem;
+          line-height: 1.7;
+          color: var(--color-text-secondary);
+        }
+
+        .skills-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: var(--space-8);
+        }
+
+        .skill-category {
+          background: var(--color-bg-primary);
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-lg);
+          padding: var(--space-6);
+          transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+          transform: translateY(-4px);
+          box-shadow: var(--shadow-lg);
+          border-color: var(--color-border-strong);
+        }
+
+        .skill-category-title {
+          font-size: 1.1rem;
+          font-weight: 600;
+          margin-bottom: var(--space-4);
+          color: var(--brand-black);
+        }
+
+        .skill-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: var(--space-2);
+        }
+
+        .skill-tag {
+          background: var(--color-bg-secondary);
+          color: var(--color-text-secondary);
+          padding: var(--space-2) var(--space-3);
+          border-radius: var(--radius-sm);
+          font-size: 0.85rem;
+          font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+          .about-content {
+            grid-template-columns: 1fr;
+            gap: var(--space-12);
+          }
+
+          .skills-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+// Experience Section
+// Experience Section
+function ExperienceSection() {
+  const experiences = [
+    {
+      period: '2022 - Atual',
+      position: 'Técnico de TI Pleno',
+      company: 'Selbetti',
+      description: 'Atuação no suporte técnico de primeiro nível, acompanhando a administração de infraestrutura de TI e auxiliando em projetos de migração e melhorias.',
+      achievements: [
+        'Acompanhamento de migração para cloud com redução de custos',
+        'Suporte na implementação de sistemas internos para otimização de processos',
+        'Criação de scripts para automação de tarefas',
+        'Colaboração técnica com uma equipe de 8 profissionais'
+      ],
+      skills: ['VMware Cloud', 'Linux', 'Zabbix', 'Veeam', 'SQL']
+    },
+    {
+      period: '2020 - 2022',
+      position: 'Desenvolvedor Full-Stack',
+      company: 'Freelancer & Projetos Próprios',
+      description: 'Desenvolvimento de aplicações web e mobile personalizadas, com foco em soluções escaláveis e de alta performance para diversos clientes.',
+      achievements: [
+        'Entrega de mais de 25 projetos com alta satisfação dos clientes',
+        'Desenvolvimento de e-commerce com faturamento superior a R$ 2M no primeiro ano',
+        'Criação de sistemas de gestão utilizados por mais de 15 empresas',
+        'Lançamento de aplicativo mobile com mais de 10k downloads'
+      ],
+      skills: ['React', 'Next.js', 'Node.js', 'TypeScript', 'MongoDB', 'MySQL']
+    }
+  ];
+
+  return (
+    <section id="experience" className="experience-section">
+      <div className="container">
+        <h2 className="section-title text-center">
+          Jornada <span className="font-mono">&lt;/profissional&gt;</span>
+        </h2>
+        
+        <div className="timeline-content-wrapper">
+          <div className="timeline-line"></div>
+          
+          {experiences.map((exp, index) => (
+            <div key={index} className="timeline-item">
+              <div className="timeline-year">{exp.period}</div>
+              <div className="timeline-node"></div>
+              
+              <div className="timeline-content">
+                <h3 className="timeline-position">{exp.position}</h3>
+                <div className="timeline-company">{exp.company}</div>
+                <p className="timeline-description">{exp.description}</p>
+                
+                <ul className="timeline-achievements">
+                  {exp.achievements.map((achievement, i) => (
+                    <li key={i}>{achievement}</li>
+                  ))}
+                </ul>
+                
+                <div className="timeline-skills">
+                  {exp.skills.map((skill) => (
+                    <span key={skill} className="skill-badge">{skill}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Projects Section
+function ProjectsSection() {
+  const projects = [
+    {
+      title: 'Workee',
+      category: 'Sistema de Gestão',
+      description: 'Controlador de ordens de serviço com gestão completa de fluxo de trabalho, atribuição de tarefas e acompanhamento de status em tempo real.',
+      tech: ['React', 'Node.js', 'PostgreSQL', 'Socket.io'],
+      image: '/project-1.jpg',
+      link: '#',
+      github: '#'
+    },
+    {
+      title: 'DataJet',
+      category: 'Orquestrador de Dados',
+      description: 'Orquestrador de banco de dados multi-tenant com gerenciamento inteligente de recursos, isolamento de dados e escalabilidade automática.',
+      tech: ['Node.js', 'Docker', 'PostgreSQL', 'Redis'],
+      image: '/project-2.jpg',
+      link: '#',
+      github: '#'
+    },
+    {
+      title: 'ChatBot WhatsApp',
+      category: 'Automação & IA',
+      description: 'Bot inteligente para WhatsApp com processamento de linguagem natural, integração com APIs e automação de atendimento ao cliente.',
+      tech: ['Node.js', 'WhatsApp API', 'OpenAI', 'MongoDB'],
+      image: '/project-3.jpg',
+      link: '#',
+      github: '#'
+    }
+  ];
+
+  return (
+    <section id="projects" className="section-lg bg-secondary">
+      <div className="container">
+        <h2 className="section-title text-center">
+          Projetos <span className="font-mono">&lt;/destacados&gt;</span>
+        </h2>
+        
+        <div className="projects-grid">
+          {projects.map((project, index) => (
+            <div key={index} className="project-card">
+              <div className="project-image">
+                <div className="project-placeholder">
+                  <Code size={48} />
+                </div>
+              </div>
+              
+              <div className="project-content">
+                <div className="project-category">{project.category}</div>
+                <h3 className="project-title">{project.title}</h3>
+                <p className="project-description">{project.description}</p>
+                
+                <div className="project-tech">
+                  {project.tech.map((tech) => (
+                    <span key={tech} className="tech-tag">{tech}</span>
+                  ))}
+                </div>
+                
+                <div className="project-links">
+                  <a href={project.link} className="project-link">
+                    Ver Projeto <ExternalLink size={14} />
+                  </a>
+                  <a href={project.github} className="project-link secondary">
+                    GitHub <FaGithub size={14} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <style jsx>{`
+        .section-title {
+          font-size: clamp(2.5rem, 5vw, 3.5rem);
+          font-weight: 700;
+          margin-bottom: var(--space-16);
+          color: var(--brand-black);
+        }
+
+        .projects-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+          gap: var(--space-8);
+        }
+
+        .project-card {
+          background: var(--color-bg-primary);
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-xl);
+          overflow: hidden;
+          transition: all 0.4s ease;
+          opacity: 0;
+          transform: translateY(30px);
+          animation: fade-in-up 0.8s ease forwards;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .project-card:nth-child(1) { animation-delay: 0.1s; }
+        .project-card:nth-child(2) { animation-delay: 0.3s; }
+        .project-card:nth-child(3) { animation-delay: 0.5s; }
+
+        .project-card:hover {
+          transform: translateY(-12px);
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+          border-color: var(--brand-black);
+        }
+
+        .project-image {
+          aspect-ratio: 16/9;
+          background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-border) 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-bottom: 1px solid var(--color-border);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .project-placeholder {
+          color: var(--color-text-muted);
+          transition: all 0.4s ease;
+          opacity: 0.6;
+        }
+
+        .project-card:hover .project-placeholder {
+          transform: scale(1.2);
+          color: var(--brand-black);
+          opacity: 1;
+        }
+
+        .project-content {
+          padding: var(--space-10);
+          text-align: center;
+        }
+
+        .project-category {
+          font-size: 0.75rem;
+          font-weight: 700;
+          color: var(--brand-black);
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          margin-bottom: var(--space-4);
+          display: inline-block;
+          background: var(--color-bg-secondary);
+          padding: var(--space-2) var(--space-4);
+          border-radius: var(--radius-full);
+          border: 1px solid var(--color-border);
+        }
+
+        .project-title {
+          font-size: 1.75rem;
+          font-weight: 700;
+          color: var(--brand-black);
+          margin-bottom: var(--space-5);
+          line-height: 1.2;
+        }
+
+        .project-description {
+          font-size: 1rem;
+          line-height: 1.7;
+          color: var(--color-text-secondary);
+          margin-bottom: var(--space-8);
+          max-width: 90%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .project-tech {
+          display: flex;
+          flex-wrap: wrap;
+          gap: var(--space-3);
+          margin-bottom: var(--space-8);
+          justify-content: center;
+        }
+
+        .tech-tag {
+          background: var(--brand-black);
+          color: var(--brand-white);
+          padding: var(--space-2) var(--space-4);
+          border-radius: var(--radius-full);
+          font-size: 0.8rem;
+          font-weight: 600;
+          transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover {
+          background: var(--color-text-secondary);
+          transform: translateY(-2px);
+        }
+
+        .project-links {
+          display: flex;
+          gap: var(--space-4);
+          justify-content: center;
+        }
+
+        .project-link {
+          display: inline-flex;
+          align-items: center;
+          gap: var(--space-2);
+          padding: var(--space-4) var(--space-6);
+          border-radius: var(--radius-full);
+          text-decoration: none;
+          font-size: 0.9rem;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          min-width: 120px;
+          justify-content: center;
+        }
+
+        .project-link:not(.secondary) {
+          background: var(--brand-black);
+          color: var(--brand-white);
+          border: 2px solid var(--brand-black);
+        }
+
+        .project-link:not(.secondary):hover {
+          transform: translateY(-3px);
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-link.secondary {
+          background: transparent;
+          color: var(--brand-black);
+          border: 2px solid var(--color-border);
+        }
+
+        .project-link.secondary:hover {
+          background: var(--brand-black);
+          color: var(--brand-white);
+          border-color: var(--brand-black);
+          transform: translateY(-3px);
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+      `}</style>
+    </section>
+  );
+}
+
+// Contact Section
+function ContactSection() {
+  return (
+    <section id="contact" className="section-lg">
+      <div className="container">
+        <div className="contact-content">
+          <div className="contact-text">
+            <h2 className="section-title">
+              Vamos <span className="font-mono">&lt;/colaborar&gt;</span>
+            </h2>
+            
+            <p className="contact-description">
+              Tem um projeto em mente? Quer discutir uma oportunidade ou apenas 
+              trocar uma ideia sobre tecnologia? Estou sempre aberto a novas 
+              conversas e desafios interessantes.
+            </p>
+            
+            <div className="contact-info">
+              <div className="contact-item">
+                <Mail size={20} />
+                <span>nettocodes@outlook.com</span>
+              </div>
+              <div className="contact-item">
+                <MapPin size={20} />
+                <span>SC, Brasil</span>
+              </div>
             </div>
           </div>
-        </footer>
+          
+          <div className="contact-form">
+            <form>
+              <div className="form-group">
+                <label htmlFor="name">Nome</label>
+                <input type="text" id="name" name="name" required />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="email">E-mail</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="message">Mensagem</label>
+                <textarea id="message" name="message" rows={5} required></textarea>
+              </div>
+              
+              <button type="submit" className="submit-btn">
+                Enviar Mensagem
+                <Send size={16} />
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
-    </>
+
+      <style jsx>{`
+        .contact-content {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: var(--space-20);
+          align-items: start;
+        }
+
+        .section-title {
+          font-size: clamp(2.5rem, 5vw, 3.5rem);
+          font-weight: 700;
+          margin-bottom: var(--space-8);
+          color: var(--brand-black);
+        }
+
+        .contact-description {
+          font-size: 1.1rem;
+          line-height: 1.7;
+          color: var(--color-text-secondary);
+          margin-bottom: var(--space-10);
+        }
+
+        .contact-info {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-5);
+        }
+
+        .contact-item {
+          display: flex;
+          align-items: center;
+          gap: var(--space-4);
+          color: var(--color-text-secondary);
+        }
+
+        .contact-form {
+          background: var(--color-bg-secondary);
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-xl);
+          padding: var(--space-10);
+        }
+
+        .form-group {
+          margin-bottom: var(--space-6);
+        }
+
+        .form-group label {
+          display: block;
+          margin-bottom: var(--space-2);
+          font-weight: 500;
+          color: var(--brand-black);
+        }
+
+        .form-group input,
+        .form-group textarea {
+          width: 100%;
+          padding: var(--space-4);
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-md);
+          font-size: 1rem;
+          font-family: inherit;
+          background: var(--color-bg-primary);
+          transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+          outline: none;
+          border-color: var(--brand-black);
+        }
+
+        .submit-btn {
+          width: 100%;
+          padding: var(--space-4) var(--space-6);
+          background: var(--brand-black);
+          color: var(--brand-white);
+          border: none;
+          border-radius: var(--radius-md);
+          font-size: 1rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: var(--space-3);
+        }
+
+        .submit-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-lg);
+        }
+
+        @media (max-width: 768px) {
+          .contact-content {
+            grid-template-columns: 1fr;
+            gap: var(--space-12);
+          }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+// Footer
+function Footer() {
+  return (
+    <footer className="footer">
+      <div className="container">
+        <div className="footer-content">
+          <div className="footer-brand">
+            <span className="font-mono font-bold text-xl">IVO NETTO</span>
+            <p className="footer-tagline">
+              Desenvolvedor Full-Stack especializado em soluções digitais modernas
+            </p>
+          </div>
+          
+          <div className="footer-links">
+            <a href="https://www.linkedin.com/in/ivobraatz/" target="_blank" rel="noopener noreferrer" className="footer-link">
+              <FaLinkedin size={20} />
+              <span>LinkedIn</span>
+            </a>
+            <a href="https://github.com/nettocodes" target="_blank" rel="noopener noreferrer" className="footer-link">
+              <FaGithub size={20} />
+              <span>GitHub</span>
+            </a>
+            <a href="https://www.threads.com/@ivo.braatz" target="_blank" rel="noopener noreferrer" className="footer-link">
+              <SiThreads size={20} />
+              <span>Threads</span>
+            </a>
+            <a href="https://discord.com/users/1055496313002803331" target="_blank" rel="noopener noreferrer" className="footer-link">
+              <FaDiscord size={20} />
+              <span>Discord</span>
+            </a>
+            <a href="mailto:nettocodes@outlook.com" className="footer-link">
+              <Mail size={20} />
+              <span>E-mail</span>
+            </a>
+          </div>
+        </div>
+        
+        <div className="footer-bottom">
+          <p>&copy; 2024 Ivo Netto. Todos os direitos reservados.</p>
+          <p className="font-mono text-sm">Feito com ❤️ e muito código</p>
+        </div>
+      </div>
+
+      <style jsx>{`
+        .footer {
+          background: var(--brand-black);
+          color: var(--brand-white);
+          padding: var(--space-16) 0 var(--space-8);
+        }
+
+        .footer-content {
+          display: flex;
+          justify-content: space-between;
+          align-items: start;
+          margin-bottom: var(--space-12);
+        }
+
+        .footer-brand {
+          max-width: 400px;
+        }
+
+        .footer-tagline {
+          margin-top: var(--space-4);
+          color: var(--brand-gray-400);
+          font-size: 0.95rem;
+          line-height: 1.6;
+        }
+
+        .footer-links {
+          display: flex;
+          gap: var(--space-6);
+          flex-wrap: wrap;
+        }
+
+        .footer-link {
+          color: var(--brand-gray-400);
+          text-decoration: none;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          gap: var(--space-3);
+          padding: var(--space-3) var(--space-4);
+          border-radius: var(--radius-md);
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .footer-link::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+          transform: translateX(-100%);
+          transition: transform 0.6s ease;
+        }
+
+        .footer-link:hover::before {
+          transform: translateX(100%);
+        }
+
+        .footer-link:hover {
+          color: var(--brand-white);
+          background: rgba(255, 255, 255, 0.1);
+          border-color: rgba(255, 255, 255, 0.2);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-bottom {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-top: var(--space-8);
+          border-top: 1px solid var(--brand-gray-800);
+          font-size: 0.9rem;
+          color: var(--brand-gray-500);
+        }
+
+        @media (max-width: 768px) {
+          .footer-content {
+            flex-direction: column;
+            gap: var(--space-8);
+            text-align: center;
+          }
+
+          .footer-links {
+            justify-content: center;
+          }
+
+          .footer-bottom {
+            flex-direction: column;
+            gap: var(--space-4);
+            text-align: center;
+          }
+        }
+      `}</style>
+    </footer>
   );
 }
