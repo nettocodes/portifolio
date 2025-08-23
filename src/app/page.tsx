@@ -195,7 +195,11 @@ function LoadingScreen() {
     <div className="loading-screen">
       <div className="loading-content">
         <div className="loading-logo">
-          <span className="text-6xl font-bold font-mono">IVO NETTO</span>
+          <img 
+            src="/images/logo-dark.svg" 
+            alt="Logo IBN" 
+            style={{ height: '48px', width: 'auto', display: 'block', margin: '0 auto' }} 
+          />
         </div>
         
         <div className="loading-progress">
@@ -310,8 +314,14 @@ function Navigation({ navigation, activeSection, scrollToSection, isMenuOpen, se
             <button 
               onClick={() => scrollToSection('home')}
               className="logo"
+              style={{ background: 'none', border: 'none', padding: 0 }}
+              aria-label="Logo IBN"
             >
-              <span className="font-mono font-bold text-xl">IVO NETTO</span>
+              <img 
+                src="/images/logo-dark.svg" 
+                alt="Logo IBN" 
+                style={{ height: '40px', width: 'auto', display: 'block' }} 
+              />
             </button>
 
             {/* Desktop Navigation */}
@@ -368,26 +378,30 @@ function Navigation({ navigation, activeSection, scrollToSection, isMenuOpen, se
           background: rgba(250, 250, 250, 0.95);
           backdrop-filter: blur(20px);
           border-bottom: 1px solid var(--color-border);
-          transition: all 0.3s ease;
+          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .header-content {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: var(--space-5) 0;
+          padding: var(--space-6) 0;
         }
 
         .logo {
           background: none;
           border: none;
           cursor: pointer;
-          transition: opacity 0.2s ease;
+          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           position: relative;
+          font-family: var(--font-family-mono);
+          font-size: 1.2rem;
+          font-weight: 900;
+          letter-spacing: 3px;
         }
 
         .logo:hover {
-          opacity: 0.7;
+          transform: translateY(-1px);
         }
 
         .logo::after {
@@ -396,10 +410,10 @@ function Navigation({ navigation, activeSection, scrollToSection, isMenuOpen, se
           bottom: -2px;
           left: 0;
           right: 0;
-          height: 1px;
+          height: 2px;
           background: var(--brand-black);
           transform: scaleX(0);
-          transition: transform 0.2s ease;
+          transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .logo:hover::after {
@@ -557,7 +571,7 @@ function HeroSection() {
             
             <h1 className="hero-title">
               <span className="hero-name">Ivo Netto</span>
-              <span className="hero-profession">Desenvolvedor Full-Stack</span>
+              <span className="hero-profession">Full-Stack Developer</span>
             </h1>
 
             <p className="hero-description">
@@ -595,59 +609,60 @@ function HeroSection() {
           min-height: 100vh;
           display: flex;
           align-items: center;
-          padding-top: 80px;
+          padding-top: 100px;
           position: relative;
-          background: 
-            radial-gradient(circle at 20% 80%, rgba(10, 10, 10, 0.03) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(10, 10, 10, 0.03) 0%, transparent 50%);
+          background: var(--color-bg-primary);
         }
 
         .hero-content {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: var(--space-20);
+          gap: var(--space-32);
           align-items: center;
-          max-width: 1200px;
+          max-width: 1400px;
           margin: 0 auto;
         }
 
         .hero-greeting {
-          margin-bottom: var(--space-6);
+          margin-bottom: var(--space-8);
           opacity: 0;
-          animation: fade-in-up 0.8s ease 0.2s forwards;
+          animation: fade-in-up 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s forwards;
         }
 
         .hero-title {
-          margin-bottom: var(--space-8);
+          margin-bottom: var(--space-12);
           opacity: 0;
-          animation: fade-in-up 0.8s ease 0.4s forwards;
+          animation: fade-in-up 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s forwards;
         }
 
         .hero-name {
           display: block;
-          font-size: clamp(3rem, 8vw, 5rem);
-          font-weight: 800;
-          line-height: 0.9;
+          font-size: clamp(4rem, 12vw, 7rem);
+          font-weight: 900;
+          line-height: 0.85;
           color: var(--brand-black);
-          margin-bottom: var(--space-4);
+          margin-bottom: var(--space-6);
+          letter-spacing: -4px;
         }
 
         .hero-profession {
           display: block;
-          font-size: clamp(1.2rem, 3vw, 1.8rem);
-          font-weight: 300;
+          font-size: clamp(1.4rem, 4vw, 2.2rem);
+          font-weight: 400;
           color: var(--color-text-secondary);
           font-family: var(--font-family-mono);
-          letter-spacing: 1px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
         }
 
         .hero-description {
-          font-size: 1.1rem;
-          line-height: 1.7;
+          font-size: 1.2rem;
+          line-height: 1.6;
           color: var(--color-text-secondary);
-          margin-bottom: var(--space-10);
+          margin-bottom: var(--space-12);
           opacity: 0;
-          animation: fade-in-up 0.8s ease 0.6s forwards;
+          animation: fade-in-up 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s forwards;
+          max-width: 90%;
         }
 
         .hero-actions {
@@ -655,21 +670,21 @@ function HeroSection() {
           gap: var(--space-6);
           flex-wrap: wrap;
           opacity: 0;
-          animation: fade-in-up 0.8s ease 0.8s forwards;
+          animation: fade-in-up 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s forwards;
         }
 
         .btn-primary,
         .btn-secondary {
-          padding: var(--space-4) var(--space-8);
-          border-radius: var(--radius-md);
-          font-weight: 500;
+          padding: var(--space-5) var(--space-10);
+          border-radius: var(--radius-xl);
+          font-weight: 600;
           text-decoration: none;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           display: inline-flex;
           align-items: center;
           gap: var(--space-3);
-          font-size: 0.95rem;
+          font-size: 1rem;
           letter-spacing: 0.5px;
           position: relative;
           overflow: hidden;
@@ -695,8 +710,8 @@ function HeroSection() {
         }
 
         .btn-primary:hover {
-          transform: translateY(-2px);
-          box-shadow: var(--shadow-lg);
+          transform: translateY(-4px);
+          box-shadow: var(--shadow-xl);
         }
 
         .btn-secondary {
@@ -709,22 +724,23 @@ function HeroSection() {
           background: var(--brand-black);
           color: var(--brand-white);
           border-color: var(--brand-black);
-          transform: translateY(-2px);
-          box-shadow: var(--shadow-lg);
+          transform: translateY(-4px);
+          box-shadow: var(--shadow-xl);
         }
 
         .hero-visual {
           opacity: 0;
-          animation: fade-in-up 0.8s ease 1s forwards;
+          animation: fade-in-up 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s forwards;
         }
 
         .code-block {
           background: var(--color-bg-secondary);
-          border: 1px solid var(--color-border);
-          border-radius: var(--radius-xl);
-          padding: var(--space-8);
+          border: none;
+          border-radius: var(--radius-2xl);
+          padding: var(--space-12);
           position: relative;
           overflow: hidden;
+          box-shadow: var(--shadow-lg);
         }
 
         .code-block::before {
@@ -733,21 +749,21 @@ function HeroSection() {
           top: 0;
           left: 0;
           right: 0;
-          height: 40px;
+          height: 50px;
           background: var(--color-border);
           display: flex;
           align-items: center;
-          padding: 0 var(--space-5);
+          padding: 0 var(--space-6);
         }
 
         .code-block::after {
           content: '● ● ●';
           position: absolute;
-          top: 12px;
-          left: var(--space-5);
-          font-size: 0.8rem;
+          top: 16px;
+          left: var(--space-6);
+          font-size: 0.9rem;
           color: var(--color-text-muted);
-          letter-spacing: 4px;
+          letter-spacing: 6px;
         }
 
         @keyframes fade-in-up {
@@ -766,6 +782,24 @@ function HeroSection() {
 
           .hero-actions {
             justify-content: center;
+            flex-direction: column;
+            gap: var(--space-4);
+          }
+
+          .btn-primary,
+          .btn-secondary {
+            width: 100%;
+            justify-content: center;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hero-content {
+            gap: var(--space-8);
+          }
+
+          .hero-actions {
+            gap: var(--space-3);
           }
         }
       `}</style>
@@ -867,10 +901,30 @@ function CodeDisplay() {
 // About Section
 function AboutSection() {
   const skills = [
-    { name: 'Frontend', tech: ['React', 'Next.js', 'TypeScript', 'CSS'] },
-    { name: 'Backend', tech: ['Node.js', 'Python', 'MySQL', 'C#'] },
-    { name: 'Tools', tech: ['Git', 'Docker', 'AWS', 'Figma'] },
-    { name: 'Mobile', tech: ['Flutter'] }
+    { 
+      name: 'Frontend', 
+      icon: '</>',
+      tech: ['React', 'Next.js', 'TypeScript', 'CSS'],
+      description: 'Interfaces modernas e responsivas'
+    },
+    { 
+      name: 'Backend', 
+      icon: '{ }',
+      tech: ['Node.js', 'Python', 'MySQL', 'C#'],
+      description: 'APIs robustas e escaláveis'
+    },
+    { 
+      name: 'Tools', 
+      icon: '[]',
+      tech: ['Git', 'Docker', 'AWS', 'Figma'],
+      description: 'Produtividade e colaboração'
+    },
+    { 
+      name: 'Mobile', 
+      icon: '()',
+      tech: ['Flutter'],
+      description: 'Apps multiplataforma'
+    }
   ];
 
   return (
@@ -893,11 +947,17 @@ function AboutSection() {
           </div>
           
           <div className="skills-grid">
-            {skills.map((category) => (
-              <div key={category.name} className="skill-category">
-                <h3 className="skill-category-title">
-                  {category.name}
-                </h3>
+            {skills.map((category, index) => (
+              <div key={category.name} className="skill-category" style={{animationDelay: `${index * 0.1}s`}}>
+                <div className="skill-header">
+                  <div className="skill-icon">
+                    <span className="skill-symbol">{category.icon}</span>
+                  </div>
+                  <div className="skill-info">
+                    <h3 className="skill-category-title">{category.name}</h3>
+                    <p className="skill-description">{category.description}</p>
+                  </div>
+                </div>
                 <div className="skill-tags">
                   {category.tech.map((tech) => (
                     <span key={tech} className="skill-tag">
@@ -915,15 +975,17 @@ function AboutSection() {
         .about-content {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: var(--space-20);
+          gap: var(--space-32);
           align-items: start;
         }
 
         .section-title {
-          font-size: clamp(2.5rem, 5vw, 3.5rem);
-          font-weight: 700;
-          margin-bottom: var(--space-12);
+          font-size: clamp(3.5rem, 8vw, 6rem);
+          font-weight: 900;
+          margin-bottom: var(--space-20);
           color: var(--brand-black);
+          letter-spacing: -3px;
+          line-height: 0.9;
         }
 
         .about-description {
@@ -933,51 +995,129 @@ function AboutSection() {
         }
 
         .about-description p {
-          font-size: 1.1rem;
-          line-height: 1.7;
+          font-size: 1.2rem;
+          line-height: 1.6;
           color: var(--color-text-secondary);
         }
 
         .skills-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: var(--space-8);
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-6);
         }
 
         .skill-category {
           background: var(--color-bg-primary);
-          border: 1px solid var(--color-border);
+          border: none;
           border-radius: var(--radius-lg);
-          padding: var(--space-6);
-          transition: all 0.3s ease;
+          padding: var(--space-8);
+          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          box-shadow: var(--shadow-sm);
+          position: relative;
+          overflow: hidden;
+          opacity: 0;
+          transform: translateY(30px);
+          animation: fade-in-up 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .skill-category::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: var(--brand-black);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .skill-category:hover::before {
+          opacity: 1;
         }
 
         .skill-category:hover {
           transform: translateY(-4px);
           box-shadow: var(--shadow-lg);
-          border-color: var(--color-border-strong);
+        }
+
+        .skill-header {
+          display: flex;
+          align-items: center;
+          gap: var(--space-4);
+          margin-bottom: var(--space-6);
+        }
+
+        .skill-icon {
+          width: 50px;
+          height: 50px;
+          background: var(--color-bg-secondary);
+          border-radius: var(--radius-md);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          position: relative;
+        }
+
+        .skill-category:hover .skill-icon {
+          background: var(--brand-black);
+        }
+
+        .skill-symbol {
+          font-family: var(--font-family-mono);
+          font-size: 1rem;
+          font-weight: 700;
+          color: var(--brand-black);
+          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          letter-spacing: -1px;
+        }
+
+        .skill-category:hover .skill-symbol {
+          color: var(--brand-white);
+        }
+
+        .skill-info {
+          flex: 1;
         }
 
         .skill-category-title {
-          font-size: 1.1rem;
-          font-weight: 600;
-          margin-bottom: var(--space-4);
+          font-size: 1.2rem;
+          font-weight: 700;
+          margin-bottom: var(--space-1);
           color: var(--brand-black);
+          letter-spacing: -0.5px;
+        }
+
+        .skill-description {
+          font-size: 0.85rem;
+          color: var(--color-text-muted);
+          font-weight: 500;
+          line-height: 1.4;
         }
 
         .skill-tags {
           display: flex;
           flex-wrap: wrap;
           gap: var(--space-2);
+          margin-top: var(--space-4);
         }
 
         .skill-tag {
-          background: var(--color-bg-secondary);
-          color: var(--color-text-secondary);
+          background: var(--brand-black);
+          color: var(--brand-white);
           padding: var(--space-2) var(--space-3);
-          border-radius: var(--radius-sm);
-          font-size: 0.85rem;
-          font-weight: 500;
+          border-radius: var(--radius-full);
+          font-size: 0.75rem;
+          font-weight: 600;
+          font-family: var(--font-family-mono);
+          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .skill-category:hover .skill-tag {
+          transform: translateY(-1px);
+          box-shadow: var(--shadow-sm);
         }
 
         @media (max-width: 768px) {
@@ -986,8 +1126,73 @@ function AboutSection() {
             gap: var(--space-12);
           }
 
+          .section-title {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin-bottom: var(--space-16);
+            text-align: center;
+          }
+
+          .about-description p {
+            font-size: 1rem;
+          }
+
           .skills-grid {
-            grid-template-columns: 1fr;
+            gap: var(--space-5);
+          }
+
+          .skill-category {
+            padding: var(--space-6);
+          }
+
+          .skill-header {
+            align-items: center;
+            gap: var(--space-3);
+          }
+
+          .skill-icon {
+            width: 40px;
+            height: 40px;
+          }
+
+          .skill-symbol {
+            font-size: 0.9rem;
+          }
+
+          .skill-category-title {
+            font-size: 1rem;
+          }
+
+          .skill-description {
+            font-size: 0.8rem;
+          }
+
+          .skill-tags {
+            gap: var(--space-1);
+          }
+
+          .skill-tag {
+            font-size: 0.75rem;
+            padding: var(--space-1) var(--space-2);
+          }
+        }
+
+        @media (max-width: 480px) {
+          .about-content {
+            gap: var(--space-8);
+          }
+
+          .skill-category {
+            padding: var(--space-4);
+          }
+
+          .skill-header {
+            flex-direction: column;
+            text-align: center;
+            gap: var(--space-2);
+          }
+
+          .skill-info {
+            text-align: center;
           }
         }
       `}</style>
@@ -1092,7 +1297,7 @@ function ProjectsSection() {
       title: 'ChatBot WhatsApp',
       category: 'Automação & IA',
       description: 'Bot inteligente para WhatsApp com processamento de linguagem natural, integração com APIs e automação de atendimento ao cliente.',
-      tech: ['Node.js', 'WhatsApp API', 'OpenAI', 'MongoDB'],
+      tech: ['Node.js', 'WhatsApp API', 'OpenAI'],
       image: '/project-3.jpg',
       link: '#',
       github: '#'
@@ -1142,28 +1347,30 @@ function ProjectsSection() {
 
       <style jsx>{`
         .section-title {
-          font-size: clamp(2.5rem, 5vw, 3.5rem);
-          font-weight: 700;
-          margin-bottom: var(--space-16);
+          font-size: clamp(3.5rem, 8vw, 6rem);
+          font-weight: 900;
+          margin-bottom: var(--space-20);
           color: var(--brand-black);
+          letter-spacing: -3px;
+          line-height: 0.9;
         }
 
         .projects-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-          gap: var(--space-8);
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          gap: var(--space-6);
         }
 
         .project-card {
           background: var(--color-bg-primary);
-          border: 1px solid var(--color-border);
+          border: none;
           border-radius: var(--radius-xl);
           overflow: hidden;
-          transition: all 0.4s ease;
+          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           opacity: 0;
           transform: translateY(30px);
           animation: fade-in-up 0.8s ease forwards;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+          box-shadow: var(--shadow-md);
         }
 
         .project-card:nth-child(1) { animation-delay: 0.1s; }
@@ -1171,13 +1378,12 @@ function ProjectsSection() {
         .project-card:nth-child(3) { animation-delay: 0.5s; }
 
         .project-card:hover {
-          transform: translateY(-12px);
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-          border-color: var(--brand-black);
+          transform: translateY(-8px);
+          box-shadow: var(--shadow-xl);
         }
 
         .project-image {
-          aspect-ratio: 16/9;
+          aspect-ratio: 16/10;
           background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-border) 100%);
           display: flex;
           align-items: center;
@@ -1194,44 +1400,45 @@ function ProjectsSection() {
         }
 
         .project-card:hover .project-placeholder {
-          transform: scale(1.2);
+          transform: scale(1.1);
           color: var(--brand-black);
           opacity: 1;
         }
 
         .project-content {
-          padding: var(--space-10);
+          padding: var(--space-8);
           text-align: center;
         }
 
         .project-category {
-          font-size: 0.75rem;
+          font-size: 0.7rem;
           font-weight: 700;
           color: var(--brand-black);
           text-transform: uppercase;
-          letter-spacing: 2px;
-          margin-bottom: var(--space-4);
+          letter-spacing: 1.5px;
+          margin-bottom: var(--space-3);
           display: inline-block;
           background: var(--color-bg-secondary);
-          padding: var(--space-2) var(--space-4);
+          padding: var(--space-1) var(--space-3);
           border-radius: var(--radius-full);
           border: 1px solid var(--color-border);
         }
 
         .project-title {
-          font-size: 1.75rem;
-          font-weight: 700;
+          font-size: 1.5rem;
+          font-weight: 800;
           color: var(--brand-black);
-          margin-bottom: var(--space-5);
+          margin-bottom: var(--space-4);
           line-height: 1.2;
+          letter-spacing: -1px;
         }
 
         .project-description {
-          font-size: 1rem;
-          line-height: 1.7;
+          font-size: 0.9rem;
+          line-height: 1.6;
           color: var(--color-text-secondary);
-          margin-bottom: var(--space-8);
-          max-width: 90%;
+          margin-bottom: var(--space-6);
+          max-width: 95%;
           margin-left: auto;
           margin-right: auto;
         }
@@ -1239,17 +1446,17 @@ function ProjectsSection() {
         .project-tech {
           display: flex;
           flex-wrap: wrap;
-          gap: var(--space-3);
-          margin-bottom: var(--space-8);
+          gap: var(--space-2);
+          margin-bottom: var(--space-6);
           justify-content: center;
         }
 
         .tech-tag {
           background: var(--brand-black);
           color: var(--brand-white);
-          padding: var(--space-2) var(--space-4);
+          padding: var(--space-1) var(--space-3);
           border-radius: var(--radius-full);
-          font-size: 0.8rem;
+          font-size: 0.75rem;
           font-weight: 600;
           transition: all 0.3s ease;
         }
@@ -1310,6 +1517,58 @@ function ProjectsSection() {
 
 // Contact Section
 function ContactSection() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [statusMessage, setStatusMessage] = useState('');
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setStatusMessage('Mensagem enviada com sucesso! Entrarei em contato em breve.');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setSubmitStatus('error');
+        setStatusMessage(data.error || 'Erro ao enviar mensagem. Tente novamente.');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setStatusMessage('Erro de conexão. Verifique sua internet e tente novamente.');
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => {
+        setSubmitStatus('idle');
+        setStatusMessage('');
+      }, 5000);
+    }
+  };
   return (
     <section id="contact" className="section-lg">
       <div className="container">
@@ -1338,25 +1597,65 @@ function ContactSection() {
           </div>
           
           <div className="contact-form">
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="name">Nome</label>
-                <input type="text" id="name" name="name" required />
+                <input 
+                  type="text" 
+                  id="name" 
+                  name="name" 
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required 
+                  disabled={isSubmitting}
+                />
               </div>
               
               <div className="form-group">
                 <label htmlFor="email">E-mail</label>
-                <input type="email" id="email" name="email" required />
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required 
+                  disabled={isSubmitting}
+                />
               </div>
               
               <div className="form-group">
                 <label htmlFor="message">Mensagem</label>
-                <textarea id="message" name="message" rows={5} required></textarea>
+                <textarea 
+                  id="message" 
+                  name="message" 
+                  rows={5} 
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  disabled={isSubmitting}
+                  placeholder="Conte-me sobre seu projeto ou ideia..."
+                ></textarea>
               </div>
               
-              <button type="submit" className="submit-btn">
-                Enviar Mensagem
-                <Send size={16} />
+              {statusMessage && (
+                <div className={`status-message ${submitStatus}`}>
+                  {statusMessage}
+                </div>
+              )}
+              
+              <button type="submit" className="submit-btn" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <>
+                    <div className="spinner"></div>
+                    Enviando...
+                  </>
+                ) : (
+                  <>
+                    Enviar Mensagem
+                    <Send size={16} />
+                  </>
+                )}
               </button>
             </form>
           </div>
@@ -1367,22 +1666,24 @@ function ContactSection() {
         .contact-content {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: var(--space-20);
+          gap: var(--space-32);
           align-items: start;
         }
 
         .section-title {
-          font-size: clamp(2.5rem, 5vw, 3.5rem);
-          font-weight: 700;
-          margin-bottom: var(--space-8);
+          font-size: clamp(3.5rem, 8vw, 6rem);
+          font-weight: 900;
+          margin-bottom: var(--space-12);
           color: var(--brand-black);
+          letter-spacing: -3px;
+          line-height: 0.9;
         }
 
         .contact-description {
-          font-size: 1.1rem;
-          line-height: 1.7;
+          font-size: 1.2rem;
+          line-height: 1.6;
           color: var(--color-text-secondary);
-          margin-bottom: var(--space-10);
+          margin-bottom: var(--space-12);
         }
 
         .contact-info {
@@ -1400,9 +1701,10 @@ function ContactSection() {
 
         .contact-form {
           background: var(--color-bg-secondary);
-          border: 1px solid var(--color-border);
-          border-radius: var(--radius-xl);
-          padding: var(--space-10);
+          border: none;
+          border-radius: var(--radius-2xl);
+          padding: var(--space-12);
+          box-shadow: var(--shadow-lg);
         }
 
         .form-group {
@@ -1425,41 +1727,147 @@ function ContactSection() {
           font-size: 1rem;
           font-family: inherit;
           background: var(--color-bg-primary);
-          transition: border-color 0.3s ease;
+          transition: all 0.3s ease;
+          resize: none;
+        }
+
+        .form-group textarea {
+          min-height: 120px;
+          max-height: 120px;
+          overflow-y: auto;
         }
 
         .form-group input:focus,
         .form-group textarea:focus {
           outline: none;
           border-color: var(--brand-black);
+          box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.1);
+        }
+
+        .form-group input:disabled,
+        .form-group textarea:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        .status-message {
+          padding: var(--space-4);
+          border-radius: var(--radius-md);
+          margin-bottom: var(--space-6);
+          font-size: 0.9rem;
+          font-weight: 500;
+          text-align: center;
+        }
+
+        .status-message.success {
+          background: #d4edda;
+          color: #155724;
+          border: 1px solid #c3e6cb;
+        }
+
+        .status-message.error {
+          background: #f8d7da;
+          color: #721c24;
+          border: 1px solid #f5c6cb;
         }
 
         .submit-btn {
           width: 100%;
-          padding: var(--space-4) var(--space-6);
+          padding: var(--space-5) var(--space-8);
           background: var(--brand-black);
           color: var(--brand-white);
           border: none;
-          border-radius: var(--radius-md);
+          border-radius: var(--radius-xl);
           font-size: 1rem;
-          font-weight: 500;
+          font-weight: 600;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           display: flex;
           align-items: center;
           justify-content: center;
           gap: var(--space-3);
+          position: relative;
+          overflow: hidden;
         }
 
-        .submit-btn:hover {
-          transform: translateY(-2px);
-          box-shadow: var(--shadow-lg);
+        .submit-btn:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+          transform: none !important;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+          transform: translateY(-4px);
+          box-shadow: var(--shadow-xl);
+        }
+
+        .spinner {
+          width: 16px;
+          height: 16px;
+          border: 2px solid transparent;
+          border-top: 2px solid currentColor;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
         }
 
         @media (max-width: 768px) {
           .contact-content {
             grid-template-columns: 1fr;
             gap: var(--space-12);
+          }
+
+          .section-title {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            text-align: center;
+          }
+
+          .contact-description {
+            text-align: center;
+            font-size: 1rem;
+          }
+
+          .contact-info {
+            text-align: center;
+          }
+
+          .contact-form {
+            padding: var(--space-8);
+          }
+
+          .form-group input,
+          .form-group textarea {
+            padding: var(--space-3);
+          }
+
+          .form-group textarea {
+            min-height: 100px;
+            max-height: 100px;
+          }
+
+          .submit-btn {
+            padding: var(--space-4) var(--space-6);
+          }
+
+          .status-message {
+            font-size: 0.85rem;
+            padding: var(--space-3);
+          }
+        }
+
+        @media (max-width: 480px) {
+          .contact-content {
+            gap: var(--space-8);
+          }
+
+          .contact-form {
+            padding: var(--space-6);
+            border-radius: var(--radius-xl);
           }
         }
       `}</style>
@@ -1474,9 +1882,9 @@ function Footer() {
       <div className="container">
         <div className="footer-content">
           <div className="footer-brand">
-            <span className="font-mono font-bold text-xl">IVO NETTO</span>
+            <img src="/images/logo-white.svg" alt="IBN Logo" style={{ height: '40px', width: 'auto', display: 'block' }} />
             <p className="footer-tagline">
-              Desenvolvedor Full-Stack especializado em soluções digitais modernas
+              Full-Stack Developer especializado em soluções digitais modernas
             </p>
           </div>
           
