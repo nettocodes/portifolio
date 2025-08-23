@@ -1517,6 +1517,8 @@ function ProjectsSection() {
 
 // Contact Section
 function ContactSection() {
+  // Adiciona o import do emailjs
+  // import emailjs from '@emailjs/browser';
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -1540,27 +1542,25 @@ function ContactSection() {
     setSubmitStatus('idle');
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        setStatusMessage('Mensagem enviada com sucesso! Entrarei em contato em breve.');
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        setSubmitStatus('error');
-        setStatusMessage(data.error || 'Erro ao enviar mensagem. Tente novamente.');
-      }
+      // Envia o e-mail via EmailJS no frontend
+      await import('@emailjs/browser').then(emailjs =>
+        emailjs.send(
+          process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+          process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+          {
+            from_name: formData.name,
+            from_email: formData.email,
+            message: formData.message,
+          },
+          process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+        )
+      );
+      setSubmitStatus('success');
+      setStatusMessage('Mensagem enviada com sucesso! Entrarei em contato em breve.');
+      setFormData({ name: '', email: '', message: '' });
     } catch (error) {
       setSubmitStatus('error');
-      setStatusMessage('Erro de conexão. Verifique sua internet e tente novamente.');
+      setStatusMessage('Erro ao enviar mensagem. Tente novamente.');
     } finally {
       setIsSubmitting(false);
       setTimeout(() => {
