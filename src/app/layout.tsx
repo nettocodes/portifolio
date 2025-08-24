@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Portfolio",
+  title: "Ivo Netto | dev",
   description: "Meu portfólio pessoal",
+  icons: {
+    icon: "/logo-white.ico"
+  }
 };
 
 export default function RootLayout({
@@ -13,6 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
+      <head>
+        <link rel="icon" href="/logo-white.ico" type="image/x-icon" />
+      </head>
       <body>
         <div className="layout-container">
           {children}

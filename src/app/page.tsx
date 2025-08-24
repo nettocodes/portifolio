@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Head from 'next/head';
 import { 
   ArrowUpRight, 
   Code, 
@@ -40,6 +41,10 @@ export default function Portfolio() {
           document.documentElement.classList.remove('cursor-enabled');
         }
       };
+              <Head>
+                <title>Ivo Netto | dev</title>
+                <link rel="icon" href="/logo-white.ico" type="image/x-icon" />
+              </Head>
 
       checkScreenSize();
       window.addEventListener('resize', checkScreenSize);
@@ -1485,6 +1490,11 @@ function ProjectsSection() {
           min-width: 120px;
           justify-content: center;
         }
+          @media (max-width: 480px) {
+            .project-link {
+              padding: var(--space-2) var(--space-4);
+            }
+          }
 
         .project-link:not(.secondary) {
           background: var(--brand-black);
@@ -1664,10 +1674,16 @@ function ContactSection() {
 
       <style jsx>{`
         .contact-content {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: var(--space-32);
-          align-items: start;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-32);
+            align-items: start;
+          }
+          @media (max-width: 1024px) {
+            .contact-content {
+              grid-template-columns: 1fr;
+              gap: var(--space-12);
+            }
         }
 
         .section-title {
@@ -1931,9 +1947,38 @@ function Footer() {
           align-items: start;
           margin-bottom: var(--space-12);
         }
+        @media (max-width: 1024px) {
+          .footer-content {
+            flex-direction: column;
+            gap: var(--space-8);
+            text-align: center;
+          }
 
+          .footer-links {
+            width: 100%;
+            justify-content: space-between;
+          }
+
+          .footer-bottom {
+            flex-direction: column;
+            gap: var(--space-4);
+            text-align: center;
+          } 
+        }
         .footer-brand {
-          max-width: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+          @media (max-width: 768px) {
+            .footer-brand {
+              max-width: none;
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            }
         }
 
         .footer-tagline {
