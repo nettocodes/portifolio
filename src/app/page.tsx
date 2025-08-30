@@ -1,10 +1,9 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import Head from 'next/head';
+import Image from 'next/image';
 import { 
   ArrowUpRight, 
-  Code, 
   ExternalLink, 
   Mail, 
   MapPin, 
@@ -41,10 +40,6 @@ export default function Portfolio() {
           document.documentElement.classList.remove('cursor-enabled');
         }
       };
-              <Head>
-                <title>Ivo Netto | dev</title>
-                <link rel="icon" href="/logo-white.ico" type="image/x-icon" />
-              </Head>
 
       checkScreenSize();
       window.addEventListener('resize', checkScreenSize);
@@ -86,7 +81,7 @@ export default function Portfolio() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 2500);
+    }, 1500); // Reduzido de 2500ms para 1500ms
 
     return () => clearTimeout(timer);
   }, []);
@@ -200,10 +195,13 @@ function LoadingScreen() {
     <div className="loading-screen">
       <div className="loading-content">
         <div className="loading-logo">
-          <img 
+          <Image
             src="/images/logo-dark.svg" 
-            alt="Logo IBN" 
-            style={{ height: '48px', width: 'auto', display: 'block', margin: '0 auto' }} 
+            alt="Logo IBN"
+            width={120}
+            height={48}
+            priority
+            style={{ display: 'block', margin: '0 auto' }}
           />
         </div>
         
@@ -322,10 +320,13 @@ function Navigation({ navigation, activeSection, scrollToSection, isMenuOpen, se
               style={{ background: 'none', border: 'none', padding: 0 }}
               aria-label="Logo IBN"
             >
-              <img 
+              <Image
                 src="/images/logo-dark.svg" 
-                alt="Logo IBN" 
-                style={{ height: '40px', width: 'auto', display: 'block' }} 
+                alt="Logo IBN"
+                width={100}
+                height={40}
+                priority
+                style={{ display: 'block' }}
               />
             </button>
 
@@ -638,11 +639,12 @@ function HeroSection() {
           margin-bottom: var(--space-12);
           opacity: 0;
           animation: fade-in-up 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s forwards;
+          font-size: clamp(4rem, 12vw, 7rem);
         }
 
         .hero-name {
           display: block;
-          font-size: clamp(4rem, 12vw, 7rem);
+          font-size: inherit;
           font-weight: 900;
           line-height: 0.85;
           color: var(--brand-black);
@@ -1285,7 +1287,7 @@ function ProjectsSection() {
       category: 'Sistema de Gestão',
       description: 'Controlador de ordens de serviço com gestão completa de fluxo de trabalho, atribuição de tarefas e acompanhamento de status em tempo real.',
       tech: ['React', 'Node.js', 'PostgreSQL', 'Socket.io'],
-      image: '/project-1.jpg',
+      image: '/images/Workee.webp',
       link: '#',
       github: '#'
     },
@@ -1294,7 +1296,7 @@ function ProjectsSection() {
       category: 'Orquestrador de Dados',
       description: 'Orquestrador de banco de dados multi-tenant com gerenciamento inteligente de recursos, isolamento de dados e escalabilidade automática.',
       tech: ['Node.js', 'Docker', 'PostgreSQL', 'Redis'],
-      image: '/project-2.jpg',
+      image: '/images/DataJet.webp',
       link: '#',
       github: '#'
     },
@@ -1303,7 +1305,7 @@ function ProjectsSection() {
       category: 'Automação & IA',
       description: 'Bot inteligente para WhatsApp com processamento de linguagem natural, integração com APIs e automação de atendimento ao cliente.',
       tech: ['Node.js', 'WhatsApp API', 'OpenAI'],
-      image: '/project-3.jpg',
+      image: '/images/ChatBot.webp',
       link: '#',
       github: '#'
     }
@@ -1320,9 +1322,14 @@ function ProjectsSection() {
           {projects.map((project, index) => (
             <div key={index} className="project-card">
               <div className="project-image">
-                <div className="project-placeholder">
-                  <Code size={48} />
-                </div>
+                <Image
+                  src={project.image}
+                  alt={`${project.title} - ${project.category}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  style={{ objectFit: 'cover' }}
+                  priority={index < 2}
+                />
               </div>
               
               <div className="project-content">
@@ -1389,25 +1396,18 @@ function ProjectsSection() {
 
         .project-image {
           aspect-ratio: 16/10;
-          background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-border) 100%);
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          background: var(--color-bg-secondary);
           border-bottom: 1px solid var(--color-border);
           position: relative;
           overflow: hidden;
         }
 
-        .project-placeholder {
-          color: var(--color-text-muted);
-          transition: all 0.4s ease;
-          opacity: 0.6;
+        .project-image img {
+          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .project-card:hover .project-placeholder {
-          transform: scale(1.1);
-          color: var(--brand-black);
-          opacity: 1;
+        .project-card:hover .project-image img {
+          transform: scale(1.05);
         }
 
         .project-content {
@@ -1568,7 +1568,7 @@ function ContactSection() {
       setSubmitStatus('success');
       setStatusMessage('Mensagem enviada com sucesso! Entrarei em contato em breve.');
       setFormData({ name: '', email: '', message: '' });
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
       setStatusMessage('Erro ao enviar mensagem. Tente novamente.');
     } finally {
@@ -1898,7 +1898,13 @@ function Footer() {
       <div className="container">
         <div className="footer-content">
           <div className="footer-brand">
-            <img src="/images/logo-white.svg" alt="IBN Logo" style={{ height: '40px', width: 'auto', display: 'block' }} />
+            <Image 
+              src="/images/logo-white.svg" 
+              alt="IBN Logo"
+              width={100}
+              height={40}
+              style={{ display: 'block' }}
+            />
             <p className="footer-tagline">
               Full-Stack Developer especializado em soluções digitais modernas
             </p>
@@ -1929,8 +1935,7 @@ function Footer() {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; 2024 Ivo Netto. Todos os direitos reservados.</p>
-          <p className="font-mono text-sm">Feito com ❤️ e muito código</p>
+          <p>&copy; 2025 Ivo Netto. Todos os direitos reservados.</p>
         </div>
       </div>
 
