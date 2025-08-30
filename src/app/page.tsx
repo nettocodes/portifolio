@@ -12,10 +12,56 @@ import {
 import { 
   FaLinkedin, 
   FaGithub, 
-  FaDiscord 
+  FaDiscord,
+  FaReact,
+  FaVuejs,
+  FaNodeJs,
+  FaPython,
+  FaDocker,
+  FaGitAlt,
+  FaFigma,
+  FaHtml5,
+  FaCss3Alt,
+  FaJsSquare
 } from 'react-icons/fa';
 import { 
-  SiThreads 
+  SiThreads,
+  SiTypescript,
+  SiNextdotjs,
+  SiNuxtdotjs,
+  SiDotnet,
+  SiDjango,
+  SiFlask,
+  SiFastapi,
+  SiExpress,
+  SiNestjs,
+  SiGraphql,
+  SiRedis,
+  SiKubernetes,
+  SiJenkins,
+  SiGithubactions,
+  SiGitlab,
+  SiTerraform,
+  SiPrometheus,
+  SiGrafana,
+  SiElasticsearch,
+  SiKibana,
+  SiSentry,
+  SiDatadog,
+  SiHelm,
+  SiFlutter,
+  SiFirebase,
+  SiAndroidstudio,
+  SiXcode,
+  SiWebpack,
+  SiVite,
+  SiBabel,
+  SiEslint,
+  SiPrettier,
+  SiSass,
+  SiCircleci,
+  SiPulumi,
+  SiLogstash
 } from 'react-icons/si';
 
 export default function Portfolio() {
@@ -907,34 +953,85 @@ function CodeDisplay() {
 
 // About Section
 function AboutSection() {
+  // Mapeamento de tecnologias para ícones
+  const techIcons: { [key: string]: React.ReactNode } = {
+    'JavaScript': <FaJsSquare />,
+    'TypeScript': <SiTypescript />,
+    'HTML5': <FaHtml5 />,
+    'CSS3': <FaCss3Alt />,
+    'SCSS': <SiSass />,
+    'React': <FaReact />,
+    'Vue.js': <FaVuejs />,
+    'Next.js': <SiNextdotjs />,
+    'Nuxt.js': <SiNuxtdotjs />,
+    'Webpack': <SiWebpack />,
+    'Vite': <SiVite />,
+    'Babel': <SiBabel />,
+    'Figma': <FaFigma />,
+    'ESLint': <SiEslint />,
+    'Prettier': <SiPrettier />,
+    'C#': <SiDotnet />,
+    'Python': <FaPython />,
+    'Node.js': <FaNodeJs />,
+    '.NET Core': <SiDotnet />,
+    'Entity Framework': <SiDotnet />,
+    'Django': <SiDjango />,
+    'Flask': <SiFlask />,
+    'FastAPI': <SiFastapi />,
+    'Express': <SiExpress />,
+    'NestJS': <SiNestjs />,
+    'GraphQL': <SiGraphql />,
+    'Redis': <SiRedis />,
+    'Docker': <FaDocker />,
+    'Kubernetes': <SiKubernetes />,
+    'Git': <FaGitAlt />,
+    'GitHub Actions': <SiGithubactions />,
+    'GitLab CI': <SiGitlab />,
+    'Jenkins': <SiJenkins />,
+    'CircleCI': <SiCircleci />,
+    'Terraform': <SiTerraform />,
+    'Pulumi': <SiPulumi />,
+    'Prometheus': <SiPrometheus />,
+    'Grafana': <SiGrafana />,
+    'Elasticsearch': <SiElasticsearch />,
+    'Kibana': <SiKibana />,
+    'Sentry': <SiSentry />,
+    'Datadog': <SiDatadog />,
+    'Helm': <SiHelm />,
+    'React Native': <FaReact />,
+    'Flutter': <SiFlutter />,
+    'Xamarin': <SiDotnet />,
+    'Firebase': <SiFirebase />,
+    'Android Studio': <SiAndroidstudio />,
+    'Xcode': <SiXcode />
+  };
+
   const skills = [
     { 
       name: 'Frontend', 
       icon: '</>',
-      tech: ['React', 'Next.js', 'TypeScript', 'CSS'],
+      tech: ['JavaScript', 'TypeScript', 'React', 'Vue.js', 'Next.js', 'HTML5', 'CSS3'],
       description: 'Interfaces modernas e responsivas'
     },
     { 
       name: 'Backend', 
       icon: '{ }',
-      tech: ['Node.js', 'Python', 'MySQL', 'C#'],
+      tech: ['C#', 'Python', 'Node.js', '.NET Core', 'Django', 'Express', 'GraphQL'],
       description: 'APIs robustas e escaláveis'
     },
     { 
-      name: 'Tools', 
+      name: 'DevOps', 
       icon: '[]',
-      tech: ['Git', 'Docker', 'AWS', 'Figma'],
-      description: 'Produtividade e colaboração'
+      tech: ['Docker', 'Kubernetes', 'Git', 'GitHub Actions', 'Terraform', 'Prometheus'],
+      description: 'Infraestrutura e automação'
     },
     { 
       name: 'Mobile', 
       icon: '()',
-      tech: ['Flutter'],
+      tech: ['React Native', 'Flutter', 'Xamarin', 'Firebase', 'Android Studio'],
       description: 'Apps multiplataforma'
     }
-  ];
-
-  return (
+  ];  return (
     <section id="about" className="section-lg bg-secondary">
       <div className="container">
         <div className="about-content">
@@ -968,6 +1065,9 @@ function AboutSection() {
                 <div className="skill-tags">
                   {category.tech.map((tech) => (
                     <span key={tech} className="skill-tag">
+                      <span className="skill-tag-icon">
+                        {techIcons[tech] || <span>•</span>}
+                      </span>
                       {tech}
                     </span>
                   ))}
@@ -982,14 +1082,14 @@ function AboutSection() {
         .about-content {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: var(--space-32);
+          gap: var(--space-20);
           align-items: start;
         }
 
         .section-title {
           font-size: clamp(3.5rem, 8vw, 6rem);
           font-weight: 900;
-          margin-bottom: var(--space-20);
+          margin-bottom: var(--space-12);
           color: var(--brand-black);
           letter-spacing: -3px;
           line-height: 0.9;
@@ -1010,16 +1110,15 @@ function AboutSection() {
         .skills-grid {
           display: flex;
           flex-direction: column;
-          gap: var(--space-6);
+          gap: var(--space-3);
         }
 
         .skill-category {
           background: var(--color-bg-primary);
-          border: none;
+          border: 1px solid var(--color-border);
           border-radius: var(--radius-lg);
-          padding: var(--space-8);
+          padding: var(--space-5);
           transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          box-shadow: var(--shadow-sm);
           position: relative;
           overflow: hidden;
           opacity: 0;
@@ -1027,57 +1126,44 @@ function AboutSection() {
           animation: fade-in-up 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
 
-        .skill-category::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 3px;
-          background: var(--brand-black);
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        }
-
-        .skill-category:hover::before {
-          opacity: 1;
-        }
-
         .skill-category:hover {
           transform: translateY(-4px);
           box-shadow: var(--shadow-lg);
+          border-color: var(--brand-black);
         }
 
         .skill-header {
           display: flex;
           align-items: center;
           gap: var(--space-4);
-          margin-bottom: var(--space-6);
+          margin-bottom: var(--space-4);
         }
 
         .skill-icon {
           width: 50px;
           height: 50px;
           background: var(--color-bg-secondary);
+          border: 1px solid var(--color-border);
           border-radius: var(--radius-md);
           display: flex;
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
-          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           position: relative;
         }
 
         .skill-category:hover .skill-icon {
           background: var(--brand-black);
+          border-color: var(--brand-black);
         }
 
         .skill-symbol {
           font-family: var(--font-family-mono);
-          font-size: 1rem;
+          font-size: 1.2rem;
           font-weight: 700;
           color: var(--brand-black);
-          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           letter-spacing: -1px;
         }
 
@@ -1090,7 +1176,7 @@ function AboutSection() {
         }
 
         .skill-category-title {
-          font-size: 1.2rem;
+          font-size: 1.1rem;
           font-weight: 700;
           margin-bottom: var(--space-1);
           color: var(--brand-black);
@@ -1099,52 +1185,71 @@ function AboutSection() {
 
         .skill-description {
           font-size: 0.85rem;
-          color: var(--color-text-muted);
+          color: var(--color-text-secondary);
           font-weight: 500;
           line-height: 1.4;
+          margin-bottom: var(--space-3);
         }
 
         .skill-tags {
           display: flex;
           flex-wrap: wrap;
           gap: var(--space-2);
-          margin-top: var(--space-4);
         }
 
         .skill-tag {
           background: var(--brand-black);
           color: var(--brand-white);
-          padding: var(--space-2) var(--space-3);
+          padding: var(--space-1) var(--space-3);
           border-radius: var(--radius-full);
-          font-size: 0.75rem;
+          font-size: 0.7rem;
           font-weight: 600;
           font-family: var(--font-family-mono);
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          border: 1px solid var(--brand-black);
+          display: flex;
+          align-items: center;
+          gap: var(--space-1);
+        }
+
+        .skill-tag-icon {
+          display: flex;
+          align-items: center;
+          font-size: 0.8rem;
         }
 
         .skill-category:hover .skill-tag {
+          background: var(--color-bg-primary);
+          color: var(--brand-black);
           transform: translateY(-1px);
-          box-shadow: var(--shadow-sm);
+          box-shadow: var(--shadow-xs);
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
           .about-content {
             grid-template-columns: 1fr;
-            gap: var(--space-12);
+            gap: var(--space-16);
           }
 
           .section-title {
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            margin-bottom: var(--space-16);
+            font-size: clamp(3rem, 8vw, 5rem);
+            margin-bottom: var(--space-12);
             text-align: center;
           }
 
+          .about-description {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+          }
+
           .about-description p {
-            font-size: 1rem;
+            font-size: 1.1rem;
           }
 
           .skills-grid {
-            gap: var(--space-5);
+            gap: var(--space-4);
+            margin: 0 auto;
           }
 
           .skill-category {
@@ -1152,25 +1257,78 @@ function AboutSection() {
           }
 
           .skill-header {
-            align-items: center;
-            gap: var(--space-3);
+            gap: var(--space-5);
           }
 
           .skill-icon {
-            width: 40px;
-            height: 40px;
+            width: 60px;
+            height: 60px;
           }
 
           .skill-symbol {
-            font-size: 0.9rem;
+            font-size: 1.4rem;
           }
 
           .skill-category-title {
-            font-size: 1rem;
+            font-size: 1.2rem;
           }
 
           .skill-description {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
+          }
+
+          .skill-tags {
+            gap: var(--space-2);
+          }
+
+          .skill-tag {
+            padding: var(--space-2) var(--space-3);
+            font-size: 0.75rem;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .about-content {
+            gap: var(--space-12);
+          }
+
+          .section-title {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin-bottom: var(--space-10);
+          }
+
+          .about-description p {
+            font-size: 1rem;
+          }
+
+          .skills-grid {
+            gap: var(--space-3);
+            max-width: 100%;
+          }
+
+          .skill-category {
+            padding: var(--space-5);
+          }
+
+          .skill-header {
+            gap: var(--space-4);
+          }
+
+          .skill-icon {
+            width: 50px;
+            height: 50px;
+          }
+
+          .skill-symbol {
+            font-size: 1.2rem;
+          }
+
+          .skill-category-title {
+            font-size: 1.1rem;
+          }
+
+          .skill-description {
+            font-size: 0.85rem;
           }
 
           .skill-tags {
@@ -1178,14 +1336,32 @@ function AboutSection() {
           }
 
           .skill-tag {
-            font-size: 0.75rem;
             padding: var(--space-1) var(--space-2);
+            font-size: 0.7rem;
+            gap: 2px;
+          }
+
+          .skill-tag-icon {
+            font-size: 0.75rem;
           }
         }
 
         @media (max-width: 480px) {
           .about-content {
-            gap: var(--space-8);
+            gap: var(--space-10);
+          }
+
+          .section-title {
+            font-size: clamp(2rem, 8vw, 3rem);
+            margin-bottom: var(--space-8);
+          }
+
+          .about-description p {
+            font-size: 0.95rem;
+          }
+
+          .skills-grid {
+            gap: var(--space-3);
           }
 
           .skill-category {
@@ -1193,13 +1369,42 @@ function AboutSection() {
           }
 
           .skill-header {
+            gap: var(--space-3);
             flex-direction: column;
             text-align: center;
-            gap: var(--space-2);
           }
 
           .skill-info {
             text-align: center;
+          }
+
+          .skill-icon {
+            width: 45px;
+            height: 45px;
+          }
+
+          .skill-symbol {
+            font-size: 1.1rem;
+          }
+
+          .skill-category-title {
+            font-size: 1rem;
+            margin-bottom: var(--space-2);
+          }
+
+          .skill-description {
+            font-size: 0.8rem;
+            margin-bottom: var(--space-3);
+          }
+
+          .skill-tags {
+            justify-content: center;
+            gap: var(--space-1);
+          }
+
+          .skill-tag {
+            padding: var(--space-1) var(--space-2);
+            font-size: 0.65rem;
           }
         }
       `}</style>
