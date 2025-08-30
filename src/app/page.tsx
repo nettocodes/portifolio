@@ -1492,8 +1492,7 @@ function ProjectsSection() {
       description: 'Controlador de ordens de serviço com gestão completa de fluxo de trabalho, atribuição de tarefas e acompanhamento de status em tempo real.',
       tech: ['React', 'Node.js', 'PostgreSQL', 'Socket.io'],
       image: '/images/Workee.webp',
-      link: '#',
-      github: '#'
+    link: 'https://wa.me/554788036516',
     },
     {
       title: 'DataJet',
@@ -1501,8 +1500,7 @@ function ProjectsSection() {
       description: 'Orquestrador de banco de dados multi-tenant com gerenciamento inteligente de recursos, isolamento de dados e escalabilidade automática.',
       tech: ['Node.js', 'Docker', 'PostgreSQL', 'Redis'],
       image: '/images/DataJet.webp',
-      link: '#',
-      github: '#'
+    link: 'https://wa.me/554788036516',
     },
     {
       title: 'ChatBot WhatsApp',
@@ -1510,8 +1508,7 @@ function ProjectsSection() {
       description: 'Bot inteligente para WhatsApp com processamento de linguagem natural, integração com APIs e automação de atendimento ao cliente.',
       tech: ['Node.js', 'WhatsApp API', 'OpenAI'],
       image: '/images/ChatBot.webp',
-      link: '#',
-      github: '#'
+    link: 'https://wa.me/554788036516?text=digite%20.commands%20para%20listar%20todos%20comando',
     }
   ];
 
@@ -1550,9 +1547,6 @@ function ProjectsSection() {
                 <div className="project-links">
                   <a href={project.link} className="project-link">
                     Ver Projeto <ExternalLink size={14} />
-                  </a>
-                  <a href={project.github} className="project-link secondary">
-                    GitHub <FaGithub size={14} />
                   </a>
                 </div>
               </div>
