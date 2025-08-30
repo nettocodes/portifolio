@@ -1436,7 +1436,6 @@ function ExperienceSection() {
       description: 'Desenvolvimento de aplicações web e mobile personalizadas, com foco em soluções escaláveis e de alta performance para diversos clientes.',
       achievements: [
         'Entrega de mais de 25 projetos com alta satisfação dos clientes',
-        'Desenvolvimento de e-commerce com faturamento superior a R$ 2M no primeiro ano',
         'Criação de sistemas de gestão utilizados por mais de 15 empresas',
         'Lançamento de aplicativo mobile com mais de 10k downloads'
       ],
