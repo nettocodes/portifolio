@@ -1430,7 +1430,7 @@ function ExperienceSection() {
       skills: ['VMware Cloud', 'Linux', 'Zabbix', 'Veeam', 'SQL']
     },
     {
-      period: '2020 - 2022',
+      period: '2024 - Atualmente',
       position: 'Desenvolvedor Full-Stack',
       company: 'Freelancer & Projetos Próprios',
       description: 'Desenvolvimento de aplicações web e mobile personalizadas, com foco em soluções escaláveis e de alta performance para diversos clientes.',
