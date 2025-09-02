@@ -366,14 +366,17 @@ function Navigation({ navigation, activeSection, scrollToSection, isMenuOpen, se
               style={{ background: 'none', border: 'none', padding: 0 }}
               aria-label="Logo IBN"
             >
-              <Image
-                src="/images/logo-dark.svg" 
-                alt="Logo IBN"
-                width={100}
-                height={40}
-                priority
-                style={{ display: 'block' }}
-              />
+              <div className="logo-container">
+                <Image
+                  src="/images/logo-dark.svg" 
+                  alt="Logo IBN"
+                  width={100}
+                  height={40}
+                  priority
+                  style={{ display: 'block' }}
+                />
+                <span className="logo-text">netto</span>
+              </div>
             </button>
 
             {/* Desktop Navigation */}
@@ -452,24 +455,32 @@ function Navigation({ navigation, activeSection, scrollToSection, isMenuOpen, se
           letter-spacing: 3px;
         }
 
+        .logo-container {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .logo-text {
+          font-family: var(--font-family-mono);
+          font-size: 1.6rem;
+          font-weight: 800;
+          color: var(--brand-black);
+          letter-spacing: 1px;
+          text-transform: lowercase;
+          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          background: linear-gradient(135deg, var(--brand-black) 0%, var(--brand-gray-600) 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
         .logo:hover {
           transform: translateY(-1px);
         }
 
-        .logo::after {
-          content: '';
-          position: absolute;
-          bottom: -2px;
-          left: 0;
-          right: 0;
-          height: 2px;
-          background: var(--brand-black);
-          transform: scaleX(0);
-          transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .logo:hover::after {
-          transform: scaleX(1);
+        .logo:hover .logo-text {
+          transform: scale(1.05);
         }
 
         .nav-desktop {
@@ -2096,13 +2107,16 @@ function Footer() {
       <div className="container">
         <div className="footer-content">
           <div className="footer-brand">
-            <Image 
-              src="/images/logo-white.svg" 
-              alt="IBN Logo"
-              width={100}
-              height={40}
-              style={{ display: 'block' }}
-            />
+            <div className="footer-logo-container">
+              <Image 
+                src="/images/logo-white.svg" 
+                alt="IBN Logo"
+                width={100}
+                height={40}
+                style={{ display: 'block' }}
+              />
+              <span className="footer-logo-text">netto</span>
+            </div>
             <p className="footer-tagline">
               Full-Stack Developer especializado em soluções digitais modernas
             </p>
@@ -2174,6 +2188,22 @@ function Footer() {
             flex-direction: column;
             align-items: center;
           }
+
+        .footer-logo-container {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: var(--space-2);
+        }
+
+        .footer-logo-text {
+          font-family: var(--font-family-mono);
+          font-size: 1.4rem;
+          font-weight: 800;
+          color: var(--brand-white);
+          letter-spacing: 1px;
+          text-transform: lowercase;
+        }
           @media (max-width: 768px) {
             .footer-brand {
               max-width: none;

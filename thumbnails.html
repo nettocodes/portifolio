@@ -527,6 +527,343 @@
             border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
+        /* Business Card Styles - Redesign */
+        .business-card-section {
+            margin-bottom: var(--space-20);
+        }
+
+        .business-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--space-12);
+            margin-bottom: var(--space-12);
+        }
+
+        /* Business Card Dimensions - Brazil Standard (9x5cm) scaled for display */
+        .business-card {
+            width: 360px;
+            height: 200px;
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            margin: 0 auto;
+        }
+
+        .business-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Front Side - Premium Black */
+        .card-front {
+            background: linear-gradient(135deg, var(--brand-black) 0%, var(--brand-gray-900) 100%);
+            color: var(--brand-white);
+            padding: 32px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-front::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .card-front::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .brand-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-main {
+            font-family: var(--font-family-mono);
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            position: relative;
+        }
+
+        .logo-main::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--brand-white) 0%, transparent 100%);
+        }
+
+        .brand-symbol {
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 900;
+            backdrop-filter: blur(10px);
+        }
+
+        .name-section-new {
+            position: relative;
+            z-index: 2;
+            text-align: left;
+        }
+
+        .name-main {
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: -3px;
+            line-height: 0.8;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--brand-white) 0%, rgba(255,255,255,0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .role-main {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            font-family: var(--font-family-mono);
+            margin-bottom: 4px;
+        }
+
+        .expertise-main {
+            font-size: 9px;
+            font-weight: 400;
+            opacity: 0.6;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-family: var(--font-family-mono);
+        }
+
+        /* Back Side - Premium White */
+        .card-back {
+            background: var(--brand-white);
+            color: var(--brand-black);
+            padding: 32px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            border: 1px solid var(--brand-gray-200);
+        }
+
+        .card-back::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--brand-black) 0%, transparent 100%);
+        }
+
+        .brand-header-back {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-back-new {
+            font-family: var(--font-family-mono);
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            position: relative;
+        }
+
+        .logo-back-new::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--brand-black);
+        }
+
+        .website-badge {
+            background: var(--brand-black);
+            color: var(--brand-white);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            font-family: var(--font-family-mono);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            align-items: end;
+        }
+
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .contact-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--brand-gray-700);
+        }
+
+        .contact-dot {
+            width: 3px;
+            height: 3px;
+            background: var(--brand-black);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .contact-value {
+            font-family: var(--font-family-mono);
+            letter-spacing: 0.5px;
+        }
+
+        .qr-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .qr-code-new {
+            width: 56px;
+            height: 56px;
+            background: var(--brand-black);
+            border-radius: 8px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-code-new::before {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            background: var(--brand-white);
+            border-radius: 4px;
+        }
+
+        .qr-code-new::after {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            background-image: 
+                radial-gradient(circle at 25% 25%, var(--brand-black) 1px, transparent 1px),
+                radial-gradient(circle at 75% 25%, var(--brand-black) 1px, transparent 1px),
+                radial-gradient(circle at 25% 75%, var(--brand-black) 1px, transparent 1px),
+                radial-gradient(circle at 75% 75%, var(--brand-black) 1px, transparent 1px),
+                linear-gradient(45deg, var(--brand-black) 25%, transparent 25%),
+                linear-gradient(-45deg, var(--brand-black) 25%, transparent 25%);
+            background-size: 4px 4px, 4px 4px, 4px 4px, 4px 4px, 2px 2px, 2px 2px;
+            background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 1px;
+            z-index: 1;
+        }
+
+        .qr-label {
+            font-size: 8px;
+            font-weight: 600;
+            color: var(--brand-gray-600);
+            font-family: var(--font-family-mono);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .card-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--brand-gray-600);
+            margin-bottom: 20px;
+            font-family: var(--font-family-mono);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .card-specs {
+            background: var(--color-bg-primary);
+            padding: var(--space-8);
+            border-radius: 20px;
+            text-align: center;
+            margin-top: var(--space-12);
+            border: 1px solid var(--brand-gray-200);
+        }
+
+        .card-specs h4 {
+            color: var(--brand-black);
+            margin-bottom: var(--space-6);
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .spec-item {
+            background: var(--brand-white);
+            padding: var(--space-4);
+            border-radius: 12px;
+            font-family: var(--font-family-mono);
+            font-size: 0.85rem;
+            color: var(--brand-gray-800);
+            border: 1px solid var(--brand-gray-200);
+        }
+
+        .spec-item strong {
+            color: var(--brand-black);
+            display: block;
+            margin-bottom: var(--space-1);
+            font-weight: 700;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .header h1 {
@@ -549,6 +886,48 @@
             
             .template-title {
                 font-size: 1.8rem;
+            }
+
+            .business-cards-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-8);
+            }
+            
+            .business-card {
+                width: 320px;
+                height: 178px;
+            }
+            
+            .card-front,
+            .card-back {
+                padding: 28px;
+            }
+            
+            .name-main {
+                font-size: 32px;
+                letter-spacing: -2px;
+            }
+            
+            .role-main {
+                font-size: 10px;
+                letter-spacing: 2px;
+            }
+
+            .expertise-main {
+                font-size: 8px;
+            }
+
+            .qr-code-new {
+                width: 48px;
+                height: 48px;
+            }
+
+            .contact-line {
+                font-size: 9px;
+            }
+
+            .specs-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -755,6 +1134,98 @@
                     </div>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- Business Cards -->
+        <section class="section business-card-section">
+            <h2 class="section-title">Cartão de Visita Profissional</h2>
+            <div class="business-cards-grid">
+                
+                <!-- Front Side -->
+                <div style="text-align: center;">
+                    <div class="card-label">Frente</div>
+                    <div class="business-card">
+                        <div class="card-front">
+                            <div class="brand-header">
+                                <div class="logo-main">NETTO</div>
+                                <div class="brand-symbol">&lt;/&gt;</div>
+                            </div>
+                            <div class="name-section-new">
+                                <h3 class="name-main">Ivo Netto</h3>
+                                <p class="role-main">Full-Stack Developer</p>
+                                <p class="expertise-main">Systems • Cloud • Innovation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Back Side -->
+                <div style="text-align: center;">
+                    <div class="card-label">Verso</div>
+                    <div class="business-card">
+                        <div class="card-back">
+                            <div class="brand-header-back">
+                                <div class="logo-back-new">NETTO</div>
+                                <div class="website-badge">netto.dev</div>
+                            </div>
+                            
+                            <div class="contact-grid">
+                                <div class="contact-list">
+                                    <div class="contact-line">
+                                        <div class="contact-dot"></div>
+                                        <span class="contact-value">ivo@netto.dev</span>
+                                    </div>
+                                    <div class="contact-line">
+                                        <div class="contact-dot"></div>
+                                        <span class="contact-value">+55 (11) 99999-9999</span>
+                                    </div>
+                                    <div class="contact-line">
+                                        <div class="contact-dot"></div>
+                                        <span class="contact-value">linkedin.com/in/ivonetto</span>
+                                    </div>
+                                    <div class="contact-line">
+                                        <div class="contact-dot"></div>
+                                        <span class="contact-value">São Paulo, Brasil</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="qr-container">
+                                    <div class="qr-code-new"></div>
+                                    <div class="qr-label">Portfolio</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Card Specifications -->
+            <div class="card-specs">
+                <h4>Especificações Técnicas</h4>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <strong>Dimensões</strong>
+                        9 × 5 cm (Padrão Brasil)
+                    </div>
+                    <div class="spec-item">
+                        <strong>Resolução</strong>
+                        1062 × 591px (300 DPI)
+                    </div>
+                    <div class="spec-item">
+                        <strong>Formato</strong>
+                        Retangular com cantos arredondados
+                    </div>
+                    <div class="spec-item">
+                        <strong>Impressão</strong>
+                        CMYK • Papel 300g • Verniz fosco
+                    </div>
+                </div>
+                <p style="color: var(--color-text-secondary); font-size: 1rem; line-height: 1.6; margin-top: var(--space-4);">
+                    Design premium com branding forte e elementos visuais sofisticados. 
+                    Gradientes sutis, tipografia hierárquica e QR code integrado para máxima elegância profissional.
+                </p>
             </div>
         </section>
 

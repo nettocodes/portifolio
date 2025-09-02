@@ -44,8 +44,12 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/logo-white.ico",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico" }
+    ],
     apple: "/images/logo-dark.svg",
+    shortcut: "/favicon.ico",
   },
   verification: {
     google: "google-site-verification-code", // Adicione seu código aqui
