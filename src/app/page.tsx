@@ -1506,14 +1506,6 @@ function ProjectsSection() {
     link: 'https://wa.me/554788036516',
     },
     {
-      title: 'DataJet',
-      category: 'Orquestrador de Dados',
-      description: 'Orquestrador de banco de dados multi-tenant com gerenciamento inteligente de recursos, isolamento de dados e escalabilidade automática.',
-      tech: ['Node.js', 'Docker', 'PostgreSQL', 'Redis'],
-      image: '/images/DataJet.webp',
-    link: 'https://wa.me/554788036516',
-    },
-    {
       title: 'ChatBot WhatsApp',
       category: 'Automação & IA',
       description: 'Bot inteligente para WhatsApp com processamento de linguagem natural, integração com APIs e automação de atendimento ao cliente.',
