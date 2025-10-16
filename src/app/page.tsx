@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
 import { 
   ArrowUpRight, 
@@ -123,28 +123,37 @@ export default function Portfolio() {
     }
   }, [showCustomCursor]);
 
-  // Loading sequence
+  // Loading sequence - mais rápido, apenas para garantir que o conteúdo foi montado
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 1500); // Reduzido de 2500ms para 1500ms
+    }, 100); // Quase instantâneo
 
     return () => clearTimeout(timer);
   }, []);
 
-  // Intersection Observer for active sections
+  // Intersection Observer for active sections - otimizado para detectar todas as seções
   useEffect(() => {
     if (!isLoaded) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
+        // Filtrar apenas seções visíveis
+        const visibleEntries = entries.filter(entry => entry.isIntersecting);
+        
+        if (visibleEntries.length > 0) {
+          // Pegar a seção mais visível (maior intersectionRatio)
+          const mostVisible = visibleEntries.reduce((prev, current) => {
+            return current.intersectionRatio > prev.intersectionRatio ? current : prev;
+          });
+          
+          setActiveSection(mostVisible.target.id);
+        }
       },
-      { threshold: 0.5 }
+      { 
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5],
+        rootMargin: '-100px 0px -66% 0px'
+      }
     );
 
     const sections = document.querySelectorAll('section[id]');
@@ -169,10 +178,6 @@ export default function Portfolio() {
     setIsMenuOpen(false);
   };
 
-  if (!isLoaded) {
-    return <LoadingScreen />;
-  }
-
   return (
     <>
       {/* Custom Cursor - Only show on desktop */}
@@ -196,6 +201,9 @@ export default function Portfolio() {
         />
       )}
 
+      {/* Wrapper com classe de animação */}
+      <div className={`page-content ${isLoaded ? 'loaded' : ''}`}>
+      
       {/* Navigation */}
       <Navigation 
         navigation={navigation}
@@ -215,132 +223,8 @@ export default function Portfolio() {
       </main>
 
       <Footer />
-    </>
-  );
-}
-
-// Loading Screen Component
-function LoadingScreen() {
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        return prev + 2;
-      });
-    }, 40);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="loading-screen">
-      <div className="loading-content">
-        <div className="loading-logo">
-          <Image
-            src="/images/logo-dark.svg" 
-            alt="Logo IBN"
-            width={120}
-            height={48}
-            priority
-            style={{ display: 'block', margin: '0 auto' }}
-          />
-        </div>
-        
-        <div className="loading-progress">
-          <div className="progress-bar">
-            <div 
-              className="progress-fill"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <span className="progress-text font-mono text-sm">
-            {progress.toString().padStart(3, '0')}%
-          </span>
-        </div>
-        
-        <p className="loading-subtitle text-secondary font-medium">
-          Carregando experiência digital
-        </p>
       </div>
-      
-      <style jsx>{`
-        .loading-screen {
-          position: fixed;
-          inset: 0;
-          background: var(--color-bg-primary);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 9999;
-        }
-        
-        .loading-content {
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: var(--space-8);
-        }
-        
-        .loading-logo {
-          position: relative;
-        }
-        
-        .loading-logo::after {
-          content: '';
-          position: absolute;
-          bottom: -4px;
-          left: 0;
-          right: 0;
-          height: 2px;
-          background: var(--brand-black);
-          animation: logo-line 1.5s ease-in-out infinite alternate;
-        }
-        
-        .loading-progress {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: var(--space-3);
-        }
-        
-        .progress-bar {
-          width: 200px;
-          height: 2px;
-          background: var(--color-border);
-          border-radius: var(--radius-full);
-          overflow: hidden;
-        }
-        
-        .progress-fill {
-          height: 100%;
-          background: var(--brand-black);
-          border-radius: var(--radius-full);
-          transition: width 0.1s ease;
-        }
-        
-        .progress-text {
-          font-weight: 600;
-          letter-spacing: 2px;
-        }
-        
-        .loading-subtitle {
-          font-size: 0.9rem;
-          letter-spacing: 1px;
-          text-transform: uppercase;
-        }
-        
-        @keyframes logo-line {
-          0% { transform: scaleX(0.3); }
-          100% { transform: scaleX(1); }
-        }
-      `}</style>
-    </div>
+    </>
   );
 }
 
@@ -356,7 +240,7 @@ interface NavigationProps {
 function Navigation({ navigation, activeSection, scrollToSection, isMenuOpen, setIsMenuOpen }: NavigationProps) {
   return (
     <>
-      <header className="header">
+      <header className="header navigation">
         <div className="container">
           <div className="header-content">
             {/* Logo */}
@@ -795,6 +679,30 @@ function HeroSection() {
         .hero-visual {
           opacity: 0;
           animation: fade-in-up 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s forwards;
+          perspective: 1500px;
+          position: relative;
+          width: 120%;
+          margin-left: -10%;
+          overflow: visible;
+        }
+
+        .hero-visual::after {
+          content: '';
+          position: absolute;
+          bottom: -40%;
+          left: 5%;
+          right: 5%;
+          height: 80%;
+          background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.03) 0%,
+            transparent 70%
+          );
+          transform: scaleY(-1) translateY(100%) rotateX(80deg);
+          pointer-events: none;
+          opacity: 0.5;
+          filter: blur(20px);
+          z-index: -1;
         }
 
         .code-block {
@@ -803,8 +711,45 @@ function HeroSection() {
           border-radius: var(--radius-2xl);
           padding: var(--space-12);
           position: relative;
-          overflow: hidden;
-          box-shadow: var(--shadow-lg);
+          overflow: visible;
+          box-shadow: 
+            0 25px 60px rgba(0, 0, 0, 0.15),
+            0 15px 35px rgba(0, 0, 0, 0.1),
+            0 5px 15px rgba(0, 0, 0, 0.08);
+          
+          /* Perspectiva 3D - como se estivesse em um chão inclinado */
+          transform: 
+            perspective(1500px)
+            rotateX(8deg)
+            rotateY(-12deg)
+            rotateZ(2deg)
+            translateZ(20px)
+            scale(1.05);
+          
+          transform-style: preserve-3d;
+          transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+          
+          /* Efeito de profundidade com gradiente */
+          background: linear-gradient(
+            135deg,
+            var(--color-bg-secondary) 0%,
+            var(--brand-gray-100) 100%
+          );
+        }
+
+        .code-block:hover {
+          transform: 
+            perspective(1500px)
+            rotateX(4deg)
+            rotateY(-8deg)
+            rotateZ(1deg)
+            translateZ(40px)
+            scale(1.08);
+          
+          box-shadow: 
+            0 35px 80px rgba(0, 0, 0, 0.2),
+            0 20px 45px rgba(0, 0, 0, 0.15),
+            0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
         .code-block::before {
@@ -814,10 +759,16 @@ function HeroSection() {
           left: 0;
           right: 0;
           height: 50px;
-          background: var(--color-border);
+          background: linear-gradient(
+            180deg,
+            var(--color-border) 0%,
+            var(--brand-gray-200) 100%
+          );
           display: flex;
           align-items: center;
           padding: 0 var(--space-6);
+          border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .code-block::after {
@@ -828,6 +779,8 @@ function HeroSection() {
           font-size: 0.9rem;
           color: var(--color-text-muted);
           letter-spacing: 6px;
+          z-index: 1;
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         @keyframes fade-in-up {
@@ -837,11 +790,61 @@ function HeroSection() {
           }
         }
 
+        @media (max-width: 1024px) {
+          .hero-visual {
+            width: 110%;
+            margin-left: -5%;
+          }
+
+          .code-block {
+            transform: 
+              perspective(1200px)
+              rotateX(6deg)
+              rotateY(-10deg)
+              rotateZ(1deg)
+              translateZ(15px)
+              scale(1.03);
+          }
+        }
+
         @media (max-width: 768px) {
           .hero-content {
             grid-template-columns: 1fr;
             gap: var(--space-12);
             text-align: center;
+          }
+
+          .hero-visual {
+            width: 100%;
+            margin-left: 0;
+            margin-top: var(--space-8);
+            order: 2;
+          }
+
+          .hero-text {
+            order: 1;
+          }
+
+          .code-block {
+            transform: 
+              perspective(800px)
+              rotateX(4deg)
+              rotateY(-5deg)
+              rotateZ(0deg)
+              translateZ(10px)
+              scale(1);
+            
+            max-width: 100%;
+          }
+
+          .code-block:hover {
+            transform: 
+              perspective(800px)
+              rotateX(2deg)
+              rotateY(-3deg)
+              rotateZ(0deg)
+              translateZ(20px)
+              scale(1.02);
           }
 
           .hero-actions {
@@ -865,6 +868,26 @@ function HeroSection() {
           .hero-actions {
             gap: var(--space-3);
           }
+
+          .code-block {
+            transform: 
+              perspective(600px)
+              rotateX(2deg)
+              rotateY(0deg)
+              rotateZ(0deg)
+              translateZ(5px)
+              scale(1);
+          }
+
+          .code-block:hover {
+            transform: 
+              perspective(600px)
+              rotateX(1deg)
+              rotateY(0deg)
+              rotateZ(0deg)
+              translateZ(15px)
+              scale(1.01);
+          }
         }
       `}</style>
     </section>
@@ -873,89 +896,276 @@ function HeroSection() {
 
 // Code Display Component
 function CodeDisplay() {
+  const [displayedLines, setDisplayedLines] = useState<number>(0);
+  const [currentCharIndex, setCurrentCharIndex] = useState<number>(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const codeLines = useMemo(() => [
+    { text: "const developer = {", indent: 0 },
+    { text: "  name: 'Ivo Netto',", indent: 1 },
+    { text: "  role: 'Full-Stack Developer',", indent: 1 },
+    { text: "  location: 'Santa Catarina, Brasil',", indent: 1 },
+    { text: "  skills: [", indent: 1 },
+    { text: "    'React', 'Next.js', 'TypeScript',", indent: 2 },
+    { text: "    'Node.js', 'Python', 'Docker',", indent: 2 },
+    { text: "    'GraphQL', 'PostgreSQL', 'MongoDB'", indent: 2 },
+    { text: "  ],", indent: 1 },
+    { text: "  passion: 'Clean Code & Innovation',", indent: 1 },
+    { text: "  available: true,", indent: 1 },
+    { text: "  workStyle: {", indent: 1 },
+    { text: "    mindset: 'Problem Solver',", indent: 2 },
+    { text: "    focus: 'User Experience',", indent: 2 },
+    { text: "    approach: 'Agile & Collaborative'", indent: 2 },
+    { text: "  }", indent: 1 },
+    { text: "};", indent: 0 },
+    { text: "", indent: 0 },
+    { text: "// Inicializando...", indent: 0 },
+    { text: "developer.startCoding();", indent: 0 },
+    { text: "console.log('Pronto para novos desafios! 🚀');", indent: 0 }
+  ], []);
+
+  useEffect(() => {
+    if (displayedLines < codeLines.length) {
+      const currentLine = codeLines[displayedLines];
+      const typingSpeed = 30; // velocidade de digitação em ms
+      
+      if (currentCharIndex < currentLine.text.length) {
+        const timer = setTimeout(() => {
+          setCurrentCharIndex(prev => prev + 1);
+        }, typingSpeed);
+        return () => clearTimeout(timer);
+      } else {
+        // Linha completa, passar para a próxima após uma pausa
+        const lineDelay = setTimeout(() => {
+          setDisplayedLines(prev => prev + 1);
+          setCurrentCharIndex(0);
+        }, 100);
+        return () => clearTimeout(lineDelay);
+      }
+    }
+  }, [displayedLines, currentCharIndex, codeLines]);
+
+  // Auto-scroll suave
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
+    }
+  }, [displayedLines, currentCharIndex]);
+
+  const renderLine = (line: { text: string; indent: number }, index: number) => {
+    const isCurrentLine = index === displayedLines;
+    const displayText = isCurrentLine 
+      ? line.text.substring(0, currentCharIndex)
+      : line.text;
+    
+    const shouldShow = index < displayedLines || (index === displayedLines && currentCharIndex > 0);
+
+    if (!shouldShow) return null;
+
+    return (
+      <div key={index} className={`code-line code-indent-${line.indent}`}>
+        {highlightSyntax(displayText)}
+        {isCurrentLine && currentCharIndex < line.text.length && (
+          <span className="cursor-blink">|</span>
+        )}
+      </div>
+    );
+  };
+
+  const highlightSyntax = (text: string) => {
+    // Palavras-chave
+    const keywords = ['const', 'let', 'var', 'function', 'return', 'if', 'else'];
+    const keywordRegex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
+    
+    // Strings
+    const stringRegex = /'([^']*)'/g;
+    
+    // Propriedades
+    const propertyRegex = /(\w+):/g;
+    
+    // Métodos
+    const methodRegex = /\.(\w+)\(/g;
+    
+    // Comentários
+    const commentRegex = /(\/\/.*)/g;
+    
+    // Booleanos
+    const booleanRegex = /\b(true|false)\b/g;
+
+    const result: React.ReactNode[] = [];
+    let lastIndex = 0;
+
+    // Encontrar todas as correspondências
+    const matches = [
+      ...Array.from(text.matchAll(keywordRegex)).map(m => ({ text: m[0], type: 'keyword', start: m.index!, end: m.index! + m[0].length })),
+      ...Array.from(text.matchAll(stringRegex)).map(m => ({ text: m[0], type: 'string', start: m.index!, end: m.index! + m[0].length })),
+      ...Array.from(text.matchAll(propertyRegex)).map(m => ({ text: m[1], type: 'property', start: m.index!, end: m.index! + m[1].length })),
+      ...Array.from(text.matchAll(methodRegex)).map(m => ({ text: m[1], type: 'method', start: m.index! + 1, end: m.index! + 1 + m[1].length })),
+      ...Array.from(text.matchAll(commentRegex)).map(m => ({ text: m[0], type: 'comment', start: m.index!, end: m.index! + m[0].length })),
+      ...Array.from(text.matchAll(booleanRegex)).map(m => ({ text: m[0], type: 'boolean', start: m.index!, end: m.index! + m[0].length }))
+    ].sort((a, b) => a.start - b.start);
+
+    // Construir resultado
+    matches.forEach((match, i) => {
+      // Adicionar texto antes da correspondência
+      if (match.start > lastIndex) {
+        result.push(
+          <span key={`text-${i}`} className="code-text">
+            {text.substring(lastIndex, match.start)}
+          </span>
+        );
+      }
+
+      // Adicionar correspondência com estilo
+      result.push(
+        <span key={`match-${i}`} className={`code-${match.type}`}>
+          {match.text}
+        </span>
+      );
+
+      lastIndex = match.end;
+    });
+
+    // Adicionar texto restante
+    if (lastIndex < text.length) {
+      result.push(
+        <span key="text-end" className="code-text">
+          {text.substring(lastIndex)}
+        </span>
+      );
+    }
+
+    return result.length > 0 ? result : <span className="code-text">{text}</span>;
+  };
+
   return (
-    <div className="code-display">
-      <div className="code-line">
-        <span className="code-keyword">const</span>{' '}
-        <span className="code-variable">developer</span>{' '}
-        <span className="code-operator">=</span>{' '}
-        <span className="code-punctuation">{'{'}</span>
-      </div>
-      <div className="code-line code-indent">
-        <span className="code-property">name</span>
-        <span className="code-punctuation">:</span>{' '}
-        <span className="code-string">&apos;Ivo Netto&apos;</span>
-        <span className="code-punctuation">,</span>
-      </div>
-      <div className="code-line code-indent">
-        <span className="code-property">skills</span>
-        <span className="code-punctuation">:</span>{' '}
-        <span className="code-punctuation">[&apos;</span>
-        <span className="code-string">React</span>
-        <span className="code-punctuation">&apos;,</span>{' '}
-        <span className="code-string">Next.js</span>
-        <span className="code-punctuation">&apos;,</span>{' '}
-        <span className="code-string">Node.js</span>
-        <span className="code-punctuation">&apos;],</span>
-      </div>
-      <div className="code-line code-indent">
-        <span className="code-property">passion</span>
-        <span className="code-punctuation">:</span>{' '}
-        <span className="code-string">&apos;Clean Code&apos;</span>
-        <span className="code-punctuation">,</span>
-      </div>
-      <div className="code-line code-indent">
-        <span className="code-property">available</span>
-        <span className="code-punctuation">:</span>{' '}
-        <span className="code-boolean">true</span>
-      </div>
-      <div className="code-line">
-        <span className="code-punctuation">{'}'}</span>
-        <span className="code-punctuation">;</span>
-      </div>
+    <div className="code-display" ref={scrollContainerRef}>
+      {codeLines.map((line: { text: string; indent: number }, index: number) => renderLine(line, index))}
+      {displayedLines >= codeLines.length && (
+        <div className="code-line">
+          <span className="cursor-blink">|</span>
+        </div>
+      )}
 
       <style jsx>{`
         .code-display {
           font-family: var(--font-family-mono);
           font-size: 0.9rem;
-          line-height: 1.8;
+          line-height: 1.9;
           padding-top: 40px;
+          position: relative;
+          z-index: 1;
+          max-height: 380px;
+          overflow-y: auto;
+          overflow-x: hidden;
+          padding-right: var(--space-4);
+        }
+
+        .code-display::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .code-display::-webkit-scrollbar-track {
+          background: rgba(0, 0, 0, 0.05);
+          border-radius: 3px;
+        }
+
+        .code-display::-webkit-scrollbar-thumb {
+          background: rgba(0, 0, 0, 0.2);
+          border-radius: 3px;
+        }
+
+        .code-display::-webkit-scrollbar-thumb:hover {
+          background: rgba(0, 0, 0, 0.3);
         }
 
         .code-line {
           display: block;
-          margin-bottom: 2px;
+          margin-bottom: 3px;
+          white-space: pre-wrap;
+          word-break: break-word;
+          transition: all 0.2s ease;
+          opacity: 1;
         }
 
-        .code-indent {
-          padding-left: var(--space-6);
+        .code-line:hover {
+          background: rgba(0, 0, 0, 0.02);
+          padding-left: 4px;
+          margin-left: -4px;
+          border-radius: 4px;
+        }
+
+        .code-indent-0 { padding-left: 0; }
+        .code-indent-1 { padding-left: var(--space-6); }
+        .code-indent-2 { padding-left: var(--space-12); }
+
+        .cursor-blink {
+          color: var(--brand-black);
+          font-weight: 700;
+          animation: blink 1s infinite;
+          margin-left: 2px;
+        }
+
+        @keyframes blink {
+          0%, 50% { opacity: 1; }
+          51%, 100% { opacity: 0; }
+        }
+
+        .code-text {
+          color: var(--color-text-primary);
         }
 
         .code-keyword {
           color: #d73a49;
-          font-weight: 600;
+          font-weight: 700;
         }
 
         .code-variable {
           color: #6f42c1;
-          font-weight: 600;
+          font-weight: 700;
         }
 
         .code-property {
           color: #005cc5;
+          font-weight: 600;
         }
 
         .code-string {
           color: #032f62;
+          font-weight: 500;
         }
 
         .code-boolean {
           color: #d73a49;
+          font-weight: 600;
         }
 
-        .code-operator,
-        .code-punctuation {
-          color: var(--color-text-secondary);
+        .code-method {
+          color: #6f42c1;
+          font-weight: 600;
+        }
+
+        .code-comment {
+          color: #6a737d;
+          font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+          .code-display {
+            font-size: 0.8rem;
+            line-height: 1.7;
+            max-height: 300px;
+          }
+
+          .code-indent-1 { padding-left: var(--space-4); }
+          .code-indent-2 { padding-left: var(--space-8); }
+        }
+
+        @media (max-width: 480px) {
+          .code-display {
+            font-size: 0.75rem;
+            max-height: 250px;
+          }
         }
       `}</style>
     </div>
@@ -2098,6 +2308,7 @@ function Footer() {
     <footer className="footer">
       <div className="container">
         <div className="footer-content">
+          {/* Brand Section */}
           <div className="footer-brand">
             <div className="footer-logo-container">
               <Image 
@@ -2110,36 +2321,51 @@ function Footer() {
               <span className="footer-logo-text">netto</span>
             </div>
             <p className="footer-tagline">
-              Full-Stack Developer especializado em soluções digitais modernas
+              Desenvolvedor Full-Stack apaixonado por criar experiências digitais 
+              inovadoras e de alta performance. Transformando ideias em soluções 
+              reais através de código limpo, design intuitivo e tecnologias modernas.
             </p>
+            <div className="footer-info">
+              <div className="footer-info-item">
+                <MapPin size={16} />
+                <span>Santa Catarina, Brasil</span>
+              </div>
+              <div className="footer-info-item">
+                <Mail size={16} />
+                <span>nettocodes@outlook.com</span>
+              </div>
+            </div>
           </div>
           
-          <div className="footer-links">
-            <a href="https://www.linkedin.com/in/ivobraatz/" target="_blank" rel="noopener noreferrer" className="footer-link">
-              <FaLinkedin size={20} />
-              <span>LinkedIn</span>
-            </a>
-            <a href="https://github.com/nettocodes" target="_blank" rel="noopener noreferrer" className="footer-link">
-              <FaGithub size={20} />
-              <span>GitHub</span>
-            </a>
-            <a href="https://www.threads.com/@ivo.braatz" target="_blank" rel="noopener noreferrer" className="footer-link">
-              <SiThreads size={20} />
-              <span>Threads</span>
-            </a>
-            <a href="https://discord.com/users/1055496313002803331" target="_blank" rel="noopener noreferrer" className="footer-link">
-              <FaDiscord size={20} />
-              <span>Discord</span>
-            </a>
-            <a href="mailto:nettocodes@outlook.com" className="footer-link">
-              <Mail size={20} />
-              <span>E-mail</span>
-            </a>
+          {/* Links Section */}
+          <div className="footer-links-container">
+            <h3 className="footer-links-title">Conecte-se</h3>
+            <div className="footer-links">
+              <a href="https://www.linkedin.com/in/ivobraatz/" target="_blank" rel="noopener noreferrer" className="footer-link social-link">
+                <FaLinkedin size={20} />
+                <span>LinkedIn</span>
+              </a>
+              <a href="https://github.com/nettocodes" target="_blank" rel="noopener noreferrer" className="footer-link social-link">
+                <FaGithub size={20} />
+                <span>GitHub</span>
+              </a>
+              <a href="https://www.threads.com/@ivo.braatz" target="_blank" rel="noopener noreferrer" className="footer-link social-link">
+                <SiThreads size={20} />
+                <span>Threads</span>
+              </a>
+              <a href="https://discord.com/users/1055496313002803331" target="_blank" rel="noopener noreferrer" className="footer-link social-link">
+                <FaDiscord size={20} />
+                <span>Discord</span>
+              </a>
+            </div>
           </div>
         </div>
         
         <div className="footer-bottom">
           <p>&copy; 2025 Ivo Netto. Todos os direitos reservados.</p>
+          <p className="footer-made-with">
+            Desenvolvido com <span className="footer-heart">♥</span> usando Next.js & TypeScript
+          </p>
         </div>
       </div>
 
@@ -2147,92 +2373,120 @@ function Footer() {
         .footer {
           background: var(--brand-black);
           color: var(--brand-white);
-          padding: var(--space-16) 0 var(--space-8);
+          padding: var(--space-20) 0 var(--space-8);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .footer::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, var(--brand-gray-700), transparent);
         }
 
         .footer-content {
-          display: flex;
-          justify-content: space-between;
-          align-items: start;
+          display: grid;
+          grid-template-columns: 1fr auto;
+          gap: var(--space-12);
           margin-bottom: var(--space-12);
+          padding-bottom: var(--space-12);
+          border-bottom: 1px solid var(--brand-gray-800);
+          align-items: start;
         }
-        @media (max-width: 1024px) {
-          .footer-content {
-            flex-direction: column;
-            gap: var(--space-8);
-            text-align: center;
-          }
 
-          .footer-links {
-            width: 100%;
-            justify-content: space-between;
-          }
-
-          .footer-bottom {
-            flex-direction: column;
-            gap: var(--space-4);
-            text-align: center;
-          } 
-        }
         .footer-brand {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-          }
+          max-width: 600px;
+        }
 
         .footer-logo-container {
           display: flex;
           align-items: center;
-          gap: 8px;
-          margin-bottom: var(--space-2);
+          gap: 10px;
+          margin-bottom: var(--space-6);
         }
 
         .footer-logo-text {
           font-family: var(--font-family-mono);
-          font-size: 1.4rem;
+          font-size: 1.6rem;
           font-weight: 800;
           color: var(--brand-white);
           letter-spacing: 1px;
           text-transform: lowercase;
-        }
-          @media (max-width: 768px) {
-            .footer-brand {
-              max-width: none;
-              width: 100%;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-            }
+          background: linear-gradient(135deg, var(--brand-white) 0%, var(--brand-gray-400) 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
         }
 
         .footer-tagline {
-          margin-top: var(--space-4);
           color: var(--brand-gray-400);
-          font-size: 0.95rem;
-          line-height: 1.6;
+          font-size: 1rem;
+          line-height: 1.7;
+          margin-bottom: var(--space-6);
+          font-weight: 400;
+        }
+
+        .footer-info {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-3);
+        }
+
+        .footer-info-item {
+          display: flex;
+          align-items: center;
+          gap: var(--space-3);
+          color: var(--brand-gray-400);
+          font-size: 0.9rem;
+          transition: color 0.3s ease;
+        }
+
+        .footer-info-item:hover {
+          color: var(--brand-white);
+        }
+
+        .footer-links-container {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-5);
+          min-width: 200px;
+        }
+
+        .footer-links-title {
+          font-size: 1rem;
+          font-weight: 700;
+          color: var(--brand-white);
+          letter-spacing: 0.5px;
+          margin: 0;
+          margin-bottom: var(--space-2);
         }
 
         .footer-links {
           display: flex;
-          gap: var(--space-6);
-          flex-wrap: wrap;
+          flex-direction: column;
+          gap: var(--space-3);
         }
 
         .footer-link {
           color: var(--brand-gray-400);
           text-decoration: none;
           font-weight: 500;
-          transition: all 0.3s ease;
+          font-size: 0.9rem;
+          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           display: flex;
           align-items: center;
           gap: var(--space-3);
           padding: var(--space-3) var(--space-4);
           border-radius: var(--radius-md);
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.08);
           position: relative;
           overflow: hidden;
+          white-space: nowrap;
         }
 
         .footer-link::before {
@@ -2250,10 +2504,10 @@ function Footer() {
 
         .footer-link:hover {
           color: var(--brand-white);
-          background: rgba(255, 255, 255, 0.1);
-          border-color: rgba(255, 255, 255, 0.2);
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+          background: rgba(255, 255, 255, 0.08);
+          border-color: rgba(255, 255, 255, 0.15);
+          transform: translateX(4px);
+          box-shadow: 0 4px 20px rgba(255, 255, 255, 0.08);
         }
 
         .footer-bottom {
@@ -2261,26 +2515,121 @@ function Footer() {
           justify-content: space-between;
           align-items: center;
           padding-top: var(--space-8);
-          border-top: 1px solid var(--brand-gray-800);
           font-size: 0.9rem;
           color: var(--brand-gray-500);
         }
 
-        @media (max-width: 768px) {
+        .footer-made-with {
+          display: flex;
+          align-items: center;
+          gap: var(--space-2);
+        }
+
+        .footer-heart {
+          color: #ff4757;
+          animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+          0%, 100% {
+            transform: scale(1);
+          }
+          25% {
+            transform: scale(1.2);
+          }
+          50% {
+            transform: scale(1);
+          }
+        }
+
+        /* Tablet */
+        @media (max-width: 1024px) {
           .footer-content {
-            flex-direction: column;
-            gap: var(--space-8);
-            text-align: center;
+            grid-template-columns: 1fr;
+            gap: var(--space-10);
+          }
+
+          .footer-brand {
+            max-width: 100%;
+          }
+
+          .footer-links-container {
+            width: 100%;
           }
 
           .footer-links {
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-3);
+          }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+          .footer {
+            padding: var(--space-16) 0 var(--space-6);
+          }
+
+          .footer-content {
+            grid-template-columns: 1fr;
+            gap: var(--space-10);
+            padding-bottom: var(--space-10);
+          }
+
+          .footer-brand {
+            max-width: 100%;
+          }
+
+          .footer-logo-container {
+            justify-content: flex-start;
+          }
+
+          .footer-links-container {
+            width: 100%;
+          }
+
+          .footer-links {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: var(--space-3);
+          }
+
+          .footer-link {
+            width: 100%;
           }
 
           .footer-bottom {
             flex-direction: column;
             gap: var(--space-4);
             text-align: center;
+          }
+
+          .footer-info {
+            width: 100%;
+          }
+
+          .footer-info-item {
+            font-size: 0.85rem;
+          }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 480px) {
+          .footer {
+            padding: var(--space-12) 0 var(--space-6);
+          }
+
+          .footer-tagline {
+            font-size: 0.9rem;
+          }
+
+          .footer-links-title {
+            font-size: 1rem;
+          }
+
+          .footer-bottom {
+            font-size: 0.8rem;
           }
         }
       `}</style>

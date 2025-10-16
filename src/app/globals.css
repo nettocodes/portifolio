@@ -1159,3 +1159,316 @@ body {
     transform: translateY(0);
   }
 }
+
+/* ===================================
+   PLASMA LOADING ANIMATIONS
+   =================================== */
+
+/* Wrapper para todo o conteúdo da página */
+.page-content {
+  opacity: 0;
+  animation: fade-in-page 0.6s ease forwards;
+}
+
+.page-content.loaded {
+  animation: fade-in-page 0.6s ease forwards;
+}
+
+@keyframes fade-in-page {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Animação para a navegação - desliza de cima */
+.navigation {
+  animation: slide-down-fade 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 0.1s;
+  opacity: 0;
+}
+
+@keyframes slide-down-fade {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animação para o Hero Section - plasma fluido */
+.hero-section {
+  animation: plasma-appear 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+@keyframes plasma-appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(80px);
+    filter: blur(20px);
+  }
+  50% {
+    filter: blur(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Animação para títulos - vem da esquerda com plasma */
+.section-title {
+  animation: slide-from-left 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes slide-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-120px) scale(0.9);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Animação para cards e itens - vem de diferentes direções */
+.skill-category,
+.timeline-item,
+.project-card {
+  animation: plasma-slide-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+}
+
+/* Delays escalonados para efeito cascata */
+.skill-category:nth-child(1) { animation-delay: 0.1s; }
+.skill-category:nth-child(2) { animation-delay: 0.2s; }
+.skill-category:nth-child(3) { animation-delay: 0.3s; }
+.skill-category:nth-child(4) { animation-delay: 0.4s; }
+.skill-category:nth-child(5) { animation-delay: 0.5s; }
+.skill-category:nth-child(6) { animation-delay: 0.6s; }
+
+.timeline-item:nth-child(1) { animation-delay: 0.15s; }
+.timeline-item:nth-child(2) { animation-delay: 0.25s; }
+.timeline-item:nth-child(3) { animation-delay: 0.35s; }
+.timeline-item:nth-child(4) { animation-delay: 0.45s; }
+.timeline-item:nth-child(5) { animation-delay: 0.55s; }
+
+.project-card:nth-child(odd) {
+  animation-name: plasma-slide-in-left;
+  animation-delay: 0.2s;
+}
+
+.project-card:nth-child(even) {
+  animation-name: plasma-slide-in-right;
+  animation-delay: 0.3s;
+}
+
+@keyframes plasma-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(60px) scale(0.9);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes plasma-slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100px) translateY(40px) scale(0.95);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes plasma-slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(100px) translateY(40px) scale(0.95);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Animação para o About Section - rotação suave */
+.about-content {
+  animation: rotate-appear 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+@keyframes rotate-appear {
+  from {
+    opacity: 0;
+    transform: rotate(-5deg) scale(0.9) translateY(40px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0deg) scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Animação para badges e tags - explodem para dentro */
+.skill-badge,
+.tech-stack-badge {
+  animation: badge-pop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  opacity: 0;
+}
+
+.skill-badge:nth-child(1) { animation-delay: 0.1s; }
+.skill-badge:nth-child(2) { animation-delay: 0.15s; }
+.skill-badge:nth-child(3) { animation-delay: 0.2s; }
+.skill-badge:nth-child(4) { animation-delay: 0.25s; }
+.skill-badge:nth-child(5) { animation-delay: 0.3s; }
+.skill-badge:nth-child(6) { animation-delay: 0.35s; }
+.skill-badge:nth-child(7) { animation-delay: 0.4s; }
+.skill-badge:nth-child(8) { animation-delay: 0.45s; }
+
+@keyframes badge-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(-180deg);
+  }
+  70% {
+    transform: scale(1.1) rotate(10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Animação para o footer - vem de baixo */
+.footer {
+  animation: slide-up-fade 0.8s ease forwards;
+  animation-delay: 0.5s;
+  opacity: 0;
+}
+
+@keyframes slide-up-fade {
+  from {
+    opacity: 0;
+    transform: translateY(80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animação para ícones sociais - bounce suave */
+.social-link {
+  animation: icon-bounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  opacity: 0;
+}
+
+.social-link:nth-child(1) { animation-delay: 0.1s; }
+.social-link:nth-child(2) { animation-delay: 0.2s; }
+.social-link:nth-child(3) { animation-delay: 0.3s; }
+.social-link:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes icon-bounce {
+  0% {
+    opacity: 0;
+    transform: scale(0) translateY(-30px);
+  }
+  60% {
+    transform: scale(1.2) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Animação para formulário de contato */
+.contact-form {
+  animation: form-appear 0.9s ease forwards;
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+@keyframes form-appear {
+  from {
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Performance: reduzir animações em dispositivos com preferência por movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  .page-content,
+  .navigation,
+  .hero-section,
+  .section-title,
+  .skill-category,
+  .timeline-item,
+  .project-card,
+  .about-content,
+  .skill-badge,
+  .tech-stack-badge,
+  .footer,
+  .social-link,
+  .contact-form {
+    animation: simple-fade 0.3s ease forwards !important;
+  }
+
+  @keyframes simple-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/* Responsividade: simplificar animações em mobile */
+@media (max-width: 768px) {
+  .plasma-slide-in-left,
+  .plasma-slide-in-right {
+    animation-name: plasma-slide-in !important;
+  }
+  
+  .hero-section {
+    animation-duration: 0.7s;
+  }
+  
+  .project-card:nth-child(odd),
+  .project-card:nth-child(even) {
+    animation-name: plasma-slide-in;
+    animation-duration: 0.6s;
+  }
+}
