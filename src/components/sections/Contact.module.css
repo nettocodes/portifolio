@@ -1,0 +1,200 @@
+.contactContent {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--spacing-3xl);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.subtitle {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-sm);
+}
+
+.text {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+.contactItems {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+.contactItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--spacing-md);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+}
+
+.contactItem:hover {
+  border-color: var(--color-text-tertiary);
+  transform: translateX(4px);
+}
+
+.label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: var(--font-weight-medium);
+}
+
+.value {
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.form {
+  background: transparent;
+  padding: 0;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+}
+
+.formGroup {
+  margin-bottom: var(--spacing-xl);
+  position: relative;
+}
+
+.formGroup label {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.required {
+  color: var(--color-text-tertiary);
+  margin-left: 4px;
+}
+
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  padding: var(--spacing-md) 0;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--color-border);
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  transition: all var(--transition-base);
+}
+
+.formGroup input::placeholder,
+.formGroup textarea::placeholder {
+  color: var(--color-text-tertiary);
+  opacity: 0.6;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-bottom-color: var(--color-text-primary);
+}
+
+.formGroup textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: var(--line-height-relaxed);
+}
+
+.charCount {
+  position: absolute;
+  bottom: -20px;
+  right: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  font-family: var(--font-mono);
+}
+
+.submitBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-2xl);
+  background: var(--color-text-primary);
+  color: var(--color-bg-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+.submitBtn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.submitBtn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.submitBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.submitBtn svg {
+  transition: transform var(--transition-base);
+  position: relative;
+  z-index: 1;
+}
+
+.submitBtn:hover svg {
+  transform: translateX(4px) rotate(45deg);
+}
+
+@media (max-width: 768px) {
+  .contactContent {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+
+  .submitBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}
