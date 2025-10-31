@@ -1,0 +1,121 @@
+{
+  "nav": {
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "label": "Software Developer",
+    "title": "Software Developer",
+    "subtitle": "Specialized in creating elegant and scalable solutions",
+    "bio": "Passionate developer creating innovative and scalable digital solutions. Specialized in transforming complex ideas into elegant and functional applications.",
+    "cta": "View Projects",
+    "contactButton": "Get in Touch",
+    "projectsButton": "View Projects",
+    "yearsExperience": "Years of Experience",
+    "projectsCompleted": "Projects Completed",
+    "happyClients": "Happy Clients",
+    "stats": {
+      "experience": "Years of Experience",
+      "projects": "Completed Projects",
+      "technologies": "Technologies"
+    }
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "Passionate developer focused on software architecture and quality code",
+    "lead": "I transform complex ideas into elegant solutions through clean code and well-thought architecture.",
+    "paragraph1": "With over 5 years developing full-stack web applications, I specialize in creating scalable systems that balance performance, maintainability, and user experience. My development journey started with curiosity about how things work - today, that curiosity has evolved into solid technical expertise.",
+    "paragraph2": "I work primarily with TypeScript, React, Next.js on the frontend and Node.js, Python on the backend, always seeking best practices in software architecture, cloud computing, and DevOps. I believe well-written code isn't just functional - it's a form of communication between developers.",
+    "paragraph3": "When I'm not coding, I'm studying new architecture patterns, contributing to open source projects, or sharing knowledge with the dev community. My goal is always to grow professionally and help other developers on their journey.",
+    "valuesTitle": "Values that guide my work"
+  },
+  "experience": {
+    "title": "Experience",
+    "subtitle": "My professional journey in software development",
+    "current": "Current",
+    "1": {
+      "position": "Senior Software Engineer",
+      "period": "2023 - Present",
+      "description": "Technical leadership in enterprise application development. Scalable systems architecture and team mentoring."
+    },
+    "2": {
+      "position": "Full Stack Developer",
+      "period": "2021 - 2023",
+      "description": "Modern web application development focused on performance and user experience."
+    },
+    "3": {
+      "position": "Frontend Developer",
+      "period": "2020 - 2021",
+      "description": "Creation of responsive and accessible interfaces. Performance optimization and design systems implementation."
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "Some of my most recent work",
+    "other": "Other Projects",
+    "1": {
+      "description": "Complete SaaS platform with multi-tenancy, advanced authentication, and real-time analytics dashboards."
+    },
+    "2": {
+      "description": "Real-time collaboration tool with WebSocket, simultaneous editing, and state synchronization."
+    },
+    "3": {
+      "description": "Scalable microservices architecture with API Gateway, service mesh, and complete observability."
+    },
+    "4": {
+      "description": "Analytics dashboard with machine learning for predictions and automated insights."
+    },
+    "5": {
+      "description": "Robust REST API with JWT authentication, rate limiting, and complete Swagger documentation."
+    },
+    "6": {
+      "description": "Progressive Web App with offline-first, push notifications, and native installation."
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Let's build something amazing together",
+    "info": {
+      "title": "Let's talk",
+      "description": "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision."
+    },
+    "form": {
+      "name": "Full Name",
+      "email": "Email",
+      "message": "Message",
+      "placeholder": {
+        "name": "John Doe",
+        "email": "john@example.com",
+        "message": "Tell me about your project or idea..."
+      },
+      "chars": "characters",
+      "submit": "Send Message"
+    }
+  },
+  "footer": {
+    "location": "Brazil",
+    "navigation": "Navigation",
+    "social": "Social Media",
+    "rights": "All rights reserved."
+  },
+  "project": {
+    "back": "Back to projects",
+    "viewCode": "View code",
+    "viewDemo": "View demo",
+    "demonstration": "Demonstration",
+    "about": "About the Project",
+    "features": "Key Features",
+    "challenges": "Challenges & Solutions",
+    "challenge": "Challenge",
+    "solution": "Solution",
+    "allProjects": "View all projects"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist",
+    "backHome": "Back to home"
+  }
+}

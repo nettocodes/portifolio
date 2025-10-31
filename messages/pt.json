@@ -1,0 +1,121 @@
+{
+  "nav": {
+    "about": "Sobre",
+    "experience": "Experiência",
+    "projects": "Projetos",
+    "contact": "Contato"
+  },
+  "hero": {
+    "greeting": "Olá, eu sou",
+    "label": "Desenvolvedor de Software",
+    "title": "Desenvolvedor de Software",
+    "subtitle": "Especializado em criar soluções elegantes e escaláveis",
+    "bio": "Desenvolvedor apaixonado por criar soluções digitais inovadoras e escaláveis. Especializado em transformar ideias complexas em aplicações elegantes e funcionais.",
+    "cta": "Ver Projetos",
+    "contactButton": "Entre em Contato",
+    "projectsButton": "Ver Projetos",
+    "yearsExperience": "Anos de Experiência",
+    "projectsCompleted": "Projetos Completos",
+    "happyClients": "Clientes Satisfeitos",
+    "stats": {
+      "experience": "Anos de Experiência",
+      "projects": "Projetos Concluídos",
+      "technologies": "Tecnologias"
+    }
+  },
+  "about": {
+    "title": "Sobre Mim",
+    "subtitle": "Desenvolvedor apaixonado por arquitetura de software e código de qualidade",
+    "lead": "Transformo ideias complexas em soluções elegantes através de código limpo e arquitetura bem pensada.",
+    "paragraph1": "Com mais de 5 anos desenvolvendo aplicações web full-stack, especializei-me em criar sistemas escaláveis que equilibram performance, maintibilidade e experiência do usuário. Minha jornada no desenvolvimento começou com curiosidade sobre como as coisas funcionam - hoje, essa curiosidade se transformou em expertise técnica sólida.",
+    "paragraph2": "Trabalho principalmente com TypeScript, React, Next.js no frontend e Node.js, Python no backend, sempre buscando as melhores práticas em arquitetura de software, cloud computing e DevOps. Acredito que código bem escrito não é apenas funcional - é uma forma de comunicação entre desenvolvedores.",
+    "paragraph3": "Quando não estou codificando, estou estudando novos padrões de arquitetura, contribuindo em projetos open source, ou compartilhando conhecimento com a comunidade dev. Meu objetivo é sempre crescer como profissional e ajudar outros desenvolvedores em sua jornada.",
+    "valuesTitle": "Valores que guiam meu trabalho"
+  },
+  "experience": {
+    "title": "Experiência",
+    "subtitle": "Minha jornada profissional no desenvolvimento de software",
+    "current": "Atual",
+    "1": {
+      "position": "Engenheiro de Software Sênior",
+      "period": "2023 - Presente",
+      "description": "Liderança técnica no desenvolvimento de aplicações enterprise. Arquitetura de sistemas escaláveis e mentoria de equipe."
+    },
+    "2": {
+      "position": "Desenvolvedor Full Stack",
+      "period": "2021 - 2023",
+      "description": "Desenvolvimento de aplicações web modernas com foco em performance e experiência do usuário."
+    },
+    "3": {
+      "position": "Desenvolvedor Frontend",
+      "period": "2020 - 2021",
+      "description": "Criação de interfaces responsivas e acessíveis. Otimização de performance e implementação de design systems."
+    }
+  },
+  "projects": {
+    "title": "Projetos",
+    "subtitle": "Alguns dos meus trabalhos mais recentes",
+    "other": "Outros Projetos",
+    "1": {
+      "description": "Plataforma SaaS completa com multi-tenancy, autenticação avançada e dashboards analíticos em tempo real."
+    },
+    "2": {
+      "description": "Ferramenta de colaboração em tempo real com WebSocket, edição simultânea e sincronização de estado."
+    },
+    "3": {
+      "description": "Arquitetura de microserviços escalável com API Gateway, service mesh e observabilidade completa."
+    },
+    "4": {
+      "description": "Dashboard analytics com machine learning para predições e insights automatizados."
+    },
+    "5": {
+      "description": "API REST robusta com autenticação JWT, rate limiting e documentação Swagger completa."
+    },
+    "6": {
+      "description": "Progressive Web App com offline-first, push notifications e instalação nativa."
+    }
+  },
+  "contact": {
+    "title": "Contato",
+    "subtitle": "Vamos construir algo incrível juntos",
+    "info": {
+      "title": "Vamos conversar",
+      "description": "Estou sempre aberto a discutir novos projetos, ideias criativas ou oportunidades para fazer parte da sua visão."
+    },
+    "form": {
+      "name": "Nome Completo",
+      "email": "Email",
+      "message": "Mensagem",
+      "placeholder": {
+        "name": "João Silva",
+        "email": "joao@exemplo.com",
+        "message": "Conte-me sobre seu projeto ou ideia..."
+      },
+      "chars": "caracteres",
+      "submit": "Enviar Mensagem"
+    }
+  },
+  "footer": {
+    "location": "Brasil",
+    "navigation": "Navegação",
+    "social": "Redes Sociais",
+    "rights": "Todos os direitos reservados."
+  },
+  "project": {
+    "back": "Voltar para projetos",
+    "viewCode": "Ver código",
+    "viewDemo": "Ver demo",
+    "demonstration": "Demonstração",
+    "about": "Sobre o Projeto",
+    "features": "Principais Features",
+    "challenges": "Desafios & Soluções",
+    "challenge": "Desafio",
+    "solution": "Solução",
+    "allProjects": "Ver todos os projetos"
+  },
+  "notFound": {
+    "title": "Página não encontrada",
+    "description": "A página que você está procurando não existe",
+    "backHome": "Voltar para a página inicial"
+  }
+}

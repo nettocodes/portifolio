@@ -1,138 +1,36 @@
-# Portfólio - Ivo Braatz
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Portfólio pessoal profissional, monocromático e minimalista para desenvolvedor de software.
+## Getting Started
 
-## 🚀 Tecnologias
-
-- **Next.js 14** - Framework React para produção
-- **TypeScript** - Tipagem estática
-- **CSS Modules** - Estilização modular e isolada
-- **React Hooks** - Gerenciamento de estado
-- **Canvas API** - Efeitos de partículas
-- **Intersection Observer** - Animações on scroll
-
-## ✨ Características
-
-- ✅ Design monocromático profissional (preto, branco, cinzas)
-- ✅ Arquitetura escalável e organizada
-- ✅ Animações sofisticadas (typing effect, scroll reveal, particles)
-- ✅ Efeitos visuais modernos sem cores vibrantes
-- ✅ Totalmente responsivo (Mobile, Tablet, Desktop)
-- ✅ CSS puro (sem Tailwind ou Bootstrap)
-- ✅ Performance otimizada
-- ✅ SEO friendly
-- ✅ Componentes reutilizáveis
-
-## 📁 Estrutura do Projeto
-
-```
-portifolio/
-├── app/                          # Next.js App Router
-│   ├── layout.tsx               # Layout principal
-│   └── page.tsx                 # Página home
-├── src/
-│   ├── components/
-│   │   ├── layout/              # Componentes de layout
-│   │   │   ├── Header.tsx
-│   │   │   └── Footer.tsx
-│   │   ├── sections/            # Seções da página
-│   │   │   ├── Hero.tsx
-│   │   │   ├── About.tsx
-│   │   │   ├── Experience.tsx
-│   │   │   ├── Skills.tsx
-│   │   │   ├── Projects.tsx
-│   │   │   └── Contact.tsx
-│   │   └── ui/                  # Componentes UI reutilizáveis
-│   │       ├── ParticleBackground.tsx
-│   │       ├── ScrollReveal.tsx
-│   │       └── TypingEffect.tsx
-│   ├── constants/               # Constantes e dados
-│   │   └── data.ts
-│   ├── types/                   # TypeScript types
-│   │   └── index.ts
-│   ├── styles/                  # Estilos globais
-│   │   └── globals.css
-│   └── lib/                     # Utilitários
-└── public/                      # Assets estáticos
-```
-
-## 📦 Instalação
+First, run the development server:
 
 ```bash
-# Instalar dependências
-npm install
-
-# Executar em modo desenvolvimento
 npm run dev
-
-# Build para produção
-npm run build
-
-# Iniciar servidor de produção
-npm start
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## 🎨 Seções
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-- **Hero** - Apresentação com código animado e typing effect
-- **About** - Informações pessoais e destaques
-- **Experience** - Timeline de experiência profissional
-- **Skills** - Habilidades técnicas organizadas por categoria
-- **Projects** - Portfólio de projetos destacados
-- **Contato** - Formulário e links sociais
-- **Footer** - Rodapé com navegação
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## 🎨 Customização
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-### Dados Pessoais
-Edite `src/constants/data.ts`:
-```typescript
-export const PERSONAL_INFO = {
-  name: 'Seu Nome',
-  title: 'Seu Título',
-  email: 'seu@email.com',
-  // ...
-}
-```
+## Learn More
 
-### Cores e Estilos
-Edite `src/styles/globals.css`:
-```css
-:root {
-  --color-bg-primary: #000000;
-  --color-bg-secondary: #0a0a0a;
-  --color-text-primary: #ffffff;
-  /* ... */
-}
-```
+To learn more about Next.js, take a look at the following resources:
 
-## 🌐 Deploy
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-O projeto está pronto para deploy em:
-- **Vercel** (Recomendado)
-- Netlify
-- AWS Amplify
-- Cloudflare Pages
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## 📱 Responsividade
+## Deploy on Vercel
 
-Breakpoints:
-- Mobile: < 480px
-- Tablet: 480px - 768px
-- Desktop: 768px - 1024px
-- Large: > 1024px
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-## ⚡ Performance
-
-- Componentes otimizados
-- Lazy loading de seções
-- Animações GPU-accelerated
-- CSS Modules para tree-shaking
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT.
-
----
-
-Desenvolvido com dedicação por Ivo Braatz
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

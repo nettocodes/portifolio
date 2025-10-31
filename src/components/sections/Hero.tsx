@@ -1,14 +1,15 @@
 'use client'
 
 import { PERSONAL_INFO } from '@/constants/data'
-import { useLanguage } from '@/contexts/LanguageContext'
+import { useTranslations, useLocale } from 'next-intl'
 import TypingEffect from '@/components/ui/TypingEffect'
 import styles from './Hero.module.css'
 
 export default function Hero() {
-  const { t, language } = useLanguage()
+  const t = useTranslations('hero')
+  const locale = useLocale()
   
-  const roles = language === 'pt' 
+  const roles = locale === 'pt' 
     ? [
         'Desenvolvedor de Software',
         'Engenheiro Full Stack',
@@ -44,7 +45,7 @@ export default function Hero() {
         <div className={styles.heroContent}>
           <div className={styles.heroLabel}>
             <span className={styles.labelDot}></span>
-            <span>{t('hero.label')}</span>
+            <span>{t('label')}</span>
           </div>
 
           <h1 className={styles.heroTitle}>
@@ -56,35 +57,35 @@ export default function Hero() {
           </div>
 
           <p className={styles.heroBio}>
-            {t('hero.bio')}
+            {t('bio')}
           </p>
 
           <div className={styles.heroActions}>
             <button onClick={scrollToContact} className={styles.btnPrimary}>
-              <span>{t('hero.contactButton')}</span>
+              <span>{t('contactButton')}</span>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor">
                 <path d="M1 8h14M8 1l7 7-7 7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
             <button onClick={scrollToProjects} className={styles.btnSecondary}>
-              <span>{t('hero.projectsButton')}</span>
+              <span>{t('projectsButton')}</span>
             </button>
           </div>
 
           <div className={styles.heroStats}>
             <div className={styles.stat}>
               <div className={styles.statValue}>5+</div>
-              <div className={styles.statLabel}>{t('hero.yearsExperience')}</div>
+              <div className={styles.statLabel}>{t('yearsExperience')}</div>
             </div>
             <div className={styles.statDivider} />
             <div className={styles.stat}>
               <div className={styles.statValue}>50+</div>
-              <div className={styles.statLabel}>{t('hero.projectsCompleted')}</div>
+              <div className={styles.statLabel}>{t('projectsCompleted')}</div>
             </div>
             <div className={styles.statDivider} />
             <div className={styles.stat}>
               <div className={styles.statValue}>20+</div>
-              <div className={styles.statLabel}>{t('hero.happyClients')}</div>
+              <div className={styles.statLabel}>{t('happyClients')}</div>
             </div>
           </div>
         </div>

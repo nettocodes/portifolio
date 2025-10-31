@@ -1,14 +1,15 @@
 'use client'
 
 import { PERSONAL_INFO } from '@/constants/data'
-import { useLanguage } from '@/contexts/LanguageContext'
+import { useTranslations, useLocale } from 'next-intl'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 import styles from './About.module.css'
 
 export default function About() {
-  const { t, language } = useLanguage()
+  const t = useTranslations('about')
+  const locale = useLocale()
   
-  const values = language === 'pt' 
+  const values = locale === 'pt' 
     ? [
         {
           title: 'Clean Code',
@@ -43,9 +44,9 @@ export default function About() {
       <div className="container">
         <ScrollReveal>
           <div className="section-header">
-            <h2 className="section-title">{t('about.title')}</h2>
+            <h2 className="section-title">{t('title')}</h2>
             <p className="section-subtitle">
-              {t('about.subtitle')}
+              {t('subtitle')}
             </p>
           </div>
         </ScrollReveal>
@@ -54,23 +55,23 @@ export default function About() {
           <ScrollReveal delay={200}>
             <div className={styles.aboutText}>
               <p className={styles.lead}>
-                {t('about.lead')}
+                {t('lead')}
               </p>
               <p className={styles.paragraph}>
-                {t('about.paragraph1')}
+                {t('paragraph1')}
               </p>
               <p className={styles.paragraph}>
-                {t('about.paragraph2')}
+                {t('paragraph2')}
               </p>
               <p className={styles.paragraph}>
-                {t('about.paragraph3')}
+                {t('paragraph3')}
               </p>
             </div>
           </ScrollReveal>
 
           <ScrollReveal delay={400}>
             <div className={styles.values}>
-              <h3 className={styles.valuesTitle}>{t('about.valuesTitle')}</h3>
+              <h3 className={styles.valuesTitle}>{t('valuesTitle')}</h3>
               <div className={styles.valuesList}>
                 {values.map((value, index) => (
                   <div key={index} className={styles.valueCard}>

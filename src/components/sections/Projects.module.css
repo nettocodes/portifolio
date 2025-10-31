@@ -45,6 +45,12 @@
   height: 100%;
 }
 
+.projectImageLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
 .projectImage {
   position: relative;
   width: 100%;
@@ -132,10 +138,20 @@
   height: 18px;
 }
 
+.projectContent a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .projectTitle {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   margin-bottom: var(--spacing-md);
+  transition: color var(--transition-base);
+}
+
+.projectContent a:hover .projectTitle {
+  color: var(--color-text-primary);
 }
 
 .projectDescription {
