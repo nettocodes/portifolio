@@ -144,10 +144,12 @@
 }
 
 .projectTitle {
-  font-size: var(--font-size-2xl);
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
   font-weight: var(--font-weight-bold);
   margin-bottom: var(--spacing-md);
   transition: color var(--transition-base);
+  letter-spacing: -0.01em;
+  line-height: var(--line-height-tight);
 }
 
 .projectContent a:hover .projectTitle {
@@ -155,9 +157,9 @@
 }
 
 .projectDescription {
-  font-size: var(--font-size-base);
+  font-size: clamp(0.9375rem, 2vw, 1.0625rem);
   color: var(--color-text-secondary);
-  line-height: var(--line-height-relaxed);
+  line-height: 1.8;
   margin-bottom: var(--spacing-lg);
 }
 
@@ -184,11 +186,12 @@
 }
 
 .sectionSubtitle {
-  font-size: var(--font-size-xl);
+  font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: var(--font-weight-bold);
   margin-bottom: var(--spacing-xl);
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
   text-align: center;
+  letter-spacing: -0.01em;
 }
 
 .otherProjects {

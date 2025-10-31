@@ -13,22 +13,28 @@
 }
 
 .lead {
-  font-size: var(--font-size-2xl);
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
   color: var(--color-text-primary);
   line-height: var(--line-height-normal);
-  font-weight: var(--font-weight-medium);
-  margin-bottom: var(--spacing-sm);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-lg);
+  letter-spacing: -0.01em;
 }
 
 .paragraph {
-  font-size: var(--font-size-base);
+  font-size: clamp(1rem, 2vw, 1.125rem);
   color: var(--color-text-secondary);
-  line-height: var(--line-height-relaxed);
+  line-height: 1.8;
+  margin-bottom: var(--spacing-md);
+}
+
+.paragraph:last-child {
+  margin-bottom: 0;
 }
 
 .paragraph strong {
   color: var(--color-text-primary);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-bold);
 }
 
 .values {
@@ -38,10 +44,12 @@
 }
 
 .valuesTitle {
-  font-size: var(--font-size-xl);
+  font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   text-align: center;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--spacing-sm);
 }
 
 .valuesList {
@@ -94,15 +102,17 @@
 }
 
 .valueTitle {
-  font-size: var(--font-size-lg);
+  font-size: clamp(1rem, 2vw, 1.25rem);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+  line-height: var(--line-height-tight);
 }
 
 .valueDescription {
-  font-size: var(--font-size-sm);
+  font-size: clamp(0.875rem, 2vw, 1rem);
   color: var(--color-text-secondary);
-  line-height: var(--line-height-relaxed);
+  line-height: 1.7;
 }
 
 @media (max-width: 1024px) {

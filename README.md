@@ -1,36 +1,136 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Portfólio - Ivo Braatz
 
-## Getting Started
+Portfólio profissional desenvolvido com Next.js 14, React 18, TypeScript e next-intl para internacionalização.
 
-First, run the development server:
+## ✨ Features
+
+- 🌐 **Internacionalização (i18n)**: Suporte para Português e Inglês
+- 🎨 **Design Moderno**: Interface elegante com animações suaves
+- 🌓 **Dark/Light Mode**: Alternância de tema
+- 📱 **Responsivo**: Totalmente adaptável para todos os dispositivos
+- ⚡ **Performance**: Otimizado com Next.js 14 e App Router
+- 🎯 **SEO Otimizado**: Meta tags e estrutura semântica
+- ✨ **Animações**: Efeitos visuais e transições suaves
+- 🔍 **TypeScript**: Código type-safe
+
+## 🛠️ Tecnologias
+
+- **Framework**: Next.js 14
+- **UI**: React 18
+- **Linguagem**: TypeScript
+- **Internacionalização**: next-intl
+- **Estilização**: CSS Modules
+- **Deploy**: Vercel
+
+## 🚀 Começando
+
+### Desenvolvimento
 
 ```bash
+# Instalar dependências
+npm install
+
+# Executar servidor de desenvolvimento
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Abrir http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Build de produção
+npm run build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Executar build localmente
+npm start
+```
 
-## Learn More
+### Lint
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run lint
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📦 Deploy Automático
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+O projeto está configurado para deploy automático na Vercel. Veja mais detalhes em [DEPLOY.md](./DEPLOY.md).
 
-## Deploy on Vercel
+### Deploy Rápido (Windows)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```powershell
+# Executa lint, build e push
+.\deploy.ps1
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Deploy Rápido (Linux/Mac)
+
+```bash
+# Executa lint, build e push
+./deploy.sh
+```
+
+### Deploy Manual
+
+```bash
+git add .
+git commit -m "sua mensagem"
+git push origin main
+```
+
+A Vercel detectará automaticamente o push e iniciará o deploy.
+
+## 📁 Estrutura do Projeto
+
+```
+├── app/                    # App Router (Next.js 14)
+│   ├── [locale]/          # Rotas internacionalizadas
+│   ├── not-found.tsx      # Página 404 customizada
+│   └── layout.tsx         # Layout root
+├── src/
+│   ├── components/        # Componentes React
+│   │   ├── layout/       # Header, Footer, etc
+│   │   ├── sections/     # Seções da página
+│   │   └── ui/           # Componentes UI reutilizáveis
+│   ├── constants/        # Dados e constantes
+│   ├── contexts/         # React Contexts
+│   ├── i18n/            # Configuração i18n
+│   ├── styles/          # Estilos globais
+│   └── types/           # TypeScript types
+├── messages/            # Arquivos de tradução
+│   ├── en.json
+│   └── pt.json
+└── public/             # Assets estáticos
+```
+
+## 🌍 Internacionalização
+
+O projeto suporta dois idiomas:
+- 🇧🇷 Português (`/pt`)
+- 🇺🇸 Inglês (`/en`)
+
+Para adicionar novas traduções, edite os arquivos em `messages/`.
+
+## 🎨 Customização
+
+### Cores e Tema
+
+Edite as variáveis CSS em `src/styles/globals.css`
+
+### Conteúdo
+
+Edite os dados em `src/constants/data.ts`
+
+### Traduções
+
+Edite os arquivos em `messages/en.json` e `messages/pt.json`
+
+## 📝 Licença
+
+Desenvolvido por Ivo Braatz - 2025
+
+## 🔗 Links
+
+- [Vercel Dashboard](https://vercel.com/dashboard)
+- [Next.js Docs](https://nextjs.org/docs)
+- [next-intl Docs](https://next-intl-docs.vercel.app/)

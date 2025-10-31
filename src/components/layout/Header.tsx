@@ -79,7 +79,6 @@ export default function Header() {
                 onClick={closeMenu}
                 style={{ transitionDelay: isMenuOpen ? `${index * 0.1}s` : '0s' }}
               >
-                <span className={styles.navNumber}>0{index + 1}</span>
                 <span className={styles.navLabel}>{getNavLabel(item.label)}</span>
               </a>
             )

@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import '@/styles/globals.css'
 import ClientLayout from '@/components/layout/ClientLayout'
 import { routing } from '@/i18n/routing';
 
@@ -40,14 +39,10 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <body>
-        <NextIntlClientProvider messages={messages}>
-          <ClientLayout>
-            {children}
-          </ClientLayout>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider messages={messages}>
+      <ClientLayout>
+        {children}
+      </ClientLayout>
+    </NextIntlClientProvider>
   )
 }

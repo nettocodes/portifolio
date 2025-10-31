@@ -15,8 +15,24 @@ export function LanguageToggle() {
     const nextLocale = locale === 'pt' ? 'en' : 'pt'
     
     startTransition(() => {
-      // Remove o prefixo do locale atual da URL
-      const pathWithoutLocale = pathname.replace(`/${locale}`, '') || '/'
+      // Remove todos os prefixos de locale da URL (caso tenha múltiplos)
+      let pathWithoutLocale = pathname
+      
+      // Remove /pt e /en do início do path repetidamente
+      while (pathWithoutLocale.startsWith('/pt') || pathWithoutLocale.startsWith('/en')) {
+        pathWithoutLocale = pathWithoutLocale.replace(/^\/(pt|en)/, '')
+      }
+      
+      // Se ficou vazio ou não tem locale, volta para home
+      if (!pathWithoutLocale || pathWithoutLocale === '' || !pathname.match(/^\/(pt|en)/)) {
+        pathWithoutLocale = '/'
+      }
+      
+      // Se não começar com /, adiciona
+      if (!pathWithoutLocale.startsWith('/')) {
+        pathWithoutLocale = '/' + pathWithoutLocale
+      }
+      
       router.replace(`/${nextLocale}${pathWithoutLocale}`)
     })
   }

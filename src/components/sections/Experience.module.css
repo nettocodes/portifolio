@@ -166,17 +166,20 @@
 }
 
 .position {
-  font-size: var(--font-size-2xl);
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   flex: 1;
+  letter-spacing: -0.01em;
+  line-height: var(--line-height-tight);
 }
 
 .company {
-  font-size: var(--font-size-lg);
+  font-size: clamp(1rem, 2vw, 1.125rem);
   color: var(--color-text-secondary);
   font-weight: var(--font-weight-medium);
   margin-bottom: var(--spacing-md);
+  line-height: var(--line-height-normal);
 }
 
 .period {
@@ -210,9 +213,9 @@
 }
 
 .description {
-  font-size: var(--font-size-base);
+  font-size: clamp(0.9375rem, 2vw, 1.0625rem);
   color: var(--color-text-secondary);
-  line-height: var(--line-height-relaxed);
+  line-height: 1.8;
 }
 
 @media (max-width: 1024px) {
